@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>赛事管理</title>
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/public.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../js/jquery-1.10.2.min.js"></script>
+    <script src="../js/public.js"></script>
+</head>
+
+<body>
+    <div>
+        <div class="public_tit" id="business_tit">
+            <span class="active">进行中</span>
+            <span>已结束</span>
+        </div>
+        <div class="public_box">
+            <div class="user_top">
+                <p class="quick_search">快速检索</p>
+                <div class="user_top_cont clearfix">
+                    <div class="user_top_cont_l">
+                        <span>关键词：</span>
+                        <input type="text" placeholder="输入产品关键词">
+                        <button>查询</button>
+                    </div>
+                    <div class="user_top_cont_r">
+                        <button class="active" id="add_match">添加赛事</button>
+                        <button id="del_btn">删除</button>
+                    </div>
+                </div>
+            </div>
+            <div id="list_box">
+                <div>
+                    <div class="user_cont">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" id="sel_all">
+                                        <label for=""></label>
+                                    </td>
+                                    <td width="30%"> 赛事名称</td>
+                                    <td>已报名</td>
+                                    <td>起止日期</td>
+                                    <td>公棚</td>
+                                    <td width="15%">操作</td>
+                                </tr>
+                            </thead>
+                            <tbody id="match_list">
+                                <tr>
+                                    <td>
+                                        <input type="checkbox">
+                                        <label for=""></label>
+                                    </td>
+                                    <td>
+                                        <span>2018年第三界三关大奖赛</span>
+                                    </td>
+                                    <td class="sign_up"><span>121</span></td>
+                                    <td>
+                                        <p>2018-06-21起</p>
+                                        <p>2018-06-21止</p>
+                                    </td>
+                                    <td>天津宇航赛鸽公棚</td>
+                                    <td>
+                                        <span class="editor_btn">编辑</span><br>
+                                        <span>设为结束</span><br>
+                                        <span class="match_upload">上传比赛成绩单</span><br>
+                                        <span>删除</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="public_footer clearfix" id="page_btn">
+                        <ul class="clearfix">
+                            <li class="active">1</li>
+                            <li>2</li>
+                            <li>3</li>
+                            <li>4</li>
+                            <li>5</li>
+                        </ul>
+                        <div>共<span id="total_num">100</span>条，每页显示<span>20</span>条</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--删除 确认-->
+        <div class="del_mark" id="del_mark" style="display:none;">
+            <div class="del_cont">
+                <p>
+                    是否将已选择内容彻底删除？<br/> 删除后无法恢复！
+                </p>
+                <div class="btn_box">
+                    <button class="cancel_btn" id="cancel_btn">取消</button>
+                    <button class="sure_btn" id="sure_btn">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../js/match_management.js"></script>
+    <script>
+        //添加赛事
+        $("#add_match").on("click", function() {
+            location.href = "match_editor.html?oneloftId=" + oneloftId;
+        });
+        //页面初始化
+        var matchListData = {
+            "keyword": "", //检索关键字
+            "pageSize": "20",
+            "pageNum": "1",
+            "orderBy": "publishedTime",
+            "orderDesc": "",
+            "startedTime": new Date().getTime()
+        }
+        matchListObj.matchListRequest(matchListData, 0);
+        // 切换 “进行中” 和 “已结束”
+        $("#business_tit span").on("click", function() {
+            var _index = $(this).index();
+            $("#business_tit span").removeClass("active");
+            $(this).addClass("active");
+            matchListData.pageNum = "1";
+            if (_index == 0) {
+                matchListData.startedTime = new Date().getTime();
+                matchListData.endedTime = "";
+            } else {
+                matchListData.endedTime = new Date().getTime();
+                matchListData.startedTime = "";
+            }
+            matchListObj.matchListRequest(matchListData, _index);
+        });
+
+        //点击赛事 页码
+        $("#page_btn").delegate("li", "click", function() {
+            $("#page_btn").find("li").removeClass("active");
+            $(this).addClass("active");
+
+            matchListData.keyword = $("#keyword").val(); //关键字
+            matchListData.pageNum = $(this).html(); //页码
+            //"进行中"、"已结束"
+            var _index = $("#business_tit .active").index();
+            matchListObj.matchListRequest(matchListData, _index);
+        });
+        //点击“全选”
+        $("#sel_all").on("change", function() {
+            var selAllFlag = $(this).prop("checked");
+            if (selAllFlag) {
+                $("#match_list").find("input[type=checkbox]").prop("checked", true);
+                if ($("#match_list").find("input[type=checkbox]:checked").length > 0) {
+                    $("#del_btn").addClass("active");
+                }
+            } else {
+                $("#match_list").find("input[type=checkbox]").prop("checked", false);
+                $("#del_btn").removeClass("active");
+            }
+        });
+        //点击列表中“checkbox”
+        $("#match_list").on("change", "input[type=checkbox]", function() {
+            if ($("#match_list").find("input:checked").length > 0) {
+                $("#del_btn").addClass("active");
+            } else {
+                $("#del_btn").removeClass("active");
+            }
+            if ($("#match_list").find("input:checked").length == $("#match_list").find("input[type=checkbox]").length) {
+                $("#sel_all").prop("checked", true);
+            } else {
+                $("#sel_all").prop("checked", false);
+            }
+        });
+        // 点击 列表 “删除”
+        $("#match_list").on("click", ".del_race", function() {
+            var raceId = $(this).closest("tr").attr("raceId");
+            $("#del_mark").attr({
+                "raceId": raceId
+            }).show(); //删除弹窗 显示
+        });
+        //点击 “删除” 大按钮
+        $("#del_btn").on("click", function() {
+            if ($(this).hasClass("active")) {
+                var checkInp = $("#match_list").find("input[type=checkbox]:checked");
+                if (checkInp.length == 0) {
+                    myAlert.createBox("请选择要删除的赛事！");
+                    return;
+                }
+                var raceIdArr = [];
+                checkInp.each(function(i) {
+                    var raceId = checkInp.eq(i).closest("tr").attr("raceId");
+                    raceIdArr.push(raceId);
+                });
+
+                $("#del_mark").attr({
+                    "raceId": raceIdArr.join(",")
+                }).show(); //删除弹窗 显示
+                // matchListObj.deleteRace({ //调删除接口
+                //     "raceId": raceIdArr.join(",")
+                // }, function() {
+                //     checkInp.closest("tr").remove();
+                // });
+            }
+        });
+        // 点击 “删除弹窗” 确定
+        $("#sure_btn").on("click", function() {
+            var raceId = $("#del_mark").attr("raceId");
+            checkInp.closest("tr").remove();
+
+            matchListObj.deleteRace({ //调删除接口
+                "raceId": raceId
+            }, function() {
+                $("#del_mark").hide();
+            });
+        });
+        // 点击 “删除弹窗” 取消  
+        $("#cancel_btn").on("click", function() {
+            $("#del_mark").hide();
+        });
+
+
+        //点击 “设为结束”  
+        $("#match_list").on("click", ".set_finish", function() {
+            var raceId = $(this).closest("tr").attr("raceId");
+            matchListObj.setFinishRace({
+                "raceId": raceId
+            }, function() {
+
+            });
+        });
+        // 点击 “编辑” 跳转到 “赛事编辑”页面
+        $("#match_list").on("click", ".editor_btn", function() {
+            var raceId = $(this).closest("tr").attr("raceId");
+            var oneloftId = $(this).closest("tr").attr("oneloftId") || oneloftId;
+            location.href = "match_editor.html?raceId=" + raceId + "&oneLoftId=" + oneloftId;
+        });
+        /*报名管理*/
+        $("#match_list").on("click", ".sign_up", function() {
+            var raceId = $(this).closest("tr").attr("raceId");
+            location.href = "match_signup.html?raceId=" + raceId;
+        });
+        /*上传比赛成绩*/
+        $("#match_list").on("click", ".match_upload", function() {
+            var raceId = $(this).closest("tr").attr("raceId");
+            location.href = "match_upload.html?raceId=" + raceId;
+        });
+    </script>
+</body>
+
+</html>

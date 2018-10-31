@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>商家管理</title>
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../js/jquery-1.10.2.min.js"></script>
+    <script src="../js/public.js"></script>
+</head>
+
+<body>
+    <div>
+        <div class="public_tit" id="business_tit">
+            <span class="active">卖家</span>
+            <span>公棚</span>
+        </div>
+        <div class="public_box">
+            <div class="user_top">
+                <p class="quick_search">快速检索</p>
+                <div class="user_top_cont clearfix">
+                    <div class="user_top_cont_l">
+                        <span>关键词：</span>
+                        <input type="text" placeholder="输入关键词" id="Keyword">
+                        <button id="serch_btn">查询</button>
+                    </div>
+                    <div class="customer_disabled">
+                        <!-- <button id="setTop_btn" channle="0">置顶</button> -->
+                        <button id="disabled_btn" channle="0">冻结用户</button>
+                    </div>
+                </div>
+            </div>
+            <div id="list_box">
+                <div>
+                    <div class="user_cont">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" id="sel_all">
+                                        <label for=""></label>
+                                    </td>
+                                    <td width="30%"> 商家id/店铺名称</td>
+                                    <td>注册日期</td>
+                                    <td width="10%">商品数</td>
+                                    <td width="10%">订单数</td>
+                                    <td width="10%">资讯</td>
+                                    <td>最后登录</td>
+                                    <td>操作</td>
+                                </tr>
+                            </thead>
+                            <tbody id="business_list">
+                                <!-- <tr>
+                                    <td>
+                                        <input type="checkbox">
+                                        <label for=""></label>
+                                    </td>
+                                    <td>
+                                        <span>风雪的魅力</span>
+                                    </td>
+                                    <td>2016-06-21 18:34</td>
+                                    <td class="blue">44</td>
+                                    <td>4343</td>
+                                    <td>2016-06-21 18:34</td>
+                                    <td>
+                                        <span class="business_look_btn">查看</span>|<span>冻结</span>|<span>置顶</span>
+                                    </td>
+                                </tr> -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="public_footer clearfix" id="business_footer">
+                        <ul class="clearfix" id="business_page_btn">
+                            <!-- <li class="active">1</li>
+                            <li>2</li>
+                            <li>3</li>
+                            <li>4</li>
+                            <li>5</li> -->
+                        </ul>
+                        <div>共<span id="business_sum_num">100</span>条，每页显示<span>20</span>条</div>
+                    </div>
+                </div>
+                <div style="display:none;">
+                    <div class="user_cont">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" id="loft_sel_all">
+                                        <label for=""></label>
+                                    </td>
+                                    <td width=""> 商家id/公棚名称</td>
+                                    <td>注册日期</td>
+                                    <td width="10%">赛事</td>
+                                    <td width="10%">资讯</td>
+                                    <td>最后登录</td>
+                                    <td>操作</td>
+                                </tr>
+                            </thead>
+                            <tbody id="loft_list">
+                                <!-- <tr>
+                                    <td>
+                                        <input type="checkbox">
+                                        <label for=""></label>
+                                    </td>
+                                    <td>
+                                        <span>风雪的魅力</span>
+                                    </td>
+                                    <td>2016-06-21 18:34</td>
+                                    <td>44</td>
+                                    <td>4343</td>
+                                    <td>2016-06-21 18:34</td>
+                                    <td>
+                                        <span class="loft_look">查看</span>|<span>冻结</span>|<span>置顶</span>
+                                    </td>
+                                </tr> -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="public_footer clearfix" id="loft_page_btn">
+                        <ul class="clearfix">
+                            <!-- <li class="active">1</li>
+                            <li>2</li>
+                            <li>3</li>
+                            <li>4</li>
+                            <li>5</li> -->
+                        </ul>
+                        <div>共<span id="loft_sum_num">100</span>条，每页显示<span>20</span>条</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="../js/business_management.js"></script>
+    <script>
+        $(function() {
+            //页面初始化默认显示商家信息
+            var businessData = {
+                "pageSize": "20",
+                "pageNum": "1", //分页参数：页码
+                "orderBy": "publishedTime",
+                "orderDesc": ""
+            };
+            businessObj.getBusinessList(businessData);
+
+            //点击 “商家页码”
+            $("#business_page_btn").delegate("li", "click", function() {
+                $("#business_page_btn").find("li").removeClass("active");
+                $(this).addClass("active");
+                businessData.keyword = $("#Keyword").val();
+                businessData.pageNum = $(this).index() + 1;
+                //重新获取列表 （调后端接口）
+                businessObj.getBusinessList(businessData)
+            });
+
+            //点击“全选”
+            $("#sel_all").on("change", function() {
+                var selAllFlag = $(this).prop("checked");
+                if (selAllFlag) {
+                    $("#business_list").find("input[type=checkbox]").prop("checked", true);
+                    $(".customer_disabled button").addClass("active"); //冻结按钮 可点
+                } else {
+                    $("#business_list").find("input[type=checkbox]").prop("checked", false);
+                    $(".customer_disabled button").removeClass("active"); //冻结按钮 禁用
+                }
+            });
+
+
+            //点击列表中“checkbox”
+            $("#business_list").on("change", "input[type=checkbox]", function() {
+                if ($("#business_list").find("input:checked").length > 0) {
+                    $(".customer_disabled button").addClass("active"); ////冻结按钮 可点
+                } else {
+                    $(".customer_disabled button").removeClass("active"); //冻结按钮 禁用
+                }
+                if ($("#business_list").find("input:checked").length == $("#business_list").find("input[type=checkbox]").length) {
+                    $("#sel_all").prop("checked", true);
+                } else {
+                    $("#sel_all").prop("checked", false);
+                }
+
+                if ($("#business_list").find("input:checked").length > 0) {
+                    $(".customer_disabled button").addClass("active");
+                } else {
+                    $(".customer_disabled button").removeClass("active"); //冻结按钮 禁用
+                }
+            });
+
+            //点击每一个“冻结”按钮，判断是否已经冻结过
+            $("#business_list").on("click", ".bus_disabled", function() {
+                var _this = $(this);
+                var disHtml = $(this).html();
+                var isDisabled = true; //默认冻结
+                var businessId = $(this).closest("tr").attr("businessId");
+                if (disHtml != "冻结") {
+                    isDisabled = false;
+                }
+
+                businessObj.getCustDisable({
+                    "businessId": businessId,
+                    "isDisabled": isDisabled
+                }, function() {
+                    if (isDisabled) {
+                        _this.html("解冻");
+                    } else {
+                        _this.html("冻结");
+                    }
+                })
+            });
+
+            //点击 商家 每一列的 置顶 按钮
+            $("#business_list").on("click", ".business_setTop", function() {
+                var _this = $(this);
+                var sticky = true; //默认置顶
+                var businessId = _this.closest("tr").attr("businessId");
+                if (_this.html() != "置顶") {
+                    sticky = false;
+                }
+                //调置顶接口
+                businessObj.setTop({
+                    "businessId": businessId,
+                    "sticky": sticky
+                }, function() {
+                    console.log(sticky)
+                    if (sticky) {
+                        _this.html("取消置顶");
+                    } else {
+                        _this.html("置顶");
+                    }
+                })
+            });
+
+            //查看商家详情
+            $("#business_list").delegate(".business_look_btn", "click", function() {
+                var businessId = $(this).closest("tr").attr("businessId");
+                location.href = "business_information.html?businessId=" + businessId;
+            });
+
+            //商家——点击 “鸽子数” 跳转到鸽子列表
+            $("#business_list").on("click", ".pigeon_num", function() {
+                location.href = "product_management.html?businessId=" + $(this).closest("tr").attr("businessId") + "&shopName=" + encodeURI($(this).closest("tr").find(".shopName").html());
+            });
+            //商家——点击 “订单数” 跳转订单列表
+            $("#business_list").on("click", ".order_num", function() {
+                location.href = "order_management.html?businessId=" + $(this).closest("tr").attr("businessId") + "&shopName=" + encodeURI($(this).closest("tr").find(".shopName").html());
+            });
+            //商家——点击 "资讯"
+            $("#business_list").on("click", ".news_num", function() {
+                location.href = "information_business.html?channelType=business&businessId=" + $(this).closest("tr").attr("businessId") + "&shopName=" + encodeURI($(this).closest("tr").find(".shopName").html());
+            });
+            //------------------------------------------商家结束---------------------------------------
+            //公棚
+            var loftData = {
+                "keyword": "", //检索关键字
+                "pageSize": "20", //分页参数：分页大小
+                "pageNum": "1", //分页参数：页码
+                "orderBy": "", //分页参数：排序，需约定字段
+                "orderDesc": "" //分页参数：降序标记，不传默认升序
+            };
+            //点击“全选”
+            $("#loft_sel_all").on("change", function() {
+                var selAllFlag = $(this).prop("checked");
+                if (selAllFlag) {
+                    $("#loft_list").find("input[type=checkbox]").prop("checked", true);
+                    $(".customer_disabled button").addClass("active"); //冻结按钮 可点
+                } else {
+                    $("#loft_list").find("input[type=checkbox]").prop("checked", false);
+                    $(".customer_disabled button").removeClass("active"); //冻结按钮 禁用
+                }
+            });
+            //点击列表中“checkbox”
+            $("#loft_list").find("input[type=checkbox]").on("change", function() {
+                if ($("#loft_list").find("input:checked").length > 0) {
+                    $(".customer_disabled button").addClass("active"); //冻结按钮 可点
+                } else {
+                    $(".customer_disabled button").removeClass("active"); //冻结按钮 禁用
+                }
+                if ($("#loft_list").find("input:checked").length == $("#loft_list").find("input[type=checkbox]").length) {
+                    $("#loft_sel_all").prop("checked", true);
+                } else {
+                    $("#loft_sel_all").prop("checked", false);
+                }
+
+                if ($("#loft_list").find("input:checked").length > 0) {
+                    $(".customer_disabled button").addClass("active");
+                } else {
+                    $(".customer_disabled button").removeClass("active"); //冻结按钮 禁用
+                }
+            });
+
+            //点击公棚 页码
+            $("#loft_page_btn").delegate("li", "click", function() {
+                $("#loft_page_btn").find("li").removeClass("active");
+                $(this).addClass("active");
+
+                loftData.keyword = $("#keyword").val(); //关键字
+                loftData.pageNum = $(this).html(); //页码
+                loftObj.getLoftList(loftData);
+            });
+            //公棚查看
+            $("#loft_list").delegate(".loft_look", "click", function() {
+                var oneloftId = $(this).closest("tr").attr("oneloftId");
+                location.href = "business_loft.html?oneloftId=" + oneloftId;
+            });
+            //公棚——点击 “赛事”
+            $("#loft_list").on("click", ".match_list", function() {
+                var oneloftName = $(this).closest("tr").attr("oneloftName")
+                alert(oneloftName + "business_management")
+                location.href = "match_management.html?oneloftId=" + $(this).closest("tr").attr("oneloftId") + "&oneloftName=" + encodeURI(oneloftName);
+            });
+            //公棚——点击 "资讯"
+            $("#loft_list").on("click", ".news_list", function() {
+                var oneloftName = $(this).closest("tr").attr("oneloftName")
+                location.href = "information_loft.html?channelType=loft&oneloftId=" + $(this).closest("tr").attr("oneloftId") + "&oneloftName=" + encodeURI(oneloftName);;
+            });
+            //公棚——点击 “冻结”
+            $("#loft_list").on("click", ".loft_disabled", function() {
+                var $this = $(this);
+                var oneloftId = $this.closest("tr").attr("oneloftId");
+                var isDisabled = $this.html() == "冻结" ?
+                    true : false;
+                loftObj.getLoftDisable({
+                    "oneloftId": oneloftId,
+                    "isDisabled": isDisabled
+                }, function() {
+                    if (isDisabled) {
+                        $this.html("解冻");
+                    } else {
+                        $this.html("冻结");
+                    }
+                })
+            });
+            //公棚——点击 “置顶”
+            $("#loft_list").on("click", ".loft_setTop", function() {
+                var $this = $(this);
+                var oneloftId = $this.closest("tr").attr("oneloftId");
+                var sticky = $this.html() == "置顶" ?
+                    true : false;
+                loftObj.loftSetTop({
+                    "oneloftId": oneloftId,
+                    "sticky": sticky
+                }, function() {
+                    if (sticky) {
+                        $this.html("取消置顶");
+                    } else {
+                        $this.html("置顶");
+                    }
+                })
+            });
+            //------------------------------------------公共部分------------------
+            //商家、公棚切换
+            $("#business_tit span").on("click", function() {
+                $("input[type=checkbox]").prop("checked", false);
+                var _index = $(this).index();
+                $("#Keyword").val("");
+                $("#serch_btn").attr("channle", _index); //咨询按钮 区分商家和公棚
+                $(".customer_disabled button").attr("channle", _index); //0 商家  1公棚
+                $(".customer_disabled button").removeClass("active");
+
+                $("#business_tit span").removeClass("active");
+                $(this).addClass("active");
+                $("#list_box>div").hide();
+                $("#list_box>div").eq(_index).show();
+                if (_index == 0) {
+                    businessData.pageNum = 1;
+                    businessObj.getBusinessList(businessData)
+                } else {
+                    loftData.pageNum = 1;
+                    loftObj.getLoftList(loftData, function() {
+                        $("#loft_list").html(loftListStr);
+                        $("#loft_page_btn ul").html(loftPageLiStr);
+                        $("#loft_sum_num").html(loftTotalNum);
+                    });
+                }
+            });
+
+            //点击置顶
+            // $("#setTop_btn").on("click", function() {
+            //     if ($(this).hasClass("active")) {
+            //         $(this).removeClass("active");
+            //         $("#disabled_btn").removeClass("active");
+            //         var channle = $(this).attr("channle"); //0 商家  1公棚
+            //         if (channle == 0) {
+            //             var checkBusiness = $("#business_list").find("input:checked");
+            //             var busIdArr = [];
+            //             checkBusiness.each(function(j) {
+            //                 busIdArr.push(checkBusiness.eq(j).closest("tr").attr("businessId"));
+            //                 checkBusiness.eq(j).closest("tr").find(".business_setTop").html("取消置顶");
+            //                 checkBusiness.eq(j).prop("checked", false);
+            //                 $("#sel_all").prop("checked", false);
+            //             })
+            //             var busiStr = busIdArr.join(",");
+            //             businessObj.setTop({
+            //                 "businessId": busiStr,
+            //                 "sticky": true
+            //             })
+            //         } else {
+            //             var checkLoft = $("#loft_list").find("input:checked");
+            //             var loftIdArr = [];
+            //             checkLoft.each(function(j) {
+            //                 loftIdArr.push(checkLoft.eq(j).closest("tr").attr("oneloftId"));
+            //                 checkLoft.eq(j).prop("checked", false);
+            //                 $("#loft_sel_all").prop("checked", false);
+            //             })
+            //             var loftStr = loftIdArr.join(",");
+            //             loftObj.loftSetTop({
+            //                 "oneloftId": loftStr,
+            //                 "sticky": true
+            //             })
+            //         }
+            //     }
+            // });
+
+            //点击冻结按钮
+            $("#disabled_btn").on("click", function() {
+                if ($(this).hasClass("active")) {
+                    $(this).removeClass("active");
+                    $("#setTop_btn").removeClass("active");
+                    var channle = $(this).attr("channle"); //0商家 1公棚
+                    if (channle == 0) {
+                        var checkCust = $("#business_list").find("input:checked");
+                        var busIdArr = [];
+                        checkCust.each(function(i) {
+                            busIdArr.push(checkCust.eq(i).closest("tr").attr("businessId"));
+                            checkCust.eq(i).closest("tr").find(".bus_disabled").html("解冻");
+                            checkCust.eq(i).prop("checked", false);
+                            $("#sel_all").prop("checked", false);
+                        })
+                        var businessIdStr = busIdArr.join(",");
+                        businessObj.getCustDisable({
+                            "businessId": businessIdStr, //多个商家
+                            "isDisabled": true //冻结， false解冻
+                        });
+                    } else {
+                        var checkLoft = $("#loft_list").find("input:checked");
+                        var loftIdArr = [];
+                        checkLoft.each(function(j) {
+                            loftIdArr.push(checkLoft.eq(j).closest("tr").attr("oneloftId"));
+                            checkLoft.eq(j).closest("tr").find(".loft_disabled").html("解冻");
+                            checkLoft.eq(j).prop("checked", false);
+                            $("#loft_sel_all").prop("checked", false);
+                        })
+                        var loftStr = loftIdArr.join(",");
+                        loftObj.getLoftDisable({
+                            "oneloftId": loftStr,
+                            "isDisabled": true
+                        })
+                    }
+                }
+
+            });
+
+            //点击 查询
+            $("#serch_btn").on("click", function() {
+                var channle = $(this).attr("channle"); //0 商家  1公棚
+                if (channle == 0) {
+                    businessData.keyword = $("#Keyword").val();
+                    initData.pageNum = 1;
+                    businessObj.getBusinessList(businessData);
+                } else {
+                    loftData.keyword = $("#Keyword").val();
+                    loftData.pageNum = 1;
+                    loftObj.getLoftList(loftData);
+                }
+            });
+        })
+    </script>
+</body>
+
+</html>

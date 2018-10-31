@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>报名管理</title>
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/public.css">
+    <script src="../js/jquery-1.10.2.min.js"></script>
+    <script src="../js/ajaxfileupload.js"></script>
+    <script src="../js/public.js"></script>
+    <style>
+        #import_list_box {
+            position: relative;
+        }
+        
+        #import_list {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            opacity: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <div class="public_tit" id="business_tit">
+        </div>
+        <div class="public_box">
+            <div class="user_top">
+                <p class="sigup_nam">2018第三届三关大奖赛 报名用户<i id="signUpNum">(121)</i></p>
+                <div class="user_top_cont clearfix">
+                    <div class="user_top_cont_l">
+                        <span>关键词：</span>
+                        <input type="text" placeholder="输入产品关键词">
+                        <button>查询</button>
+                    </div>
+                    <div class="user_top_cont_r">
+                        <button class="active" id="import_list_box">
+                        <input type="file" name="upfile" id="import_list">
+                        导入用户清单
+                        </button>
+                        <button id="del_list_btn">删除</button>
+                    </div>
+                </div>
+            </div>
+            <div id="list_box">
+                <div>
+                    <div class="user_cont">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" id="sel_all">
+                                        <label for=""></label>
+                                    </td>
+                                    <td> 会员名</td>
+                                    <td>参赛名</td>
+                                    <!-- <td width="20%">足环号</td>
+                                    <td>羽色</td>
+                                    <td>隶属协会</td> -->
+                                    <td>报名日期</td>
+                                    <td>操作</td>
+                                </tr>
+                            </thead>
+                            <tbody id="list_box_cont">
+                                <tr>
+                                    <td>
+                                        <input type="checkbox">
+                                        <label for=""></label>
+                                    </td>
+                                    <td>
+                                        <span>138****0000</span>
+                                    </td>
+                                    <td>03鸽业付洪超</td>
+                                    <!--  <td>4/2018-06-2111001</td>
+                                    <td>
+                                        <p>灰色</p>
+                                    </td>
+                                    <td>天津宁河</td> -->
+                                    <td>
+                                        <span style="color:#000">2018-09-09</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="public_footer clearfix" id="page_btn">
+                        <ul class="clearfix">
+                            <li class="active">1</li>
+                            <li>2</li>
+                            <li>3</li>
+                            <li>4</li>
+                            <li>5</li>
+                        </ul>
+                        <div>共<span id="total_num">0</span>条，每页显示<span>20</span>条</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--删除 确认-->
+    <div class="del_mark" id="del_mark" style="display:none;">
+        <div class="del_cont">
+            <p>
+                是否将已选择内容彻底删除？<br/> 删除后无法恢复！
+            </p>
+            <div class="btn_box">
+                <button class="cancel_btn" id="cancel_btn">取消</button>
+                <button class="sure_btn" id="sure_btn">确定</button>
+            </div>
+        </div>
+    </div>
+    <script src="../js/match_signup.js"></script>
+    <script>
+        //初始化
+        var initData = {
+            "raceId": raceId,
+            "keyword": "", //
+            "pageSize": "20", //分页参数：分页大小
+            "pageNum": "1", //分页参数：页码
+            "orderBy": "publishedTime",
+            "orderDesc": "desc" //分页参数：升降序标记，desc为降序，不传或空字符串为升序
+        };
+        //注：orderBy可选字段：createdTime添加时间，publishedTime添加时间，updatedTime修改时间，views浏览量，sales销量，follows关注量.
+        signupObj.getListRequest(initData);
+
+        //点击 “导入清单”
+        $("#import_list").on("change", function() {
+            var postUrl = location.origin + '/ueditor?action=uploadfile';
+            var thisId = $(this).attr("id");
+            uploadRequest(postUrl, thisId, function(fileUrl) {
+                var importData = {
+                    "raceId": raceId,
+                    "url": fileUrl
+                };
+                signupObj.addByImport(importData);
+            });
+
+        });
+
+        //点击列表删除按钮
+        $("#list_box_cont").on("click", ".del_upsign", function() {
+            var $this = $(this);
+            var enrollId = $this.closest("tr").attr("enrollId");
+            var trNum = $this.closest("tr").index();
+            // 删除确认框
+            $("#del_mark").attr({
+                "enrollId": enrollId,
+                "index": trNum
+            }).show(); //删除弹窗 显示
+        });
+
+        //点击 “删除”
+        $("#del_list_btn").on("click", function() {
+            if ($(this).hasClass("active")) {
+                var checkInp = $("#list_box_cont").find("input[type=checkbox]:checked");
+                var arr = [];
+                var trIndexArr = [];
+                checkInp.each(function(index) {
+                    arr.push(checkInp.eq(index).closest("tr").attr("enrollId"));
+                    trIndexArr.push(checkInp.eq(index).closest("tr").index());
+                });
+                // 删除确认框
+                $("#del_mark").attr({
+                    "enrollId": arr.join(","),
+                    "index": trIndexArr.join(",")
+                }).show(); //删除弹窗 显示
+            }
+        });
+
+        //点击弹框 “取消”
+        $("#cancel_btn").on("click", function() {
+            $("#del_mark").hide();
+        });
+        //点击弹框 “确定”
+        $("#sure_btn").on("click", function() {
+            var enrollId = $("#del_mark").attr("enrollId");
+            var trIndex = $("#del_mark").attr("index").split(",");
+            var delData = {
+                "enrollId": enrollId
+            }
+            signupObj.deleteRace(delData, function() {
+                $("#list_box_cont").find("input[type=checkbox]:checked").closest("tr").remove();
+                $("#del_mark").hide();
+            });
+        });
+        //点击赛事 页码
+        $("#page_btn").delegate("li", "click", function() {
+            $("#page_btn").find("li").removeClass("active");
+            $(this).addClass("active");
+        });
+        //点击“全选”
+        $("#sel_all").on("change", function() {
+            var selAllFlag = $(this).prop("checked");
+            if (selAllFlag) {
+                $("#list_box_cont").find("input[type=checkbox]").prop("checked", true);
+                if ($("#list_box_cont").find("input[type=checkbox]:checked").length > 0) {
+                    $("#del_list_btn").addClass("active");
+                }
+            } else {
+                $("#list_box_cont").find("input[type=checkbox]").prop("checked", false);
+                $("#del_list_btn").removeClass("active");
+            }
+        });
+        //点击列表中“checkbox”
+        $("#list_box_cont").on("change", "input[type=checkbox]", function() {
+            if ($("#list_box_cont").find("input:checked").length > 0) {
+                $("#del_list_btn").addClass("active");
+            } else {
+                $("#del_list_btn").removeClass("active");
+            }
+            if ($("#list_box_cont").find("input:checked").length == $("#list_box_cont").find("input[type=checkbox]").length) {
+                $("#sel_all").prop("checked", true);
+            } else {
+                $("#sel_all").prop("checked", false);
+            }
+        });
+    </script>
+</body>

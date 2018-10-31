@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>平台设置</title>
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/my_style.css">
+    <script src="../js/jquery-1.10.2.min.js"></script>
+    <script src="../js/public.js"></script>
+</head>
+
+<body>
+    <div>
+        <div class="commod_tit" id="order_tit">
+        </div>
+
+        <div class="commodity_box">
+            <h3 class="pl_tit">平台设置</h3>
+            <h4 class="pl_tit2">基本信息</h4>
+            <div class="pl_article clearfix">
+                <span>
+                    网站名称
+                </span>
+                <input type="text" id="webName"/>
+            </div>
+            <div class="pl_article clearfix">
+                <span>
+                    关键词
+                </span>
+                <input type="text" id="keyWords"/>
+            </div>
+            <div class="pl_article clearfix">
+                <span>描述</span>
+                <textarea id="webDesc"></textarea>
+            </div>
+            <div class="pl_article_btn clearfix" style="margin-left:70px;">
+                <h4>排序设置</h4>
+                <div id="sortSet">
+                    <button class="active" id="pigeon_btn">产品</button>
+                    <button id="race_btn">赛事</button>
+                    <button id="oneloft_btn">公棚</button>
+                </div>
+            </div>
+            <!--排序方式-->
+            <ul id="checkUl">
+                <li>
+                    <div class="pl_article_fb plat_radio_box clearfix">
+                        <span>最新发布</span>
+                        <div>
+                            <label>
+                                <input type="radio" name="follow" orderby="createdTime">
+                                <i></i>
+                                创建日期
+                            </label>
+                            <label>
+                                <input type="radio" name="follow" orderby="updatedTime">
+                                <i></i>
+                                最后修改日期
+                            </label>
+                        </div>
+                    </div>
+                    <div class="pl_article_fb plat_radio_box clearfix">
+                        <span>人气</span>
+                        <div>
+                            <label>
+                                <input type="radio" name="follow" orderby="views">
+                                <i></i>
+                                浏览量
+                            </label>
+                            <label>
+                                <input type="radio"  name="follow" orderby="sales">
+                                <i></i>
+                                销量
+                            </label>
+                            <label>
+                                <input type="radio"  name="follow" orderby="follows">
+                                <i></i>
+                                收藏量
+                            </label>
+                        </div>
+                    </div>
+                </li>
+                <li style="display:none;">
+                    <div class="pl_article_fb plat_radio_box clearfix">
+                        <span>最新发布</span>
+                        <div>
+                            <label>
+                                <input type="radio" name="follow2" orderby="createdTime">
+                                <i></i>
+                                创建日期
+                            </label>
+                            <label>
+                                <input type="radio" name="follow2" orderby="updatedTime">
+                                <i></i>
+                                最后修改日期
+                            </label>
+                        </div>
+                    </div>
+                    <div class="pl_article_fb plat_radio_box clearfix">
+                        <span>人气</span>
+                        <div>
+                            <label>
+                                <input type="radio" name="follow2" orderby="views">
+                                <i></i>
+                                浏览量
+                            </label>
+                            <label>
+                                <input type="radio"  name="follow2" orderby="sales">
+                                <i></i>
+                                销量
+                            </label>
+                            <label>
+                                <input type="radio"  name="follow2" orderby="follows">
+                                <i></i>
+                                收藏量
+                            </label>
+                        </div>
+                    </div>
+                </li>
+                <li style="display:none;">
+                    <div class="pl_article_fb plat_radio_box clearfix">
+                        <span>最新发布</span>
+                        <div>
+                            <label>
+                                <input type="radio" name="follow3" orderby="createdTime">
+                                <i></i>
+                                创建日期
+                            </label>
+                            <label>
+                                <input type="radio" name="follow3" orderby="updatedTime">
+                                <i></i>
+                                最后修改日期
+                            </label>
+                        </div>
+                    </div>
+                    <div class="pl_article_fb plat_radio_box clearfix">
+                        <span>人气</span>
+                        <div>
+                            <label>
+                                <input type="radio" name="follow3" orderby="views">
+                                <i></i>
+                                浏览量
+                            </label>
+                            <label>
+                                <input type="radio"  name="follow3" orderby="sales">
+                                <i></i>
+                                销量
+                            </label>
+                            <label>
+                                <input type="radio"  name="follow3" orderby="follows">
+                                <i></i>
+                                收藏量
+                            </label>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            
+            <div class="pl_article_btn clearfix">
+                <h4>筛选条件管理</h4>
+                <ul>
+                    <li>
+                        <span>血统</span>
+                        <div class="mark" style="display:none">
+                            <dl>
+                                <dt>血统</dt>
+                                <dd>
+                                    <label for="">
+                                        <input type="radio"/>
+                                        <i></i>
+                                        白雪公主
+                                    </label>
+                                </dd>
+                                <dd>
+                                    <label for="">
+                                        <input type="radio"/>
+                                        <i></i>
+                                        白雪公主
+                                    </label>
+                                </dd>
+                            </dl>
+                        </div>
+                    </li>
+                    <li>
+                        <span>距离</span>
+                    </li>
+                    <li>
+                        <span>特征</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="editor_button">
+                <button id="save_btn">保存</button>
+            </div>
+        </div>
+    </div>
+    <script src="../js/platform_set.js"></script>
+    <script>
+
+    </script>
+</body>
+
+</html>

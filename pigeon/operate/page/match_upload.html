@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>上传比赛成绩</title>
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../js/jquery-1.10.2.min.js"></script>
+    <script src="../js/ajaxfileupload.js"></script>
+    <script src="../js/public.js"></script>
+</head>
+
+<body>
+    <div>
+        <div class="public_tit" id="business_tit">
+        </div>
+        <div class="public_box">
+            <div class="user_top">
+                <div class="user_top_cont clearfix">
+                    <div class="user_top_cont_l">
+                        <span>2018第三届三关大奖赛的赛程</span>
+                    </div>
+                    <div class="user_top_cont_r">
+                        <button id="down_load">下载导入模板</button>
+                    </div>
+                </div>
+            </div>
+            <div id="list_box">
+                <div>
+                    <div class="user_cont">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <td>
+                                        <span>序号</span>
+                                    </td>
+                                    <td width="30%"> 赛程名称</td>
+                                    <td>放飞地点</td>
+                                    <td width="10%">空距</td>
+                                    <td>放飞日期</td>
+                                    <td width="15%">操作</td>
+                                </tr>
+                            </thead>
+                            <tbody id="match_list">
+                                <tr>
+                                    <td>
+                                        <span>1</span>
+                                    </td>
+                                    <td>
+                                        <span>热身赛200公里  </span>
+                                    </td>
+                                    <td>天津宁河</td>
+                                    <td>200KM</td>
+                                    <td>
+                                        <p>2018-06-21</p>
+                                    </td>
+                                    <td>
+                                        <div class="match_info_btn">
+                                            <input type="file" class="input_upload" id="file1"> 选择文件
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span>2</span>
+                                    </td>
+                                    <td>
+                                        <span>初赛5公里训放</span>
+                                    </td>
+                                    <td>天津宁河</td>
+                                    <td>5KM</td>
+                                    <td>
+                                        <p>2018-06-21起</p>
+                                    </td>
+                                    <td>
+                                        <span style="border-bottom:1px solid #000;">已导入(45)</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        3
+                                    </td>
+                                    <td>
+                                        <span>初赛5公里训放</span>
+                                    </td>
+                                    <td>天津宁河</td>
+                                    <td>5KM</td>
+                                    <td>
+                                        <p>2018-06-21起</p>
+                                    </td>
+                                    <td>
+                                        <div class="match_info_btn">
+                                            <input type="file"> 选择文件
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- <div class="public_footer clearfix" id="page_btn">
+                        <ul class="clearfix">
+                            <li class="active">1</li>
+                            <li>2</li>
+                            <li>3</li>
+                            <li>4</li>
+                            <li>5</li>
+                        </ul>
+                        <div>共<span id="total_num">100</span>条，每页显示<span>20</span>条</div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../js/match_upload.js?v=0.1"></script>
+    <script>
+        //页面初始化
+        var listData = {
+            "raceId": raceId
+        };
+        uploadObj.getListRequest(listData);
+        //点击赛事 页码
+        $("#page_btn").delegate("li", "click", function() {
+            $("#page_btn").find("li").removeClass("active");
+            $(this).addClass("active");
+            listData.keyword = $("#keyword").val(); //关键字
+            listData.pageNum = $(this).html(); //页码
+            uploadObj.getListRequest(listData); //调接口
+        });
+        // 上传比赛成绩
+        $("#match_list").on("change", ".input_upload", function() {
+            var formData = new FormData();
+            var thisId = $(this).attr("id");
+            var raceitemId = $(this).closest("tr").attr("raceitemId");
+            var upData = {
+                "raceitemId": raceitemId,
+                "raceitemResult": formData
+            };
+            var postUrl = location.origin+'/ueditor?action=uploadfile';
+            uploadRequest(postUrl,thisId,function(fileUrl){
+                upData.raceitemResult = fileUrl;
+                uploadObj.upRace(upData);
+            });
+        });
+        //点击 “下载导入模板”
+        $("#down_load").on("click", function() {
+            uploadObj.downLoad();
+        })
+    </script>
+</body>
+
+</html>

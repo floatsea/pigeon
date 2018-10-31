@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>用户管理</title>
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../js/jquery-1.10.2.min.js"></script>
+    <script src="../js/public.js"></script>
+</head>
+
+<body>
+    <div>
+        <div class="public_tit">
+        </div>
+        <div class="public_box">
+            <div class="user_top">
+                <p class="quick_search">快速检索</p>
+                <div class="user_top_cont clearfix">
+                    <div class="user_top_cont_l">
+                        <span>关键词：</span>
+                        <input type="text" placeholder="输入关键词" id="Keyword">
+                        <button id="search_btn">查询</button>
+                    </div>
+                    <div class="customer_disabled">
+                        <button>冻结用户</button>
+                    </div>
+                </div>
+            </div>
+            <div class="user_cont">
+                <table>
+                    <thead>
+                        <tr>
+                            <td>
+                                <input type="checkbox" id="sel_all">
+                                <label for=""></label>
+                            </td>
+                            <td> 微信用户</td>
+                            <td>openid</td>
+                            <td>注册日期</td>
+                            <td>最后登录</td>
+                            <!-- <td>信息完整度</td> -->
+                            <td>操作</td>
+                        </tr>
+                    </thead>
+                    <tbody id="user_list">
+                        <!-- <tr>
+                            <td>
+                                <input type="checkbox">
+                                <label for=""></label>
+                            </td>
+                            <td>
+                                <div>
+                                    <div>
+                                        <img src="../image/cp.png" alt="">
+                                    </div>
+                                    <span>风雪的魅力</span>
+                                </div>
+                            </td>
+                            <td>FgddfDGvdFDGDFvd</td>
+                            <td>2016-06-21 18:34</td>
+                            <td>2016-06-21 18:34</td>
+                            <td>
+                                <span class="look_btn">查看</span>|<span>冻结</span>
+                            </td>
+                        </tr> -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="public_footer clearfix">
+                <ul class="clearfix" id="page_btn">
+                    <!-- <li class="active">1</li>
+                    <li>2</li>
+                    <li>3</li>
+                    <li>4</li>
+                    <li>5</li> -->
+                </ul>
+                <div>共<span id="sum_num">100</span>条，每页显示<span>20</span>条</div>
+            </div>
+        </div>
+    </div>
+    <script src="../js/user_management.js"></script>
+    <script>
+        $(function() {
+            var initData = {
+                "keyword": "", //检索关键字
+                "pageSize": "20", //分页参数：分页大小
+                "pageNum": "1", //分页参数：页码
+                "orderBy": "", //分页参数：排序，需约定字段
+                "orderDesc": "" //分页参数：降序标记，不传默认升序
+            };
+            //页面初始化时调接口获取列表
+            userListObj.getUserList(initData, function() {
+                $("#user_list").html(userListStr); //数据
+            });
+
+            //点击 “关键字查询”
+            $("#search_btn").on("click", function() {
+                $("#sel_all").prop("checked", false);
+                initData.keyword = $("#Keyword").val();
+                initData.pageNum = 1;
+                $(this).attr("searchTxt", $("#Keyword").val());
+
+                //重新获取列表 （调后端接口）
+                userListObj.getUserList(initData, function() {
+                    $("#user_list").html(userListStr); //数据
+                    $("#page_btn").html(pageLiStr); //页码
+                    $("#sum_num").html(totalNum); //数据总条数
+                })
+            });
+
+            //点击 “页码”
+            $("#page_btn").delegate("li", "click", function() {
+                $("#page_btn").find("li").removeClass("active");
+                $(this).addClass("active");
+                initData.keyword = $("#search_btn").attr("searchTxt");
+                initData.pageNum = $(this).index() + 1;
+
+                //重新获取列表 （调后端接口）
+                userListObj.getUserList(initData, function() {
+                    $("#user_list").html(userListStr); //数据
+                    $("#sum_num").html(totalNum); //数据总条数
+                })
+            });
+
+            //点击“全选”
+            $("#sel_all").on("change", function() {
+                var selAllFlag = $(this).prop("checked");
+                if (selAllFlag) {
+                    $("#user_list").find("input[type=checkbox]").prop("checked", true);
+                    $(".customer_disabled button").addClass("active"); //冻结按钮 可点
+                } else {
+                    $("#user_list").find("input[type=checkbox]").prop("checked", false);
+                    $(".customer_disabled button").removeClass("active"); //冻结按钮 禁用
+                }
+            });
+
+            //点击列表中“checkbox”
+            $("#user_list").on("change", "input[type=checkbox]", function() {
+                //判断 “冻结按钮” 是否可点 
+                if ($("#user_list").find("input:checked").length > 0) {
+                    $(".customer_disabled").find("button").addClass("active");
+                } else {
+                    $(".customer_disabled").find("button").removeClass("active");
+                }
+                if ($("#user_list").find("input:checked").length == $("#user_list").find("input[type=checkbox]").length) {
+                    $("#sel_all").prop("checked", true);
+                } else {
+                    $("#sel_all").prop("checked", false);
+                }
+                if ($("#user_list").find("input:checked").length > 0) {
+                    $(".customer_disabled button").addClass("active");
+                } else {
+                    $(".customer_disabled button").removeClass("active"); //冻结按钮 禁用
+                }
+            });
+
+            //点击   页面上方 "冻结用户" 按钮
+            $(".customer_disabled").on("click", ".active", function() {
+                var checkCust = $("#user_list").find("input:checked");
+                var customerIdArr = [];
+                checkCust.each(function(index) {
+                    customerIdArr.push(checkCust.eq(index).closest("tr").attr("customerId"));
+                    checkCust.eq(index).prop("checked", false);
+                    $("#sel_all").prop("checked", false);
+                    checkCust.eq(index).closest("tr").find(".cust_disable").html("解冻");
+                })
+                var customerIdStr = customerIdArr.join(","); //customerId
+
+                userListObj.getCustDisable({
+                    "customerId": customerIdStr,
+                    "isDisabled": true
+                }, function() {
+                    $(".customer_disabled").find("button").remioveClass("active");
+                }); //回调
+            });
+
+            //点击每一个用户的冻结按钮
+            $("#user_list").on("click", ".cust_disable", function() {
+                var _this = $(this);
+                var _thisHtml = $(this).html();
+                var customerId = $(this).closest("tr").attr("customerId");
+                var isDisabled = true; //默认冻结 ，false 解除禁用
+                if (_thisHtml != "冻结") {
+                    isDisabled = false;
+                }
+                //调接口，冻结用户
+                userListObj.getCustDisable({
+                    "customerId": customerId,
+                    "isDisabled": isDisabled
+                }, function() {
+                    if (isDisabled) {
+                        _this.html("解冻");
+                    } else {
+                        _this.html("冻结");
+                    }
+                });
+            });
+
+            //点击 "查看" 用户详情
+            $("#user_list").on("click", ".look_btn", function() {
+                var customerId = $(this).closest("tr").attr("customerId");
+                var openId = $(this).closest("tr").attr("openId");
+                location.href = "user_information.html?customerId=" + customerId + "&openId=" + openId;
+            })
+        })
+    </script>
+</body>
+
+</html>

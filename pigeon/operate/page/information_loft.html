@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>公棚信息管理</title>
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/m_style.css">
+    <script src="../js/jquery-1.10.2.min.js"></script>
+    <script src="../js/public.js"></script>
+</head>
+
+<body>
+    <div>
+        <div class="commod_tit" id="info_tit">
+            <span class="active">已发布</span>
+            <span>待发布</span>
+        </div>
+        <div class="commodity_box info_box" id="infor_cont">
+            <div>
+                <div class="query_p clearfix" style="margin-top:0; padding-top:50px; height:116px;">
+                    <span>快速检索</span>
+                    <div class="query_p_show">
+                        <span>产品名称：</span>
+                        <input type="text" placeholder="输入订单编号或产品名称">
+                    </div>
+                    <button class="query_p_btn" id="search_btn">查询</button>
+                    <div class="query_p_btns clearfix">
+                        <button class="active" id="input_info_btn">录入资讯</button>
+                        <button id="check_cancel_btn">撤稿</button>
+                        <button id="check_del_btn">删除</button>
+                    </div>
+                </div>
+                <!--内容-->
+                <div class="pro_det commodity_list_tit info_list_tit">
+                    <ol class="clearfix">
+                        <li class="clearfix">
+                            <div class="p_check_box">
+                                <input type="checkbox" id="info_check_all">
+                                <label></label>
+                            </div>
+                            <div class="pro_det_two">
+                                <span>标题</span>
+                            </div>
+                        </li>
+                        <li class="info_create_date" id="newsDate">发布日期</li>
+                        <li class="info_create_date">编辑</li>
+                        <li class="info_create_date">公棚</li>
+                        <li class="info_last">操作</li>
+                    </ol>
+                    <div>
+                        <!--已发布-->
+                        <ul class="comm_list_box" id="news_list_box">
+                            <li class="clearfix">
+                                <div class="comm_list_l clearfix">
+                                    <div class="comm_list_check">
+                                        <input type="checkbox">
+                                        <label></label>
+                                    </div>
+                                    <div class="info_list_txt">
+                                        长距离赛手长距离赛手长距离赛手长距离赛手长距离赛手s
+                                    </div>
+                                </div>
+
+                                <div class="info_create_date ">
+                                    2018-06-21 18:34
+                                </div>
+                                <div class="info_create_date">133****0000</div>
+                                <div class="info_create_date ">天津宇航赛鸽公棚</div>
+                                <div class="info_last ">
+                                    <span class="enditor_btn">编辑</span> | <span>撤稿</span> | <span>删除</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="public_footer clearfix" id="page_btn">
+                        <ul class="clearfix">
+                            <!-- <li class="active">1</li>
+                            <li>2</li>
+                            <li>3</li>
+                            <li>4</li>
+                            <li>5</li> -->
+                        </ul>
+                        <div>共<span id="total_num">0</span>条，每页显示<span>20</span>条</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script src="../js/information_management.js"></script>
+    <script>
+        $(function() { //区分公棚
+            if (oneloftId) {
+                $("#input_info_btn").show();
+            } else {
+                $("#input_info_btn").hide();
+            }
+            var postData = {
+                "isPublished": true, //"发布状态：发布，true；未发布，false",
+                "ownerType": "2",
+                "keyword": "", //检索关键字
+                "pageSize": "20",
+                "pageNum": "1",
+                "orderBy": "", //分页参数：排序标记，以此字段排序
+                "orderDesc": "" //"分页参数：升降序标记，desc为降序，不传或空字符串为升序"
+            }
+            inforObj.newsRequstList(postData); //页面初始化
+            //切换"已发布"和"待发布"
+            $("#info_tit>span").on('click', function() {
+                $("#info_check_all").prop("checked", false);
+                $("#check_cancel_btn").removeClass("active"); //撤稿
+                $("#check_del_btn").removeClass("active"); //删除
+                var _index = $(this).index();
+                $("#info_tit>span").removeClass('active');
+                $(this).addClass("active");
+                postData.isPublished = _index == 0 ? true : false; // 已完成 、待发布
+                var dateTitle = _index == 0 ? "发布日期" : "录入日期";
+                $("#newsDate").html(dateTitle);
+                var cancelTxt = _index == 0 ? "撤稿" : "发布";
+                $("#check_cancel_btn").html(cancelTxt);
+                postData.pageNum = 1;
+                inforObj.newsRequstList(postData); //重新渲染数据
+            });
+
+            //分页方法
+            $("#page_btn").delegate("li", "click", function() {
+                $("#page_btn").find("li").removeClass("active");
+                $(this).addClass("active");
+                postData.keyword = $("#search_btn").attr("searchTxt");
+                postData.pageNum = $(this).html() + 1;
+                inforObj.newsRequstList(postData); //重新渲染数据
+            });
+
+            //点击“全选”
+            $("#info_check_all").on("change", function() {
+                var selAllFlag = $(this).prop("checked");
+                if (selAllFlag) {
+                    if ($("#news_list_box li").length > 0) {
+                        $("#check_cancel_btn").addClass("active"); //撤稿
+                        $("#check_del_btn").addClass("active"); //删除
+                    }
+                    $("#news_list_box").find("input[type=checkbox]").prop("checked", true);
+                } else {
+                    $("#check_cancel_btn").removeClass("active"); //撤稿
+                    $("#check_del_btn").removeClass("active"); //删除
+                    $("#news_list_box").find("input[type=checkbox]").prop("checked", false);
+                }
+            });
+            //点击列表中“checkbox”
+            $("#news_list_box").find("input[type=checkbox]").on("change", function() {
+                if ($("#news_list_box").find("input:checked").length > 0) {
+                    $("#check_cancel_btn").addClass("active"); //撤稿
+                    $("#check_del_btn").addClass("active"); //删除
+                } else {
+                    $("#check_cancel_btn").removeClass("active"); //撤稿
+                    $("#check_del_btn").removeClass("active"); //删除
+                }
+                if ($("#news_list_box").find("input:checked").length == $("#news_list_box").find("input[type=checkbox]").length) {
+                    $("#info_check_all").prop("checked", true);
+                } else {
+                    $("#info_check_all").prop("checked", false);
+                }
+            });
+
+            //点击每个列表中的 “编辑”
+            $("#news_list_box").on("click", ".enditor_btn", function() {
+                var newsId = $(this).closest("li").attr("newsId");
+                location.href = "information_editor_business.html?oneloftId=" + oneloftId + "&newsId=" + newsId;
+            });
+            //点击每个列表中的 “撤稿”
+            $("#news_list_box").on("click", ".cancel_btn", function() {
+                var $this = $(this);
+                var newsId = $this.closest("li").attr("newsId");
+                var isPublished = $(this).html() == "撤稿" ? false : true;
+                var cancelData = {
+                    "newsId": newsId, //"用户id：支持多个，逗号,分隔",
+                    "isPublished": isPublished //"发布状态：发布，true；撤回，false"
+                }
+                inforObj.cancelRequest(cancelData, function() {
+                    if (cancelData.isPublished) {
+                        $this.html("撤稿");
+                    } else {
+                        $this.html("发布");
+                    }
+                    $("#info_tit .active").trigger("click");
+                });
+            });
+            //点击每个列表中的 “删除”
+            $("#news_list_box").on("click", ".delete_btn", function() {
+                var $this = $(this);
+                var newsId = $this.closest("li").attr("newsId");
+                var delData = {
+                    "newsId": newsId //"用户id：支持多个，逗号,分隔"
+                }
+                inforObj.delRequest(delData, function() {
+                    $("#info_tit .active").trigger("click");
+                });
+            });
+            //点击 "录入资讯 "
+            $("#input_info_btn").on("click", function() {
+                location.href = "information_editor_loft.html?oneloftId=" + oneloftId + "&oneloftName=" + oneloftName;
+            });
+
+            //点击 “撤稿” 多选
+            $("#check_cancel_btn").on("click", function() {
+                var checkInp = $("#news_list_box").find("input[type=checkbox]:checked");
+                var newsIdArr = [];
+                checkInp.each(function(index) {
+                    newsIdArr.push(checkInp.eq(index).closest("li").attr("newsId"));
+                });
+                var newsIdStr = newsIdArr.join(",");
+                var isPublished = $(this).html() == "撤稿" ? false : true;
+                var cancelData = {
+                    "newsId": newsIdStr, //"用户id：支持多个，逗号,分隔",
+                    "isPublished": isPublished //"发布状态：发布，true；撤回，false"
+                }
+                inforObj.cancelRequest(cancelData, function() {
+                    $("#info_tit .active").trigger("click");
+                });
+            });
+            //点击删除
+            $("#check_del_btn").on("click", function() {
+                var checkInp = $("#news_list_box").find("input[type=checkbox]:checked");
+                var newsIdArr = [];
+                checkInp.each(function(index) {
+                    newsIdArr.push(checkInp.eq(index).closest("li").attr("newsId"));
+                });
+                var newsIdStr = newsIdArr.join(",");
+                var delData = {
+                    "newsId": newsIdStr //"用户id：支持多个，逗号,分隔"
+                }
+                inforObj.delRequest(delData, function() {
+                    $("#info_tit .active").trigger("click");
+                });
+            });
+        })
+    </script>
+</body>
+
+</html>

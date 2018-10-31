@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>公棚概览</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/home.css">
+    <script src="js/jquery-1.10.2.min.js"></script>
+</head>
+
+<body>
+    <div class="home_box clearfix">
+        <div class="home_left" id="homeLeft">
+            <div class="home_type">
+                <h5>信鸽之家</h5>
+                <p>公棚端 v1.0.2</p>
+            </div>
+            <ul id="home_list_box">
+                <li class="active">
+                    <img src="image/c1.png" alt="">
+                    <span>公棚概览</span>
+                </li>
+                <li>
+                    <img src="image/f.png" alt="">
+                    <span>赛事管理</span>
+                </li>
+                <li>
+                    <img src="image/g.png" alt="">
+                    <span>直播管理</span>
+                </li>
+                <li>
+                    <img src="image/e.png" alt="">
+                    <span>信息管理</span>
+                </li>
+                <li>
+                    <img src="image/g.png" alt="">
+                    <span>公棚设置</span>
+                </li>
+            </ul>
+        </div>
+        <div class="home_right">
+            <div class="home_right_tit clearfix">
+                <div class="home_tit_right">
+                    <div class="home_language clearfix">
+                        <span>语言</span>
+                        <span>中文版<img src="image/home_icon.png" alt=""></span>
+                    </div>
+                    <div class="home_head clearfix">
+                        <div>
+                            <img src="image/head.png" alt="">
+                        </div>
+                        <span>182*****2345 <img src="" alt=""></span>
+                    </div>
+                </div>
+            </div>
+            <div class="home_content">
+                <iframe src="page/index.html" frameborder="0" id="pageContent"></iframe>
+            </div>
+        </div>
+    </div>
+    <script src="js/setIframeHeight.js"></script>
+    <script src="js/home_config.js"></script>
+    <script>
+        window.onload = function() {
+            document.body.style.height = document.getElementById("pageContent").height + "px"
+        }
+    </script>
+</body>
+
+</html>

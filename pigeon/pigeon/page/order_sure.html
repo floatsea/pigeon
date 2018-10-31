@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>确认订单</title>
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,target-densitydpi=medium-dpi">
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/m_style.css" />
+    <script type="text/javascript" src="../js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="../js/public.js"></script>
+    <script type="text/javascript" src="../js/weixin_init.js"></script>
+</head>
+
+<body>
+    <div class="order_list">
+        <!-- 订单详情-->
+        <div id="item_box" class="order_item_box">
+        </div>
+        <footer class="t_foot">
+            <ul class="pri_tot clearfix">
+                <li class="chk_btn">
+                    <input type="checkbox" id="check_all">
+                    <label for=""></label>
+                    <span>全选</span>
+                </li>
+                <li class="combined">
+                    <span class="combined_l">合计:</span><span class="combined_r" style="color:#ff0913">¥<em id="all_price"> 0</em>元</span>
+                </li>
+                <li class="sub_btn">
+                    <a href="javascript:;">提交订单</a>
+                </li>
+            </ul>
+        </footer>
+    </div>
+    <!--弹窗-->
+    <div class="order_sure_mark" style="display:none;">
+        <div class="order_sure_info">
+            <dl>
+                <dt>
+                    <img src="../image/close.png" alt="" id="close_btn">
+                    <h3>收货人</h3>
+                </dt>
+                <dd class="clearfix">
+                    <span>姓　名</span>
+                    <input type="text" placeholder="请输入" id="cust_name" maxlength="10">
+                </dd>
+                <dd class="clearfix">
+                    <span>手　机</span>
+                    <input type="text" placeholder="请输入" id="mobile" maxlength="11">
+                </dd>
+                <dd class="clearfix">
+                    <span>地　址</span>
+                    <input type="text" placeholder="请输入" id="address" maxlength="20">
+                </dd>
+            </dl>
+            <div class="order_infor_btn">
+                <button id="submit_btn">提交</button>
+            </div>
+        </div>
+    </div>
+    <script src="../js/order_sure.js"></script>
+    <script>
+        //页面初始化
+        orderSureObj.initPageItem(pigeonsInfoArr);
+        //事件
+        $(".sub_btn").on("click", function() {
+            if ($(".j_check:checked").length == 0) {
+                myAlert.createBox("亲，还没有选择要购买的鸽子哦~");
+                return;
+            }
+            $(".order_sure_mark").show();
+        });
+        $("#close_btn").on("click", function() {
+            $(".order_sure_mark").hide();
+        });
+
+        //全选 （每个商家）
+        $("#item_box").on("change", ".j_check_item", function() {
+            if ($(this).prop("checked")) {
+                $(this).closest(".order_item_list").find(".j_check").prop("checked", true);
+            } else {
+                $(this).closest(".order_item_list").find(".j_check").prop("checked", false);
+            }
+            orderSureObj.findCheckInp(); //判断所有全选的
+            var allPrice = orderSureObj.changeAllPrice();
+            $("#all_price").html(allPrice);
+        });
+        $("#item_box").on("change", ".j_check", function() {
+            var checkBoxList = $(this).closest(".order_item_list").find(".j_check");
+            var checkedBox = $(this).closest(".order_item_list").find(".j_check:checked");
+            if (checkBoxList.length == checkedBox.length) {
+                $(this).closest(".order_item_list").find(".j_check_item").prop("checked", true);
+            } else {
+                $(this).closest(".order_item_list").find(".j_check_item").prop("checked", false);
+            }
+            orderSureObj.findCheckInp(); //判断所有全选的
+            var allPrice = orderSureObj.changeAllPrice();
+            $("#all_price").html(allPrice);
+        });
+
+        //所有全选
+        $("#check_all").on("change", function() {
+            if ($(this).prop("checked")) {
+                $("#item_box").find("input[type=checkbox]").prop("checked", true);
+            } else {
+                $("#item_box").find("input[type=checkbox]").prop("checked", false);
+            }
+            var allPrice = orderSureObj.changeAllPrice();
+            $("#all_price").html(allPrice);
+        });
+
+        //姓名校验
+        $("#cust_name").on("blur", function() {
+            var $that = $(this);
+            var nameFlag = checkFn.applicantName($that.val(), $that);
+            if (!nameFlag) {
+                myAlert.createBox("姓名格式有误，请重新输入~");
+                $that.val("");
+            }
+        });
+
+        //手机号校验
+        $("#mobile").on("blur", function() {
+            if (!checkInputPhone($(this).val())) {
+                myAlert.createBox("手机号格式有误，请重新输入~");
+                $(this).val("");
+            }
+        });
+
+        //校验地址 
+        $("#address").on("blur", function() {
+            if (!stripscript($(this).val())) {
+                myAlert.createBox("地区格式有误，请重新输入~");
+                $(this).val("");
+            }
+        });
+
+        //提交订单
+        $("#submit_btn").on("click", function() {
+            if ($("#cust_name").val() == "" || $("#mobile").val() == "" || $("#address").val() == "") {
+                myAlert.createBox("亲，您的信息填写不完整，赶快完善吧~");
+                return;
+            } else {
+                var orderData = {
+                    "address": {
+                        "user_name": $("#cust_name").val(), //"用户登录名",
+                        "mobile": $("#mobile").val(), //"用户手机号",
+                        "address": $("#address").val() //"城市"
+                    },
+                    "orderitems": []
+                };
+                var checkedInp = $(".j_check:checked");
+                checkedInp.each(function(index) {
+                    //页面渲染时，给每一个checkbox赋值，请求接口时取
+                    var pigeonJson = decodeURIComponent($(".j_check:checked").eq(index).attr("pigeonInfo"));
+                    pigeonJson = JSON.parse(pigeonJson);
+                    var shopName = checkedInp.eq(index).closest(".order_item_list").find(".shop_name a").html();
+                    //给入参赋值
+                    orderData.orderitems.push({
+                        "goodsDesc": {
+                            "pigeonName": pigeonJson.pigeonName,
+                            "pigeonNo": pigeonJson.pigeonNo,
+                            "pigeonPic": pigeonJson.imgSrc,
+                            "shopName": shopName
+                        },
+                        "goodsId": pigeonJson.pigeonId, //鸽子Id
+                        "goodsPrice": pigeonJson.pigeonPrice //鸽子价格 注意：是否带字符
+                    }); //order_item_list
+                });
+                //调提交订单接口  刷新token
+                reloadToken({
+                    Authorization: Authorization
+                }, {
+                    openId: openid
+                }, function() {
+                    orderSureObj.submitOrder(orderData, function() {
+                        checkedInp.each(function(index) {
+                            var businessNum = checkedInp.eq(index).closest(".order_item_list").attr("businessNum"); //第几个商家
+                            pigeonsInfoArr[businessNum].pigeonArr.splice(index, 1); //删除第几只鸽子
+                            if (pigeonsInfoArr[businessNum].pigeonArr.length == 0) {
+                                pigeonsInfoArr.splice(businessNum, 1);
+                            }
+                            sessionStorage.setItem("pigeonsInfoArr", JSON.stringify(pigeonsInfoArr));
+                        });
+                        setTimeout(() => {
+                            location.replace("my_order.html?openid=" + openid)
+                        }, 300);
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

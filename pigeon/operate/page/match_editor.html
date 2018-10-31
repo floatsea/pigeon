@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>编辑赛事详情</title>
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/m_style.css">
+    <link rel="stylesheet" href="../css/my_style.css">
+    <link rel="stylesheet" href="../css/datepicker.css">
+    <script src="../js/jquery-1.10.2.min.js"></script>
+    <script src="../js/ajaxfileupload.js"></script>
+    <script src=" ../js/public.js "></script>
+    <script src="../js/moment.min.js"></script>
+    <script src="../js/datepicker.all.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/ueditor/ueditor.all.min.js">
+    </script>
+    <script type="text/javascript" charset="utf-8" src="/ueditor/lang/zh-cn/zh-cn.js"></script>
+</head>
+
+<body>
+    <div>
+        <div class="commod_tit" id="order_tit">
+            <span>编辑赛事信息</span>
+        </div>
+        <div class="commodity_box">
+            <ul class="product clearfix ">
+                <li>
+                    <span>公棚</span>
+                    <input type="text" placeholder=" " id="oneloftName" style="width:388px;">
+                </li>
+                <li>
+                    <span>赛事名称</span>
+                    <input type="text" placeholder=" " id="raceTitile">
+                </li>
+                <li>
+                    <span>起止日期</span>
+                    <div class="J-datepicker-range c-data-product">
+                        <i></i>
+                        <input placeholder="开始日期" name="" class="" value="" id="matchStartedTime">
+                        <span class="">-</span>
+                        <input placeholder="结束日期" name="" class="" value="" id="matchEndedTime">
+                    </div>
+                </li>
+                <li>
+                    <span>总奖金</span>
+                    <input type="text" placeholder="单位：人民币(元) " id="reward">
+                </li>
+
+            </ul>
+            <!--赛程-->
+            <div class="schedule ">
+                <h3>设置赛程</h3>
+                <div class="schedule_time clearfix ">
+                    <span>报名期</span>
+                    <input type="text" placeholder="名称 " class="schedule_time_name" id="race_item_tit">
+                    <div class="schedule_time_ff ">
+                        <span>报名截止日期</span>
+                        <div class="J-datepicker c-datepicker">
+                            <i class=""></i>
+                            <input type="text" autocomplete="off" name="" placeholder="选择日期" class="" value="" id="enrolledTime">
+                        </div>
+                    </div>
+                </div>
+                <ul id="race_item_box">
+                    <li class="schedule_time clearfix">
+                        <span>赛程1</span>
+                        <input type="text" placeholder="赛程名称 " class="schedule_time_name raceitemTitile">
+                        <div class="schedule_time_ff">
+                            <span>放飞日期</span>
+                            <div class="J-datepicker c-datepicker">
+                                <i class=""></i>
+                                <input type="text" autocomplete="off" name="" placeholder="选择日期" class="" value="" class="startedTime">
+                            </div>
+                        </div>
+                        <div class="schedule_time_ff schedule_time_ff2">
+                            <span>放飞地点</span>
+                            <i class="address">
+                            </i>
+                            <input type="text" class="startedPlace">
+                        </div>
+                        <div class="schedule_time_ff schedule_time_ff2">
+                            <span>空距</span>
+                            <input type="text" placeholder=" "  class="distance">
+                        </div>
+                    </li>
+                </ul>
+                <button class="add_raceItem" id="add_raceItem">+ 添加赛程</button>
+            </div>
+            <!--橱窗-->
+            <div class="input_info_cont clearfix match_editor">
+                <span>橱窗展示</span>
+                <div class="input_info_list">
+                    <p>添加视频或者图片</p>
+                    <ul class="clearfix" id="raceShow">
+                        <li>
+                            <div class="up_box">
+                                <img src="" alt="">
+                                <input type="file" name="upfile" multiple="multiple" class="upVideo" id="pigeon_video"/>
+                                <b class="look_video">上传视频</b>
+                            </div>
+                            <div id="video" class="video_box show_mark"></div>
+                            <em class="del_img"></em>
+                        </li>
+                        <li>
+                            <div class="up_box j_up_img">
+                                <img src="" alt="">
+                                <input type="file" name="upfile" class="upImg show_mark" id="up_img1"/>
+                                <div class="video_box show_mark"></div>
+                                <i>上传图片</i>
+                            </div>  
+                            <em class="del_img"></em>
+                        </li>
+                        <li>
+                            <div class="up_box j_up_img">
+                                <img src="" alt="">
+                                <input type="file" name="upfile" class="upImg show_mark" id="up_img2"/>
+                                <div class="video_box show_mark"></div>
+                                <i>上传图片</i>
+                            </div>  
+                            <em class="del_img"></em>
+                        </li>
+                        <li>
+                            <div class="up_box j_up_img">
+                                <img src="" alt="">
+                                <input type="file" name="upfile" class="upImg show_mark" id="up_img3"/>
+                                <div class="video_box show_mark"></div>
+                                <i>上传图片</i>
+                            </div>  
+                            <em class="del_img"></em>
+                        </li>
+                        <li>
+                            <div class="up_box j_up_img">
+                                <img src="" alt="">
+                                <input type="file" name="upfile" class="upImg show_mark" id="up_img4"/>
+                                <div class="video_box show_mark"></div>
+                                <i>上传图片</i>
+                            </div>  
+                            <em class="del_img"></em>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="input_info_cont clearfix match_editor ">
+                <span>详细价格</span>
+                <div class="editor_box" style="float:left; width:70%">
+                    <script id="editor" type="text/plain" style="width:100%; height:300px"></script>
+                </div>
+            </div>
+            <div class="editor_button">
+                <button id="return_btn">返回</button>
+                <button id="save_btn">保存</button>
+            </div>
+        </div>
+    </div>
+    <script src="../js/match_editor.js "></script>
+    <script src="../js/date.js "></script>
+    <script>
+        //富文本编辑器
+        $(function() {
+            var ue = UE.getEditor('editor');
+            //初始化：
+            if (raceId) { // 编辑
+                matchEditoObj.matchInfo();
+                $("#oneloftName").attr("readonly", "readonly");
+            } else {
+                $("#oneloftName").attr("readonly", "");
+                $("#oneloftName").val(oneloftName)
+            }
+            /**
+             *日期控件
+             *十分秒年月日范围，包含最大最小值
+             *赛事 起止日期
+             */
+            $('.J-datepicker-range').datePicker({
+                hasShortcut: true,
+                min: '',
+                max: '', //2019-04-29 20:59:59
+                isRange: true,
+                shortcutOptions: [{
+                    name: '昨天',
+                    day: '-1,-1',
+                    time: '00:00:00,23:59:59'
+                }, {
+                    name: '最近一周',
+                    day: '-7,0',
+                    time: '00:00:00,'
+                }, {
+                    name: '最近一个月',
+                    day: '-30,0',
+                    time: '00:00:00,'
+                }, {
+                    name: '最近三个月',
+                    day: '-90, 0',
+                    time: '00:00:00,'
+                }]
+            });
+            //十分秒年月日单个
+            $('.J-datepicker').datePicker({
+                hasShortcut: true,
+                min: '',
+                max: '',
+                shortcutOptions: [{
+                    name: '今天',
+                    day: '0'
+                }, {
+                    name: '昨天',
+                    day: '-1',
+                    time: '00:00:00'
+                }, {
+                    name: '一周前',
+                    day: '-7'
+                }],
+                hide: function() {
+                    console.info(this)
+                }
+            });
+            $("#race_item_box").on("click", ".J-datepicker", function() {
+                $(this).datePicker({
+                    hasShortcut: true,
+                    min: '',
+                    max: '',
+                    shortcutOptions: [{
+                        name: '今天',
+                        day: '0'
+                    }, {
+                        name: '昨天',
+                        day: '-1',
+                        time: '00:00:00'
+                    }, {
+                        name: '一周前',
+                        day: '-7'
+                    }],
+                    hide: function() {
+                        console.info(this)
+                    }
+                });
+            });
+            /**
+             * 橱窗
+             */
+            //选择图片上传 
+            // $("#raceShow").on("change", ".upImg", function() {
+            //     var $this = $(this);
+            //     var _index = $this.index();
+            //     var input1 = $this.get(0);
+            //     var imgDom = $this.prev().get(0);
+            //     readFile(input1, imgDom, function() {
+            //         if ($this.closest("li").find("i").html() == "上传图片") {
+            //             $this.closest("li").find("i").html("设为封面");
+            //             $this.closest("li").find(".del_img").show();
+            //         }
+            //     });
+            // });
+            $("#raceShow").on("change", ".upImg", function() {
+                var $this = $(this);
+                var _index = $this.closest("li").index();
+                var input1 = $this.get(0);
+                var imgDom = $this.prev().get(0);
+                var thisId = $(this).attr("id");
+                var postUrl = location.origin+'/ueditor?action=uploadimage';
+                uploadRequest(postUrl,thisId,function(imgUrl){
+                    imgDom.src = imgUrl;
+                    if ($("#raceShow").find("li").eq(_index).find("i").html() == "上传图片") {
+                        $("#raceShow").find("li").eq(_index).find("i").html("设为封面");
+                        $("#raceShow").find("li").eq(_index).find(".del_img").show();
+                    }
+                });
+            });
+            //点击 “设为封面”
+            $("#raceShow li").on("click", "i", function() {
+                if ($(this).html() == "设为封面") {
+                    $("#raceShow i").removeClass("active");
+                    $("#raceShow li").attr("isCover", "N");
+                    $(this).addClass("active");
+                    $(this).closest("li").attr("isCover", "Y"); //设为封面
+                }
+            });
+            //选择上传视频
+            // $("#raceShow").on("change", ".upVideo", function() {
+            //     var $this = $(this);
+            //     var _index = $this.index();
+            //     var input1 = $this.get(0);
+            //     var imgDom = $this.prev().get(0);
+            //     var videoBox = $("#video");
+            //     upVideo(input1, imgDom, videoBox, function() {
+            //         $this.closest("li").find("b").html("查看视频");
+            //         $this.closest("li").find(".del_img").show();
+            //     })
+            // });
+            $("#raceShow").on("change", ".upVideo", function() {
+                var $this = $(this);
+                var input1 = $this.get(0);
+                var imgDom = $this.prev().get(0);
+                var videoBox = $("#video");
+                var thisId = $(this).attr("id");
+                var postUrl = location.origin +"/ueditor?action=uploadvideo";
+                uploadRequest(postUrl,thisId,function(videoUrl){
+                    alert(videoUrl);
+                    upVideo(input1, imgDom, videoBox,videoUrl, function() {
+                        $("#raceShow").find("li").eq(0).find("b").html("查看视频");
+                        $("#raceShow").find("li").eq(0).find(".del_img").show();
+                    })
+                });
+            });
+            //点击 “查看视频"
+            $(".look_video").on("click", function() {
+                if ($(this).html() == "查看视频") {
+                    $("#video").show();
+                }
+            });
+            //点击 “删除” 按钮
+            $(".del_img").on("click", function() {
+                $(this).closest("li").find("img").attr("src", "");
+                $(this).closest("li").find("input[type=file]").val("");
+                $(this).closest("li").find("b").html("上传视频");
+                $(this).closest("li").find("i").html("上传图片");
+                $(this).hide();
+            });
+
+            //点击 视频 遮罩 ,隐藏
+            $("#video").on("click", function() {
+                $(this).hide();
+            });
+
+            //添加 "下一赛程"
+            $("#add_raceItem").on("click", function() {
+                var len = $("#race_item_box li").length;
+                var str = '<li class="schedule_time clearfix">' +
+                    '<span>赛程' + (len + 1) + '</span>' +
+                    '<input type="text" placeholder="赛程名称 " class="schedule_time_name raceitemTitile" value="">' +
+                    '<div class="schedule_time_ff">' +
+                    '<span>放飞日期</span>' +
+                    '<div class="J-datepicker c-datepicker">' +
+                    '<i class=""></i>' +
+                    '<input class="startedTime"  type="text" autocomplete="off" name="" placeholder="选择日期" value="">' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="schedule_time_ff schedule_time_ff2">' +
+                    '<span>放飞地点</span>' +
+                    '<i class="address"></i>' +
+                    '<input type="text" value="" class="startedPlace">' +
+                    '</div>' +
+                    '<div class="schedule_time_ff schedule_time_ff2">' +
+                    '<span>空距</span>' +
+                    '<input type="text" placeholder="" value="" class="distance">' +
+                    '</div>'
+                '</li>';
+                $("#race_item_box").append(str);
+            });
+
+            //点击 “返回”
+            $("#return_btn").on("click", function() {
+                window.history.go(-1);
+            });
+            /**
+             *点击 “保存”
+             */
+            $("#save_btn").on("click", function() {
+                //当前日期
+                var nowTime = getNow();
+                //获取上传的图片
+                var upImgObj = $("#raceShow").find(".j_up_img").find("img");
+                var imgArr = [];
+                upImgObj.each(function(index) {
+                    var isCover = $(this).closest("li").attr("isCover");
+                    var imgSrc = upImgObj.eq(index).attr("src");
+                    if (imgSrc) {
+                        imgArr.push({
+                            "img": imgSrc, //name ?
+                            "isCover": isCover, //1:设置封面，0：不设封面
+                        });
+                    }
+                });
+                var videoArr = [{
+                    "video": $("#video").find("video").attr("src"),
+                    "alt": "",
+                    "desc": ""
+                }];
+                //获取赛程
+                var raceItems = $("#race_item_box li");
+                var raceArr = [];
+                raceItems.each(function(i) {
+                    console.log(raceItems.eq(i))
+                    raceArr.push({
+                        "distance": raceItems.eq(i).find(".distance").val(),
+                        "raceitemTitile": raceItems.eq(i).find(".raceitemTitile").val(),
+                        "startedPlace": raceItems.eq(i).find(".startedPlace").val(),
+                        "startedTime": raceItems.eq(i).find(".startedTime").val(),
+                        "raceId": raceId,
+                        "raceitemId": raceItems.eq(i).attr("raceitemId") || "",
+                        "raceitemResult": "" //成绩文件
+                    });
+                });
+                var saveData = {
+                    "endedTime": $("#matchEndedTime").val(),
+                    "enrolledTime": $("#enrolledTime").val(),
+                    "oneloftId": oneloftId,
+                    "raceId": raceId || "",
+                    "raceDesc": ue.getContent(), //富文本
+                    "raceShow": {
+                        "images": imgArr,
+                        "videos": videoArr
+                    },
+                    "raceTitile": $("#raceTitile").val(),
+                    "reward": $("#reward").val(),
+                    "startedTime": $("#matchStartedTime").val(),
+                    "raceitems": raceArr
+                };
+                if (!raceId) { //添加
+                    matchEditoObj.addMatch(saveData);
+                } else { //编辑 保存
+                    matchEditoObj.saveMatch(saveData);
+                }
+            })
+        })
+    </script>
+</body>
+
+</html>

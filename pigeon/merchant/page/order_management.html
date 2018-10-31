@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>已付款</title>
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/m_style.css">
+    <script src="../js/jquery-1.10.2.min.js"></script>
+    <script src="../js/product.js"></script>
+
+    <body>
+        <div>
+            <div class="commod_tit" id="order_tit">
+                <span class="active">已付款</span>
+                <span>待发货</span>
+                <span>已完成</span>
+            </div>
+            <div class="commodity_box">
+                <div class="query_p marginTop0 clearfix">
+                    <div class="query_p_show">
+                        <span>产品名称：</span>
+                        <input type="text" placeholder="输入订单编号或产品名称">
+                    </div>
+                    <button class="query_p_btn">查询</button>
+                </div>
+                <div id="list_cont">
+                    <!--已付款-->
+                    <div class="pro_det">
+                        <ol class="clearfix">
+                            <li class="pro_det_one send_goods_list clearfix">订单信息</li>
+                            <li class="payment_order_price">订单总价</li>
+                            <li class="payment_order_price">下单日期</li>
+                            <li class="payment_order_price">买家</li>
+                            <li class="payment_det_last">操作</li>
+                        </ol>
+                        <ul class="clearfix">
+                            <li class="clearfix">
+                                <div class="comm_list_l comm_list_l_payment clearfix">
+                                    <div class="comm_list_img">
+                                        <img src="../image/cp.png">
+                                    </div>
+                                    <div class="comm_list_txt">
+                                        <p>长距离赛手长距离赛手长距离赛手长距离赛手长距离赛手 BE17-12345</p>
+                                        <p class="comm_list_money">¥1888.00</p>
+                                    </div>
+                                </div>
+                                <div class="payment_order_price lineHeight80">¥1888.00</div>
+                                <div class="payment_order_price lineHeight80">
+                                    2018-06-21 18:34
+                                </div>
+                                <div class="payment_order_price lineHeight80">
+                                    136****6666
+                                </div>
+                                <div class="payment_det_last lineHeight80">
+                                    <span class="order_detail_btn">订单详情</span> | <span>提醒买家付款</span>
+                                </div>
+                            </li>
+                            <li class="pro_det_one clearfix">
+                                <div class="comm_list_l comm_list_l_payment clearfix">
+                                    <div class="comm_list_img">
+                                        <img src="../image/cp.png">
+                                    </div>
+                                    <div class="comm_list_txt">
+                                        <p>长距离赛手长距离赛手长距离赛手长距离赛手长距离赛手 BE17-12345</p>
+                                        <p class="comm_list_money">¥1888.00</p>
+                                    </div>
+                                </div>
+                                <div class="payment_order_price lineHeight80">¥1888.00</div>
+                                <div class="payment_order_price lineHeight80">
+                                    2018-06-21 18:34
+                                </div>
+                                <div class="payment_order_price lineHeight80">
+                                    136****6666
+                                </div>
+                                <div class="payment_det_last lineHeight80">
+                                    <span class="order_detail_btn">订单详情</span> | <span>提醒买家付款</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--待发货-->
+                    <div class="pro_det pro_det2" style="display:none;">
+                        <ol class="clearfix ">
+                            <li class="pro_det_one comm_list_l_payment clearfix">订单信息</li>
+                            <li class="payment_order_price">订单总价</li>
+                            <li class="payment_order_price">下单日期</li>
+                            <li class="payment_order_price">付款日期</li>
+                            <li class="payment_order_price">买家</li>
+                            <li class="payment_det_last">操作</li>
+                        </ol>
+                        <ul class="clearfix">
+                            <li class="pro_det_one clearfix">
+                                <div class="comm_list_l comm_list_l_payment clearfix">
+                                    <div class="comm_list_img">
+                                        <img src="../image/cp.png">
+                                    </div>
+                                    <div class="comm_list_txt">
+                                        <p>长距离赛手长距离赛手长距离赛手长距离赛手长距离赛手 BE17-12345</p>
+                                        <p class="comm_list_money">¥1888.00</p>
+                                    </div>
+                                </div>
+                                <div class="payment_order_price lineHeight80">¥1888.00</div>
+                                <div class="payment_order_price lineHeight80">
+                                    2018-06-21 18:34
+                                </div>
+                                <div class="payment_order_price lineHeight80">
+                                    2018-06-21 18:34
+                                </div>
+                                <div class="payment_order_price lineHeight80">
+                                    136****6666
+                                </div>
+                                <div class="payment_det_last lineHeight80">
+                                    <span class="order_detail_btn">订单详情</span> | <span>确认发货</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--已完成-->
+                    <div class="pro_det pro_det3" style="display:none;">
+                        <ol class="clearfix ">
+                            <li class="pro_det_one send_goods_l_payment clearfix">订单信息</li>
+                            <li class="payment_order_price">订单总价</li>
+                            <li class="payment_order_price">下单日期</li>
+                            <li class="payment_order_price">付款日期</li>
+                            <li class="payment_order_price">发货日期</li>
+                            <li class="payment_order_price">买家</li>
+                            <li class="payment_det_last send_goods_last">操作</li>
+                        </ol>
+                        <ul class="clearfix">
+                            <li class="pro_det_one clearfix">
+                                <div class="comm_list_l send_goods_l_payment clearfix">
+                                    <div class="comm_list_img comm_list_img2">
+                                        <img src="../image/cp.png">
+                                    </div>
+                                    <div class="comm_list_txt">
+                                        <p>长距离赛手长距离赛手长距离赛手长距离赛手长距离赛手 BE17-12345</p>
+                                        <p class="comm_list_money">¥1888.00</p>
+                                    </div>
+                                </div>
+                                <div class="payment_order_price lineHeight80">¥1888.00</div>
+                                <div class="payment_order_price lineHeight80">
+                                    2018-06-21 18:34
+                                </div>
+                                <div class="payment_order_price lineHeight80">
+                                    2018-06-21 18:34
+                                </div>
+                                <div class="payment_order_price lineHeight80">
+                                    2018-06-21 18:34
+                                </div>
+                                <div class="payment_order_price lineHeight80">
+                                    136****6666
+                                </div>
+                                <div class="payment_det_last lineHeight80">
+                                    <span>订单详情</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="../js/order_management.js"></script>
+        <script>
+            $(".order_detail_btn").on("click", function() {
+                window.location.href = "order_detail.html";
+            })
+        </script>
+    </body>
+
+</html>

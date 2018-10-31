@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>我的</title>
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,target-densitydpi=medium-dpi">
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/m_style.css" />
+
+</head>
+
+<body>
+    <div class="mine_box">
+        <!--首部登录注册-->
+        <div class="header">
+            <div class="header_back">
+                <!--注册登录-->
+                <div class="login-form clearfix">
+                    <div class="login-form-img">
+                        <img src="../image/data.png" id="headImg">
+                    </div>
+                    <div class="login-form-tab">
+                        <span id="nickName">章鱼墨水</span>
+                        <img src="../image/write.png" id="write_info">
+                    </div>
+                </div>
+                <ul class="collect-messages clearfix">
+                    <li class="collect" id="notice_btn">
+                        <p>0</p>
+                        <p>通知</p>
+                    </li>
+                    <li class="messages">
+                        <p>0</p>
+                        <p>客服</p>
+
+                    </li>
+                    <li class="messages" id="follow_btn">
+                        <p id="followCount">0</p>
+                        <p>关注</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--我的交易-->
+        <div class="sub">
+            <div class="sub_tit">
+                <img src="../image/mineTit.png" alt="">
+            </div>
+            <ul class="trad_information clearfix">
+                <li class="j_order_sure">
+                    <a href="javascript:;">
+                        <p class="trad_information_img">
+                            <img src="../image/payment.png" />
+                        </p>
+                        <p class="trad_information_r">待付款</p>
+                    </a>
+                </li>
+                <li class="j_dispatching">
+                    <a href="javascript:;">
+                        <p class="trad_information_img2">
+                            <img src="../image/transport.png" />
+                        </p>
+                        <p class="trad_information_r">配送中</p>
+                    </a>
+                </li>
+                <li class="j_all_order">
+                    <a href="javascript:;">
+                        <p class="trad_information_img3">
+                            <img src="../image/order.png" />
+                        </p>
+                        <p class="trad_information_r">全部订单</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!--我的关注-->
+        <div class="focus_on" style="margin-bottom:0rem">
+            <div class="focus_on_all">
+                <img src="../image/mineLook.png" alt="" class="">
+                <a href="javascript:;" class="focus_on_all" id="all_follow">查看全部关注动态</a>
+            </div>
+            <ul class="focus_on_data" id="loft_box">
+                <li>
+                    <div class="focus_on_datat">
+                        <span>华顺德春棚2018年7月8日收鸽数据
+                            <img src="../image/vi.png" alt="" class="vedio_btn">
+                        </span>
+                    </div>
+                    <div class="focus_on_name">
+                        <span class="">华顺德春棚</span>
+                        <span>
+                            2018-07-07 15:30:26
+                        </span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!--我的赛事-->
+        <div class="focus_on" style="margin:0.7rem auto 2rem">
+            <div class="focus_on_all">
+                <img src="../image/mineOrderTxt.png" alt="" class="">
+                <a href="javascript:;" class="focus_on_all" id="all_event">查看全部赛事</a>
+            </div>
+            <ul class="focus_on_data" id="mine_match">
+                <li>
+                    <div class="focus_on_datat my_fault_list">
+                        <span class="focus_on_ing">报名中</span>
+                        <span>华顺德春棚2018年7月8日收鸽数据肯德基发快递今飞凯达</span>
+                        <img src="../image/mon.png">
+                        <span>总奖金<i>500</i>万元</span>
+                    </div>
+                    <div class="focus_on_name">
+                        <span>
+                            2018-07-07至2018-09-09
+                        </span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <!--tab栏-->
+        <footer class="in_foot">
+            <ul>
+                <li class="j_index">
+                    <img src="../image/header.png" alt="">
+                    <p>首页</p>
+                </li>
+                <li class="j_breeding">
+                    <img src="../image/dove.png" alt="">
+                    <p>种鸽</p>
+                </li>
+                <li class="in_foot_type">
+                    <img src="../image/classification.png" alt="">
+                    <p>分类</p>
+                </li>
+                <li class="in_foot_me">
+                    <img src="../image/mine.png" alt="">
+                    <p style="color:#ff0913">我的</p>
+                </li>
+            </ul>
+        </footer>
+    </div>
+    <script type="text/javascript" src="../js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="../js/public.js"></script>
+    <script type="text/javascript" src="../js/weixin_init.js"></script>
+    <script src="../json/indexJson.js"></script>
+    <script type="text/javascript" src="../js/mine.js"></script>
+    <script>
+        $(function() {
+            //页面初始化入参
+            var mineQuestData = {
+                    "openId": openid,
+                    "loginType": "wechat"
+                }
+                //我的赛事  请求入参
+            var matchPostData = {
+                "keyword": "",
+                "pageSize": "10",
+                "pageNum": "1",
+                "orderBy": "publishedTime",
+                "orderDesc": ""
+            };
+            var postLoginData = {
+                openId: openid || "omCIGj2MoPE0FCWCiPFllc2BXUPs"
+            };
+            var postReloadToken = {
+                Authorization: Authorization || ""
+            }
+            reloadToken({
+                "Authorization": Authorization
+            }, {
+                "openid": openid
+            }, function() {
+                Authorization = localStorage.getItem("Authorization") || "";
+                mineObj.initRequest(mineQuestData, matchPostData); //测试
+            });
+
+            /*点击事件*/
+            $(".j_index").on("click", function() { //首页
+                location.href = "../index.html?openid=" + openid;
+            });
+            $(".j_breeding").on("click", function() { //种鸽
+                location.href = "business_list.html?openid=" + openid;
+            });
+            $(".in_foot_type").on("click", function() { //分类
+                location.href = "all_match_list.html?openid=" + openid;
+            });
+            //编辑个人资料
+            $("#write_info").on("click", function() {
+                location.href = "editor_userinfo.html?openid=" + openid;
+            });
+
+            //点击通知
+            $("#notice_btn").on("click", function() {
+                location.href = "notice.html?openid=" + openid;
+            });
+
+            //点击 关注
+            $("#follow_btn").on("click", function() {
+                location.href = "follow_list.html?openid=" + openid + "&tabnum=0";
+            });
+
+            //查看 全部关注动态
+            $("#all_follow").on("click", function() {
+                location.href = "follow_list.html?openid=" + openid + "&tabnum=1";
+            });
+
+            //点击待付款  （接口21 参数不确定）
+            $(".j_order_sure").on("click", function() {
+                location.href = "my_order.html?tab=0&openid=" + openid;
+            });
+            //点击 配送中 （接口21 参数不确定）
+            $(".j_dispatching").on("click", function() {
+                location.href = "my_order.html?tab=1&openid=" + openid;
+            });
+            //点击 全部订单 （接口21 参数不确定）
+            $(".j_all_order").on("click", function() {
+                location.href = "my_order.html?tab=2&openid=" + openid;
+            });
+
+
+
+            //查看全部赛事
+            $("#all_event").on("click", function() {
+                location.href = "my_match.html?openid=" + openid;
+            });
+        })
+    </script>
+</body>
+
+</html>

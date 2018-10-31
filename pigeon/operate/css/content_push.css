@@ -1,0 +1,554 @@
+html,
+body {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    background: #f2f2f2;
+    min-width: 800px;
+}
+
+.clearfix:after {
+    display: block;
+    content: "";
+    clear: both;
+}
+
+.clearfix {
+    zoom: 1;
+}
+
+.commod_tit {
+    width: 100%;
+    height: 50px;
+    background: #fff;
+    position: fixed;
+    left: 0;
+    top: 0;
+    font-size: 16px;
+    color: #707070;
+    padding-left: 25px;
+    border-bottom: 1px solid #e0e0e0;
+    z-index: 10;
+}
+
+.commodity_box {
+    width: -webkit-calc(100% - 40px);
+    width: -moz-calc(100% - 40px);
+    width: calc(100% - 40px);
+    margin: 70px 20px 20px;
+    background: #fff;
+    padding: 20px 20px 80px;
+    border: 1px solid #e0e0e0;
+}
+
+.content_rem_box h3 {
+    font-size: 14px;
+    margin-top: 20px;
+    margin-left: 10px;
+}
+
+.content_rem_so span {
+    float: left;
+    width: 6%;
+    text-align: right;
+    margin-right: 30px;
+    line-height: 30px;
+    font-size: 14px;
+}
+
+.content_rem_list tr td div div img {
+    display: block;
+    width: 100%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.serch_box {
+    position: relative;
+}
+
+.serch {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    right: 6px;
+    top: 50%;
+    margin-top: -8px;
+}
+
+.content_rem_list tr td div div {
+    float: left;
+    width: 70px;
+    height: 50px;
+    border-radius: 0;
+    position: relative;
+    overflow: hidden;
+    margin-right: 10px;
+}
+
+.content_rem_list tr td div span {
+    float: left;
+    line-height: 50px;
+}
+
+.content_rem_list tr td input[type=checkbox],
+.content_rem_list tr td label {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    left: 50%;
+    top: 50%;
+    margin-top: -7px;
+    margin-left: -7px;
+}
+
+.content_rem_list tr td input[type=checkbox] {
+    z-index: 1;
+    opacity: 0;
+}
+
+.content_rem_list tr td label {
+    background: url(../image/check.png) no-repeat;
+    background-size: 100% 100%;
+}
+
+.content_rem_list tr td input[type=checkbox]:checked+label {
+    background: url(../image/checked.png) no-repeat;
+    background-size: 100% 100%;
+}
+
+
+/*.content_rem_list tr td div {
+    margin-top: -20px;
+}
+*/
+
+.input_info_tit span,
+.input_info_cont span {
+    float: left;
+    width: 6%;
+    text-align: right;
+    margin-right: 30px;
+    line-height: 30px;
+    font-size: 14px;
+}
+
+.input_info_tit {
+    width: 100%;
+    margin: 20px 0;
+}
+
+.input_info_tit input {
+    float: left;
+    width: 40%;
+    height: 30px;
+    line-height: 30px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    padding: 0 15px;
+    border-radius: 4px;
+}
+
+.content_rem_btn {
+    margin: 50px 110px;
+    width: 100px;
+}
+
+.content_rem_btn button {
+    width: 100px;
+    padding: 5px 0;
+    border: 1px solid #ccc;
+    font-size: 12px;
+    background: #fff;
+    border-radius: 4px;
+}
+
+.content_rem_so div {
+    float: left;
+    position: relative;
+}
+
+.content_rem_so div input {
+    height: 30px;
+    line-height: 30px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    padding: 0 15px;
+    border-radius: 4px;
+    display: block;
+}
+
+.content_rem_name li {
+    float: left;
+    padding: 5px 40px 5px 20px;
+    border: 1px solid #ccc;
+    font-size: 12px;
+    border-radius: 14px;
+    margin: 0 10px;
+    position: relative;
+}
+
+.content_rem_name li.active {
+    background: #f40;
+    color: #fff;
+    border: none;
+}
+
+.content_rem_list {
+    width: 80%;
+    margin-left: 108px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.content_rem_list table {
+    width: 100%;
+    font-size: 14px;
+    color: #4d4d4d;
+}
+
+.content_rem_list thead {
+    width: 100%;
+    height: 44px;
+    background: #f8f8f8;
+}
+
+.content_rem_list thead td {
+    line-height: 44px;
+}
+
+.content_rem_list tr {
+    border-bottom: 1px solid #eee;
+}
+
+.content_rem_list td {
+    text-align: center;
+}
+
+.content_rem_list tr td:first-child {
+    padding-left: 10px;
+    position: relative;
+}
+
+.content_rem_list tbody tr {
+    height: 80px;
+}
+
+.content_rem_list tr td:last-child {
+    text-align: right;
+    padding-right: 20px;
+}
+
+.content_rem_list tbody tr td:last-child span {
+    color: #448af8;
+    line-height: 20px;
+    margin-left: 8px;
+}
+
+.content_rem_list tr td div input {
+    float: left;
+    width: 60%;
+    height: 24px;
+    border: 1px solid #ccc;
+    margin-left: 20px;
+    margin-top: 14px;
+    text-align: center;
+    font-size: 12px;
+}
+
+.content_rem_list tr td:nth-child(2) input {
+    width: 60%;
+    height: 25px;
+    border: 1px solid #ccc;
+    text-align: center;
+    font-size: 12px;
+}
+
+
+/*.content_rem_list tr td div {
+    margin-top: -15px;
+}
+*/
+
+.content_rem_so div button {
+    background: #fff;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    padding: 7px 13px;
+    border-radius: 4px;
+}
+
+.content_rem_box h3 {
+    font-size: 14px;
+    margin-top: 20px;
+    margin-left: 10px;
+}
+
+.input_info_save {
+    display: block;
+    width: 150px;
+    height: 35px;
+    background: #448af8;
+    color: #fff;
+    font-size: 15px;
+    border: 0px;
+    border-radius: 4px;
+    box-shadow: 2px 2px 3px 2px #dae8fe;
+    margin: 0 auto;
+}
+
+.user_cont tr td div div {
+    display: inline-block;
+    border: 1px solid #ccc;
+    overflow: hidden;
+    position: relative;
+    top: 20px;
+}
+
+.content_rem_name {
+    margin-left: 90px;
+    padding: 40px 0 0;
+}
+
+
+/*新增 上传文件功能*/
+
+.content_file_box {
+    width: 100px;
+    height: 100px;
+    float: left;
+    position: relative;
+}
+
+.content_file {
+    width: 100px;
+    height: 100px;
+    border: 1px solid #eee;
+    background: url(../image/tj.png) no-repeat;
+    position: relative;
+    overflow: hidden;
+}
+
+.content_file img {
+    position: absolute;
+    width: 100%;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.content_file input {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    border: none;
+    opacity: 0;
+}
+
+.content_file_box i {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    right: -10px;
+    top: -10px;
+    background: url(../image/close.png) no-repeat;
+    background-size: 100% 100%;
+}
+
+.alert_box {
+    padding: 10px 30px;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+}
+
+.del_bus {
+    position: absolute;
+    right: -8px;
+    top: -8px;
+    width: 16px;
+    height: 16px;
+}
+
+.set_bus {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    right: 10px;
+    top: 50%;
+    margin-top: -8px;
+}
+
+
+/* 操作样式 */
+
+.operation img {
+    width: 12px;
+    height: 12px;
+}
+
+
+/*列表遮罩*/
+
+.business_mark,
+.pigeon_mark,
+.match_mark,
+.oneloft_mark {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    left: 0;
+    top: 0;
+}
+
+.match_mark>div,
+.pigeon_mark>div,
+.oneloft_mark>div {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background: #fff;
+    padding: 20px;
+    margin-left: 0;
+    margin-top: 48px;
+    margin-bottom: 0;
+}
+
+.business_mark_box {
+    position: absolute;
+    width: 400px;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    background: #fff;
+    border-radius: 4px;
+    padding: 30px 20px 20px;
+}
+
+.business_mark_box p {
+    text-align: center;
+    font-size: 16px;
+    line-height: 28px;
+}
+
+.btn_box {
+    width: 100%;
+    text-align: center;
+    padding: 20px 0 10px;
+    margin-top: 20px;
+}
+
+.btn_box button {
+    width: 120px;
+    height: 32px;
+    outline: none;
+    border-radius: 4px;
+}
+
+.cancel_btn {
+    border: 1px solid #ccc;
+    margin-right: 20px;
+    color: #666;
+    background: #fff;
+}
+
+.sure_btn {
+    border: 1px solid #f40;
+    color: #fff;
+    background: #f40;
+}
+
+.public_footer {
+    width: 100%;
+    font-size: 14px;
+    text-align: right;
+    padding: 30px 0;
+}
+
+.public_footer ul {
+    display: inline-block;
+}
+
+.public_footer ul li {
+    display: inline-block;
+    width: 34px;
+    height: 30px;
+    border: 1px solid #eee;
+    text-align: center;
+    line-height: 30px;
+    margin-right: 5px;
+}
+
+.public_footer ul li.active {
+    background: #448af8;
+    color: #fff;
+}
+
+.public_footer div {
+    display: inline-block;
+    line-height: 30px;
+}
+
+.public_footer div span {
+    color: #448af8;
+}
+
+.editor_button {
+    text-align: center;
+}
+
+.editor_button button {
+    display: inline-block;
+    width: 100px;
+    height: 30px;
+    background: #448af8;
+    color: #fff;
+    font-size: 15px;
+    border: 0px;
+    border-radius: 4px;
+    box-shadow: 2px 2px 3px 2px #dae8fe;
+    margin-right: 20px;
+}
+
+.editor_button .cancel {
+    background: #ccc;
+    margin-right: 30px;
+    box-shadow: 2px 2px 3px 2px #fff;
+}
+
+.hide {
+    display: none;
+}
+
+.loading {
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+
+.loading img {
+    width: 2rem;
+    height: 2rem;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -1rem;
+    margin-top: -1rem;
+}

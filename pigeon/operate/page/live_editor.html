@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>申请直播</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/m_style.css">
+    <script src="../js/jquery-1.10.2.min.js"></script>
+    <script src="../js/public.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/ueditor/ueditor.all.min.js">
+    </script>
+    <script type="text/javascript" charset="utf-8" src="/ueditor/lang/zh-cn/zh-cn.js"></script>
+    <style>
+        .input_info_tit span:nth-child(2) {
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <div class="commod_tit" id="order_tit">
+        </div>
+        <div class="commodity_box product_info">
+            <h5>申请直播</h5>
+            <div class="input_info_tit clearfix">
+                <span>标题</span>
+                <!-- <input type="text" placeholder="" id="businesName"> -->
+                <span>比利时亚精顿</span>
+            </div>
+            <div class="input_info_tit clearfix">
+                <span>直播时长</span>
+                <!-- <input type="text" placeholder="" id="pigeonName"> -->
+                <span>1分钟</span>
+            </div>
+            <div class="input_info_tit clearfix">
+                <span>直播内容</span>
+                <!-- <input type="text" placeholder="" id="pigeonNo"> -->
+                <span>直播秋季第一场</span>
+            </div>
+            <div class="input_info_tit clearfix">
+                <span>公棚</span>
+                <!-- <input type="text" placeholder="" id="pigeonNo"> -->
+                <span>天津宇航赛鸽公棚</span>
+            </div>
+            <div class="input_info_tit clearfix">
+                <span>编辑</span>
+                <!-- <input type="text" placeholder="" id="pigeonNo"> -->
+                <span>133****4569</span>
+            </div>
+            <div class="input_info_tit clearfix " id="pigeonGender">
+                <span>审核结果</span>
+                <label for="examine">
+                    <input type="radio" id="examine" name="a">
+                    审核通过
+                </label>
+                <label for="no">
+                    <input type="radio" id="no" name="a">
+                    拒审
+                </label>
+            </div>
+            <div class="editor_button">
+                <button id="return _btn">返回</button>
+                <button id="save_btn">提交</button>
+            </div>
+        </div>
+    </div>
+    <script src="../js/product_editor.js"></script>
+    <script>
+        $(function() {
+            if (pigeonId) { //编辑
+                proEditorObj.editorRequst();
+                $("#businesName").attr("readonly", true);
+            } else {
+                $("#businesName").attr("readonly", false);
+            }
+            //点击 “返回”
+            $("#return_btn").on("click", function() {
+                window.history.go(-1);
+            });
+
+            //选择图片上传 
+            $("#pigeonShow").on("change", ".upImg", function() {
+                var $this = $(this);
+                var _index = $this.index();
+                var input1 = $this.get(0);
+                var imgDom = $this.prev().get(0);
+                // uploadImgRequest(input1)
+                readFile(input1, imgDom, function() {
+                    if ($this.closest("li").find("i").html() == "上传图片") {
+                        $this.closest("li").find("i").html("设为封面");
+                        $this.closest("li").find(".del_img").show();
+                    }
+                });
+            });
+            //点击 “设为封面”
+            $("#pigeonShow li").on("click", "i", function() {
+                if ($(this).html() == "设为封面") {
+                    $("#pigeonShow i").removeClass("active");
+                    $("#pigeonShow li").attr("isCover", "0");
+                    $(this).addClass("active");
+                    $(this).closest("li").attr("isCover", "1"); //设为封面
+                }
+            });
+            //选择上传视频
+            $("#pigeonShow").on("change", ".upVideo", function() {
+                var $this = $(this);
+                var _index = $this.index();
+                var input1 = $this.get(0);
+                var imgDom = $this.prev().get(0);
+                var videoBox = $("#video");
+                upVideo(input1, imgDom, videoBox, function() {
+                    $this.closest("li").find("b").html("查看视频");
+                    $this.closest("li").find(".del_img").show();
+                })
+            });
+            //点击 “查看视频"
+            $(".look_video").on("click", function() {
+                if ($(this).html() == "查看视频") {
+                    $("#video").show();
+                }
+            });
+            //点击 “删除” 按钮
+            $(".del_img").on("click", function() {
+                $(this).closest("li").find("img").attr("src", "");
+                $(this).closest("li").find("input[type=file]").val("");
+                $(this).closest("li").find("b").html("上传视频");
+                $(this).closest("li").find("i").html("上传图片");
+                $(this).hide();
+            });
+            //点击 视频 遮罩 ,隐藏
+            $("#video").on("click", function() {
+                $(this).hide();
+            });
+            //点击 “保存”
+            $("#save_btn").on("click", function() {
+                //当前日期
+                var nowTime = getNow();
+                //获取上传的图片
+                var upImgObj = $("#pigeonShow").find(".j_up_img").find("img");
+                var imgArr = [];
+                upImgObj.each(function(index) {
+                    var isCover = $(this).closest("li").attr("isCover");
+                    var imgSrc = upImgObj.eq(index).attr("src");
+                    if (imgSrc) {
+                        imgArr.push({
+                            "img": imgSrc, //name ?
+                            "isCover": isCover, //1:设置封面，0：不设封面
+                        });
+                    }
+                });
+                var videoArr = [{
+                    "video": $("#video").find("video").attr("src"),
+                    "alt": "",
+                    "desc": ""
+                }];
+                var saveData = {
+                    "createdTime": nowTime,
+                    "pigeonBlood": $("#pigeonBlood").val(),
+                    "pigeonDesc": ue.getContent(), //富文本
+                    "pigeonEye": $("#pigeonEye").val(),
+                    "pigeonFeather": $("#pigeonFeather").val(),
+                    "pigeonGender": $("#pigeonGender").find("input:checked").attr("id"),
+                    "pigeonId": pigeonId || "",
+                    "pigeonName": $("#pigeonName").val(),
+                    "pigeonNo": $("#pigeonNo").val(),
+                    "pigeonPoint": $("#pigeonPoint").val(),
+                    "pigeonPrice": $("#pigeonPrice").val(),
+                    "pigeonShow": {
+                        "images": imgArr,
+                        "videos": videoArr
+                    },
+                    "pigeonTags": "标签",
+                    "stickyTime": "" //置顶时间: 毫秒值
+                };
+                if (!pigeonId) { //添加
+                    proEditorObj.addRequst(saveData);
+                } else { //编辑 保存
+                    proEditorObj.saveRequst(saveData);
+                }
+            })
+        })
+    </script>
+</body>
+
+</html>

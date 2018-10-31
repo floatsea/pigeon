@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>信息管理</title>
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/m_style.css">
+    <script src="../js/jquery-1.10.2.min.js"></script>
+    <script src="../js/public.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/ueditor/ueditor.all.min.js">
+    </script>
+    <script type="text/javascript" charset="utf-8" src="/ueditor/lang/zh-cn/zh-cn.js"></script>
+</head>
+
+<body>
+    <div>
+        <div class="commod_tit" id="order_tit">
+            <span>录入资讯</span>
+        </div>
+        <div class="commodity_box">
+            <div class="input_info_tit clearfix">
+                <span>商家</span>
+                <input type="text" placeholder="" id="businessName">
+            </div>
+            <div class="input_info_tit clearfix">
+                <span>标题</span>
+                <input type="text" placeholder="" id="newsTitle">
+            </div>
+            <!-- <div class="input_info_cont clearfix">
+                <span>橱窗展示</span>
+                <div class="input_info_list">
+                    <p>添加视频或者图片</p>
+                    <ul class="clearfix" id="newsShow">
+                        <li>
+                            <div class="up_box">
+                                <img src="" alt="">
+                                <input type="file" name="videos[] " multiple="multiple" class="upVideo" />
+                                <b class="look_video">上传视频</b>
+                            </div>
+                            <div id="video" class="video_box show_mark "></div>
+                            <em class="del_img"></em>
+                        </li>
+                        <li>
+                            <div class="up_box j_up_img ">
+                                <img src="" alt="">
+                                <input type="file" class="upImg show_mark " />
+                                <div class="video_box show_mark "></div>
+                                <i>上传图片</i>
+                            </div>
+                            <em class="del_img"></em>
+                        </li>
+                        <li>
+                            <div class="up_box j_up_img">
+                                <img src=" " alt="">
+                                <input type="file" class="upImg show_mark" />
+                                <div class="video_box show_mark"></div>
+                                <i>上传图片</i>
+                            </div>
+                            <em class="del_img"></em>
+                        </li>
+                        <li>
+                            <div class="up_box j_up_img">
+                                <img src=" " alt="">
+                                <input type="file " class="upImg show_mark " />
+                                <div class="video_box show_mark "></div>
+                                <i>上传图片</i>
+                            </div>
+                            <em class="del_img"></em>
+                        </li>
+                        <li>
+                            <div class="up_box j_up_img ">
+                                <img src=" " alt="">
+                                <input type="file" class="upImg show_mark" />
+                                <div class="video_box show_mark "></div>
+                                <i>上传图片</i>
+                            </div>
+                            <em class="del_img"></em>
+                        </li>
+                    </ul>
+                </div>
+            </div> -->
+            <div class="input_info_cont clearfix">
+                <span>
+                    资讯详情
+                </span>
+                <div class="input_info_txt">
+                    <script id="editor" type="text/plain" style="width:100%; height:300px"></script>
+                </div>
+            </div>
+            <div class="editor_button">
+                <button class="return_button">返回</button>
+                <button class="save_button">保存</button>
+            </div>
+        </div>
+    </div>
+    <script src="../js/information_editor.js"></script>
+    <script>
+        var ue = UE.getEditor('editor');
+        var newsId = getParameter("newsId") || ""; //有值：编辑 否则 “录入资讯” 进来的
+        if (newsId) {
+            $("#oneloftName").attr("readonly", true);
+            var businessId = getParameter("businessId") || "";
+            var newsData = {
+                "newsId": newsId //资讯id
+            }
+            inforEditor.initRequest(newsData);
+        } else {
+            $("#oneloftName").attr("readonly", false);
+        }
+        /**
+         * 橱窗
+         */
+        //选择图片上传 
+        $("#newsShow").on("change", ".upImg", function() {
+            var $this = $(this);
+            var _index = $this.index();
+            var input1 = $this.get(0);
+            var imgDom = $this.prev().get(0);
+            readFile(input1, imgDom, function() {
+                if ($this.closest("li").find("i").html() == "上传图片") {
+                    $this.closest("li").find("i").html("设为封面");
+                    $this.closest("li").find(".del_img").show();
+                }
+            });
+        });
+        //点击 “设为封面”
+        $("#newsShow li").on("click", "i", function() {
+            if ($(this).html() == "设为封面") {
+                $("#newsShow i").removeClass("active");
+                $("#newsShow li").attr("isCover", "0");
+                $(this).addClass("active");
+                $(this).closest("li").attr("isCover", "1"); //设为封面
+            }
+        });
+        //选择上传视频
+        $("#newsShow").on("change", ".upVideo", function() {
+            var $this = $(this);
+            var _index = $this.index();
+            var input1 = $this.get(0);
+            var imgDom = $this.prev().get(0);
+            var videoBox = $("#video");
+            upVideo(input1, imgDom, videoBox, function() {
+                $this.closest("li").find("b").html("查看视频");
+                $this.closest("li").find(".del_img").show();
+            })
+        });
+        //点击 “查看视频"
+        $(".look_video").on("click", function() {
+            if ($(this).html() == "查看视频") {
+                $("#video").show();
+            }
+        });
+        //点击 “删除” 按钮
+        $(".del_img").on("click", function() {
+            $(this).closest("li").find("img").attr("src", "");
+            $(this).closest("li").find("input[type=file]").val("");
+            $(this).closest("li").find("b").html("上传视频");
+            $(this).closest("li").find("i").html("上传图片");
+            $(this).hide();
+        });
+        //点击 视频 遮罩 ,隐藏
+        $("#video").on("click", function() {
+            $(this).hide();
+        });
+
+
+
+        // 返回
+        $(".return_button").on("click", function() {
+            window.history.go(-1);
+        });
+        // 保存
+        $(".save_button").on("click", function() {
+            if (newsId) {
+                var saveData = {
+                    "newsContent": ue.getContent(), //"资讯内容",
+                    "newsId": newsId,
+                    "newsTitle": $("#newsTitle").val(),
+                };
+                inforEditor.saveInfor(saveData);
+            } else {
+                var saveData = {
+                    "newsContent": ue.getContent(), //"资讯内容", 富文本
+                    "businessName": $("#businessName").val(),
+                    "newsTitle": $("#newsTitle").val(),
+                    "ownerType": 1, //"资讯类型：商家：1，公棚：2",
+                    "ownerId": businessId //归属id,
+                }
+                inforEditor.addInfor(saveData);
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>商品管理</title>
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/public.css">
+    <script src="../js/jquery-1.10.2.min.js"></script>
+    <script src="../js/public.js"></script>
+</head>
+
+<body>
+    <div>
+        <div class="public_tit" id="product_tit">
+            <span class="active">已发布</span>
+            <span>待上架</span>
+        </div>
+        <div class="public_box" id="product_cont">
+            <div>
+                <div class="user_top">
+                    <p class="quick_search">快速检索</p>
+                    <div class="user_top_cont clearfix">
+                        <div class="user_top_cont_l">
+                            <span>关键词：</span>
+                            <input type="text" placeholder="输入关键词">
+                            <button>查询</button>
+                        </div>
+                        <div class="product_button">
+                            <button id="add_product" class="active">添加产品</button>
+                            <!-- <button id="settop_button">置顶</button> -->
+                            <button id="frame_button">下架</button>
+                            <button id="del_button">删除</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="user_cont pro_mana_cont">
+                    <table>
+                        <thead>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" id="sel_all">
+                                    <label for=""></label>
+                                </td>
+                                <td> 产品名称</td>
+                                <td>价格</td>
+                                <td>创建日期</td>
+                                <td>商家</td>
+                                <td>操作</td>
+                            </tr>
+                        </thead>
+                        <tbody id="pro_list_box">
+                            <!-- <tr>
+                                <td>
+                                    <input type="checkbox">
+                                    <label for=""></label>
+                                </td>
+                                <td>
+                                    <div>
+                                        <div>
+                                            <img src="../image/cp.png" alt="">
+                                        </div>
+                                        <span>风雪的魅力</span>
+                                    </div>
+                                </td>
+                                <td>5454</td>
+                                <td>2016-06-21 18:34</td>
+                                <td>鸽子小铺</td>
+                                <td>
+                                    <span class="editor_btn">编辑</span>|<span class="frame_btn">下架</span>|
+                                    <span class="del_btn">删除</span>|<span class="setTop_btn">置顶</span>
+                                </td>
+                            </tr> -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="public_footer clearfix" id="page_btn">
+                    <ul class="clearfix">
+                        <!-- <li class="active">1</li>
+                        <li>2</li>
+                        <li>3</li>
+                        <li>4</li>
+                        <li>5</li> -->
+                    </ul>
+                    <div>共<span id="total_num">0</span>条，每页显示<span>20</span>条</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--删除 确认-->
+    <div class="del_mark" id="del_mark" style="display:none;">
+        <div class="del_cont">
+            <p>
+                是否将已选择内容彻底删除？<br/> 删除后无法恢复！
+            </p>
+            <div class="btn_box">
+                <button class="cancel_btn" id="cancel_btn">取消</button>
+                <button class="sure_btn" id="sure_btn">确定</button>
+            </div>
+        </div>
+    </div>
+    <!--上架/下架 确认-->
+    <div class="del_mark" id="updown_mark" style="display:none;">
+        <div class="del_cont">
+            <p>
+                是否将已选择的商品，进行<i class="updown_txt">上架？<br/> 上架后商品将能够被用户查看。</i>
+            </p>
+            <div class="btn_box">
+                <button class="cancel_btn" id="updown_cancel_btn">取消</button>
+                <button class="sure_btn" id="updown_sure_btn">确定</button>
+            </div>
+        </div>
+    </div>
+    <script src="../js/product_management.js"></script>
+    <script>
+        //初始化请求数据
+        //请求类型: "已发布"1 、"待上架"0
+        var proListData = {
+            "pageSize": "20",
+            "pageNum": "1", //分页参数：页码
+            "orderBy": "publishedTime", //"分页参数：排序，需约定字段",
+            "orderDesc": "desc",
+            "pigeonStatus": 1
+        };
+        if (businessId) { // 从商家列表 跳过来 可以 添加 产品
+            $("#add_product").show();
+            $("#add_product").on("click", function() {
+                //点击添加商品
+                location.href = "product_editor.html?businessId=" + businessId + "&shopName=" + shopName;
+            });
+            proListData.businessId = businessId;
+        } else {
+            $("#add_product").hide();
+        }
+        productObj.proListRequst(proListData);
+
+        //切换 "已发布"、"待上架"
+        $("#product_tit span").on("click", function() {
+            $("#sel_all").prop("checked", false);
+            var _index = $(this).index();
+            $("#product_tit span").removeClass("active");
+            $(this).addClass("active");
+            proListData.pageNum = 1;
+            proListData.pigeonStatus = _index == 0 ? 1 : 0;
+            if (_index == 1) {
+                $(".setTop_btn, #settop_button").hide()
+                $(".frame_btn, #frame_button").html("上架");
+            } else {
+                $(".setTop_btn, #settop_button").show()
+                $(".frame_btn, #frame_button").html("下架");
+            }
+            productObj.proListRequst(proListData);
+        });
+        //点击 “页码”
+        $("#page_btn").delegate("li", "click", function() {
+            $("#page_btn").find("li").removeClass("active");
+            $(this).addClass("active");
+            proListData.keyword = $("#Keyword").val();
+            proListData.pageNum = $(this).index();
+            //重新获取列表 （调后端接口）
+            productObj.proListRequst(proListData)
+        });
+        //点击“全选”
+        $("#sel_all").on("change", function() {
+            var selAllFlag = $(this).prop("checked");
+            if (selAllFlag) {
+                $(".product_button button").addClass("active");
+                $("#pro_list_box").find("input[type=checkbox]").prop("checked", true);
+            } else {
+                $("#pro_list_box").find("input[type=checkbox]").prop("checked", false);
+                $(".product_button button").removeClass("active");
+            }
+        });
+
+
+        //点击列表中“checkbox”
+        $("#pro_list_box").on("change", "input[type=checkbox]", function() {
+            if ($("#pro_list_box").find("input:checked").length > 0) {
+                $(".product_button button").addClass("active");
+            } else {
+                $(".product_button button").removeClass("active");
+            }
+            if ($("#pro_list_box").find("input:checked").length == $("#pro_list_box").find("input[type=checkbox]").length) {
+                $("#sel_all").prop("checked", true);
+            } else {
+                $("#sel_all").prop("checked", false);
+            }
+        });
+        //点击 "编辑" 产品
+        $("#pro_list_box").on("click", ".editor_btn", function() {
+            var pigeonId = $(this).closest("tr").attr("pigeonId");
+            var businessId = $(this).closest("tr").attr("businessId");
+            location.href = "product_editor.html?pigeonId=" + pigeonId + "&businessId=" + businessId;
+        });
+        //点击 “删除”
+        $("#pro_list_box").on("click", ".del_btn", function() {
+            var $this = $(this);
+            var pigeonId = $this.closest("tr").attr("pigeonId");
+            var trNum = $this.closest("tr").index();
+            $("#del_mark").attr({
+                "pigeonId": pigeonId,
+                "index": trNum
+            }).show(); //删除弹窗 显示
+        });
+        //点击 “删除” 大按钮
+        $("#del_button").on("click", function() {
+            if ($(this).hasClass("active")) {
+                var checkPigeon = $("#pro_list_box").find("input[type=checkbox]:checked");
+                var pigeonArr = [];
+                var trNumArr = [];
+                checkPigeon.each(function(i) {
+                    pigeonArr.push(checkPigeon.eq(i).closest("tr").attr("pigeonId"))
+                    trNumArr.push(checkPigeon.eq(i).closest("tr").index())
+                });
+                $("#del_mark").attr({
+                    "pigeonId": pigeonArr.join(","),
+                    "index": trNumArr.join(",")
+                }).show();
+            }
+        });
+        // 点击 “删除弹窗” 确定
+        $("#sure_btn").on("click", function() {
+            var pigeonId = $("#del_mark").attr("pigeonId");
+            var trIndex = $("#del_mark").attr("index").split(",");
+            productObj.deleteList({ //调删除接口
+                "pigeonId": pigeonId
+            }, function() {
+                $("#pro_list_box").find("input[type=checkbox]:checked").closest("tr").remove();
+                $("#total_num").html($("#pro_list_box tr").length);
+                $("#del_mark").hide();
+            });
+        });
+        // 点击 “删除弹窗” 取消  
+        $("#cancel_btn").on("click", function() {
+            $("#del_mark").hide();
+        });
+
+        //点击 “置顶”
+        $("#pro_list_box").on("click", ".setTop_btn", function() {
+            var $this = $(this);
+            var setTopData = {
+                "pigeonId": $(this).closest("tr").attr("pigeonId"), //"鸽子id",
+                "sticky": true //是否置顶： true， 置顶； false， 解除
+            };
+            if ($this.html() == "置顶") {
+                setTopData.sticky = true;
+            } else {
+                setTopData.sticky = false;
+            }
+            productObj.setTop(setTopData, function() {
+                if (setTopData.sticky) {
+                    $this.html("取消置顶");
+                } else {
+                    $this.html("置顶");
+                }
+            })
+        });
+        //点击 “置顶” 大按钮
+        // $("#settop_button").on("click", function() {
+        //     if ($(this).hasClass("active")) {
+        //         var checkPigeon = $("#pro_list_box").find("input[type=checkbox]:checked");
+        //         if (checkPigeon.length == 0) {
+        //             myAlert.createBox("请选择要置顶的鸽子");
+        //             return;
+        //         }
+        //         var pigeonArr = [];
+        //         checkPigeon.each(function(index) {
+        //             pigeonArr.push(checkPigeon.eq(index).attr("pigeonId"))
+        //         });
+
+        //         var setTopData = {
+        //             "pigeonId": pigeonArr.join(","),
+        //             "sticky": true //是否置顶： true， 置顶； false， 解除
+        //         };
+        //         productObj.setTop(setTopData, function() {
+        //             if (setTopData.sticky) {
+        //                 checkPigeon.closest("tr").find(".setTop_btn").html("取消置顶");
+        //             }
+        //         });
+        //     }
+        // });
+        //点击 “下架” 或者 “上架”
+        $("#pro_list_box").on("click", ".frame_btn", function() {
+            var $this = $(this);
+            var pigeonId = $this.closest("tr").attr("pigeonId");
+            var pigeonStatus = 0; //鸽子状态: 下架,0;上架,1,
+            if ($this.html() == "下架") {
+                pigeonStatus = 0;
+                $("#updown_mark").find(".updown_txt").html("下架？<br> 下架后，商品将无法被用户浏览，仅在后台展示。");
+            } else {
+                pigeonStatus = 1;
+                $("#updown_mark").find(".updown_txt").html("上架？<br> 上架后，商品将能够被用户查看。");
+            }
+            $("#updown_mark").attr({
+                "pigeonId": pigeonId,
+                "pigeonStatus": pigeonStatus,
+                "index": $this.closest("tr").index()
+            }).show();
+        });
+        // 点击 上/下架 “确定”
+        $("#updown_sure_btn").on("click", function() {
+            //调接口
+            var pigeonId = $("#updown_mark").attr("pigeonId");
+            var pigeonStatus = $("#updown_mark").attr("pigeonStatus");
+            // var trIndex = $("#del_mark").attr("index").split(",");
+            productObj.frame({ //请求接口
+                pigeonId: pigeonId,
+                pigeonStatus: pigeonStatus
+            }, function() {
+                $("#pro_list_box").find("input[type=checkbox]:checked").closest("tr").remove();
+                $("#updown_mark").hide();
+                $("#product_tit .active").trigger("click"); // 重新渲染数据
+            });
+        });
+
+        //点击 上下架弹窗  “取消”
+        $("#updown_cancel_btn").on("click", function() {
+            $("#updown_mark").hide();
+        });
+        //点击 “下架” 或者 “上架” 大按钮
+        $("#frame_button").on("click", function() {
+            if ($(this).hasClass("active")) {
+                var checkPigeon = $("#pro_list_box").find("input[type=checkbox]:checked");
+                if (checkPigeon.length == 0) {
+                    myAlert.createBox("请选择要" + $(this).html() + "的鸽子");
+                    return;
+                }
+                var pigeonArr = [];
+                var trIndex = [];
+                checkPigeon.each(function(index) {
+                    pigeonArr.push(checkPigeon.eq(index).closest("tr").attr("pigeonId"))
+                    trIndex.push(checkPigeon.eq(index).closest("tr").index());
+                });
+                var btnTxt = $(this).html();
+                var pigeonStatus = "0";
+                pigeonStatus = (btnTxt == "上架") ? 1 : 0 //鸽子状态: 下架,0;上架,1,
+                if (btnTxt == "下架") {
+                    pigeonStatus = 0;
+                    $("#updown_mark").find(".updown_txt").html("下架？<br> 下架后，商品将无法被用户浏览，仅在后台展示。");
+                } else {
+                    pigeonStatus = 1;
+                    $("#updown_mark").find(".updown_txt").html("上架？<br> 上架后，商品将能够被用户查看。");
+                }
+                $("#updown_mark").attr({
+                    "pigeonId": pigeonArr.join(","),
+                    "pigeonStatus": pigeonStatus,
+                    "index": trIndex
+                }).show();
+            }
+        });
+    </script>
+</body>

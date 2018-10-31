@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>信息管理</title>
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/m_style.css">
+    <script src="../js/jquery-1.10.2.min.js"></script>
+    <script src="../js/public.js"></script>
+</head>
+
+<body>
+    <div>
+        <div class="commod_tit" id="info_tit">
+            <span class="active">已发布</span>
+            <span>待发布</span>
+        </div>
+        <div class="commodity_box info_box" id="infor_cont">
+            <div>
+                <div class="query_p clearfix" style="margin-top:0; padding-top:50px; height:116px;">
+                    <span>快速检索</span>
+                    <div class="query_p_show">
+                        <span>产品名称：</span>
+                        <input type="text" placeholder="输入订单编号或产品名称">
+                    </div>
+                    <button class="query_p_btn">查询</button>
+                    <div class="query_p_btns clearfix">
+                        <button id="input_info_btn">录入资讯</button>
+                        <button>撤稿</button>
+                        <button>删除</button>
+                    </div>
+                </div>
+                <!--内容-->
+                <div class="pro_det commodity_list_tit info_list_tit">
+                    <ol class="clearfix">
+                        <li class="clearfix">
+                            <div class="p_check_box">
+                                <input type="checkbox">
+                                <label></label>
+                            </div>
+                            <div class="pro_det_two">
+                                <span>标题</span>
+                            </div>
+                        </li>
+                        <li class="info_create_date">发布日期</li>
+                        <li class="info_create_date">商家</li>
+                        <li class="info_create_date">公棚</li>
+                        <li class="info_last">操作</li>
+                    </ol>
+                    <ul class="comm_list_box">
+                        <li class="clearfix">
+                            <div class="comm_list_l clearfix">
+                                <div class="comm_list_check">
+                                    <input type="checkbox">
+                                    <label></label>
+                                </div>
+                                <div class="info_list_txt">
+                                    长距离赛手长距离赛手长距离赛手长距离赛手长距离赛手s
+                                </div>
+                            </div>
+
+                            <div class="info_create_date ">
+                                2018-06-21 18:34
+                            </div>
+                            <div class="info_create_date">133****0000</div>
+                            <div class="info_create_date ">天津宇航赛鸽公棚</div>
+                            <div class="info_last ">
+                                <span class="enditor_btn">编辑</span> | <span>撤稿</span> | <span>删除</span>
+                            </div>
+                        </li>
+                        <li class="clearfix">
+                            <div class="comm_list_l clearfix">
+                                <div class="comm_list_check">
+                                    <input type="checkbox">
+                                    <label></label>
+                                </div>
+                                <div class="info_list_txt">
+                                    长距离赛手长距离赛手长距离赛手长距离赛手长距离赛手s
+                                </div>
+                            </div>
+
+                            <div class="info_create_date ">
+                                2018-06-21 18:34
+                            </div>
+                            <div class="info_create_date">133****0000</div>
+                            <div class="info_create_date ">天津宇航赛鸽公棚</div>
+                            <div class="info_last ">
+                                <span class="enditor_btn">编辑</span> | <span>撤稿</span> | <span>删除</span>
+                            </div>
+                        </li>
+                        <li class="clearfix">
+                            <div class="comm_list_l clearfix">
+                                <div class="comm_list_check">
+                                    <input type="checkbox">
+                                    <label></label>
+                                </div>
+                                <div class="info_list_txt">
+                                    长距离赛手长距离赛手长距离赛手长距离赛手长距离赛手s
+                                </div>
+                            </div>
+
+                            <div class="info_create_date ">
+                                2018-06-21 18:34
+                            </div>
+                            <div class="info_create_date">133****0000</div>
+                            <div class="info_create_date ">天津宇航赛鸽公棚</div>
+                            <div class="info_last ">
+                                <span class="enditor_btn">编辑</span> | <span>撤稿</span> | <span>删除</span>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="public_footer">
+                        <select name="" id="">
+                            <option value="0">每页显示20条</option>
+                            <option value="1">每页显示50条</option>
+                            <option value="2">每页显示100条</option>
+                        </select>
+                        <button>上一页</button>
+                        <button>下一页</button>
+                    </div>
+                </div>
+            </div>
+            <div style="display:none">
+                <div class="query_p clearfix" style="margin-top:0; padding-top:50px; height:116px;">
+                    <span>快速检索</span>
+                    <div class="query_p_show">
+                        <span>产品名称：</span>
+                        <input type="text" placeholder="输入订单编号或产品名称">
+                    </div>
+                    <button class="query_p_btn">查询</button>
+                    <div class="query_p_btns clearfix">
+                        <button id="input_info_btn">录入资讯</button>
+                        <button>发布</button>
+                        <button>删除</button>
+                    </div>
+                </div>
+                <!--内容-->
+                <div class="pro_det commodity_list_tit info_list_tit">
+                    <ol class="clearfix">
+                        <li class="clearfix">
+                            <div class="p_check_box">
+                                <input type="checkbox">
+                                <label></label>
+                            </div>
+                            <div class="pro_det_two">
+                                <span>标题</span>
+                            </div>
+                        </li>
+                        <li class="info_create_date">发布日期</li>
+                        <li class="info_create_date">商家</li>
+                        <li class="info_create_date">公棚</li>
+                        <li class="info_last">操作</li>
+                    </ol>
+                    <ul class="comm_list_box">
+                        <li class="clearfix">
+                            <div class="comm_list_l clearfix">
+                                <div class="comm_list_check">
+                                    <input type="checkbox">
+                                    <label></label>
+                                </div>
+                                <div class="info_list_txt">
+                                    长距离赛手长距离赛手长距离赛手长距离赛手长距离赛手s
+                                </div>
+                            </div>
+
+                            <div class="info_create_date ">
+                                2018-06-21 18:34
+                            </div>
+                            <div class="info_create_date">133****0000</div>
+                            <div class="info_create_date ">天津宇航赛鸽公棚</div>
+                            <div class="info_last ">
+                                <span class="enditor_btn">编辑</span> | <span>发布</span> | <span>删除</span>
+                            </div>
+                        </li>
+                        <li class="clearfix">
+                            <div class="comm_list_l clearfix">
+                                <div class="comm_list_check">
+                                    <input type="checkbox">
+                                    <label></label>
+                                </div>
+                                <div class="info_list_txt">
+                                    长距离赛手长距离赛手长距离赛手长距离赛手长距离赛手s
+                                </div>
+                            </div>
+
+                            <div class="info_create_date ">
+                                2018-06-21 18:34
+                            </div>
+                            <div class="info_create_date">133****0000</div>
+                            <div class="info_create_date ">天津宇航赛鸽公棚</div>
+                            <div class="info_last ">
+                                <span class="enditor_btn">编辑</span> | <span>发布</span> | <span>删除</span>
+                            </div>
+                        </li>
+                        <li class="clearfix">
+                            <div class="comm_list_l clearfix">
+                                <div class="comm_list_check">
+                                    <input type="checkbox">
+                                    <label></label>
+                                </div>
+                                <div class="info_list_txt">
+                                    长距离赛手长距离赛手长距离赛手长距离赛手长距离赛手s
+                                </div>
+                            </div>
+
+                            <div class="info_create_date ">
+                                2018-06-21 18:34
+                            </div>
+                            <div class="info_create_date">133****0000</div>
+                            <div class="info_create_date ">天津宇航赛鸽公棚</div>
+                            <div class="info_last ">
+                                <span class="enditor_btn">编辑</span> | <span>发布</span> | <span>删除</span>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="public_footer">
+                        <select name="" id="">
+                            <option value="0">每页显示20条</option>
+                            <option value="1">每页显示50条</option>
+                            <option value="2">每页显示100条</option>
+                        </select>
+                        <button>上一页</button>
+                        <button>下一页</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../js/commodity_management.js"></script>
+    <script>
+        //录入资讯
+        $("#input_info_btn,.enditor_btn").on("click", function() {
+            location.href = "information_editor.html";
+        })
+
+        $("#info_tit>span").on('click', function() {
+            var _index = $(this).index();
+            $("#info_tit>span").removeClass('active');
+            $(this).addClass("active");
+            $("#infor_cont>div").hide();
+            $("#infor_cont>div").eq(_index).show();
+        })
+    </script>
+</body>
+
+</html>

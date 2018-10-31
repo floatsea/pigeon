@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>卖家信息</title>
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/m_style.css">
+    <script src="../js/jquery-1.10.2.min.js"></script>
+    <script src="../js/public.js"></script>
+    <script src="../js/ajaxfileupload.js"></script>
+</head>
+
+<body>
+    <div>
+        <div class="commod_tit" id="order_tit">
+        </div>
+        <div class="commodity_box">
+            <h5 style="font-size:26px">用户基本信息</h5>
+            <div class="input_info_tit business_info_tit clearfix">
+                <span>商家ID</span>
+                <span id="businessId">abc@126.com</span>
+            </div>
+
+            <div class="input_info_tit business_info_tit clearfix">
+                <span>注册日期</span>
+                <span id="creatTime">2018-08-22 10:32</span>
+            </div>
+
+            <div class="input_info_tit business_info_tit clearfix">
+                <span>最后登录日期</span>
+                <span id="loginTime">2018-08-22 10:32</span>
+            </div>
+
+            <div class="input_info_tit clearfix">
+                <span>店铺名称</span>
+                <input type="text" placeholder="请输入店铺名称" id="shopName">
+            </div>
+            <div class="input_info_tit clearfix">
+                <span>特色描述</span>
+                <input type="text" placeholder="请输入特色描述" id="shopDesc">
+            </div>
+            <div class="input_info_cont clearfix">
+                <span>形象展示</span>
+                <div class="input_info_list">
+                    <p>添加视频或图片，仅支持gif、jpeg、png、bmp四种格式，大小不超过3.0MB</p>
+                    <ul class="clearfix" id="shopShow">
+                        <li>
+                            <div class="up_box">
+                                <img src="" alt="">
+                                <input type="file" name="upfile" multiple="multiple" class="upVideo" id="pigeon_video" />
+                                <b class="look_video">上传视频</b>
+                            </div>
+                            <div id="video" class="video_box show_mark"></div>
+                            <em class="del_img"></em>
+                        </li>
+                        <li>
+                            <div class="up_box j_up_img">
+                                <img src="" alt="">
+                                <input type="file" name="upfile" class="upImg show_mark" id="up_img1" />
+                                <div class="video_box show_mark"></div>
+                                <i>上传图片</i>
+                            </div>
+                            <em class="del_img"></em>
+                        </li>
+                        <li>
+                            <div class="up_box j_up_img">
+                                <img src="" alt="">
+                                <input type="file" name="upfile" class="upImg show_mark" id="up_img2" />
+                                <div class="video_box show_mark"></div>
+                                <i>上传图片</i>
+                            </div>
+                            <em class="del_img"></em>
+                        </li>
+                        <li>
+                            <div class="up_box j_up_img">
+                                <img src="" alt="">
+                                <input type="file" name="upfile" class="upImg show_mark" id="up_img3" />
+                                <div class="video_box show_mark"></div>
+                                <i>上传图片</i>
+                            </div>
+                            <em class="del_img"></em>
+                        </li>
+                        <li>
+                            <div class="up_box j_up_img">
+                                <img src="" alt="">
+                                <input type="file" name="upfile" class="upImg show_mark" id="up_img4" />
+                                <div class="video_box show_mark"></div>
+                                <i>上传图片</i>
+                            </div>
+                            <em class="del_img"></em>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="editor_button">
+                <button id="return_btn">返回</button>
+                <button id="save_btn">保存</button>
+            </div>
+        </div>
+    </div>
+    <script src="../js/business_information.js"></script>
+    <script>
+        $(function() {
+            $("#businessId").html(businessId);
+            businessInfoObj.infoRequest();
+
+            //点击保存
+            $("#save_btn").on("click", function() {
+                //调接口
+                var shopShowImg = [];
+                var images = $("#shopShow li").find("img");
+                images.each(function(index) {
+                    if (images.eq(index).attr("src")) {
+                        shopShowImg.push({
+                            "img": images.eq(index).attr("src"),
+                            "isCover": images.eq(index).closest("li").attr("isCover")
+                        });
+                    }
+                })
+                var savePostData = {
+                    "businessId": businessId,
+                    "createdTime": $("#creatTime").html(), //创建时间
+                    "loginTime": $("#loginTime").html(), //最后登录时间
+                    "shopName": $("#shopName").val(), //店铺名称
+                    "shopIntro": $("#shopDesc").val(), //店铺描述
+                    "shopShow": {
+                        "images": shopShowImg
+                    }
+                }
+                businessInfoObj.infoEditor(savePostData, function() {
+                    window.history.go(-1);
+                });
+            });
+            //点击返回
+            $("#return_btn").on("click", function() {
+                window.history.go(-1);
+            });
+
+            /**
+             * 橱窗
+             */
+            //选择图片上传 
+            $("#shopShow").on("change", ".upImg", function() {
+                myLoad.blackLoading();
+                var $this = $(this);
+                var _index = $this.closest("li").index();
+                var input1 = $this.get(0);
+                var imgDom = $this.prev().get(0);
+                var thisId = $(this).attr("id");
+                var postUrl = location.origin + '/ueditor?action=uploadimage';
+                sessionStorage.setItem("businessImgIndex", _index + "");
+                uploadRequest(postUrl, thisId, function(imgUrl) {
+                    myLoad.removeLoading();
+                    imgDom.src = imgUrl;
+                    var _index = Number(sessionStorage.getItem("businessImgIndex"));
+                    if ($("#shopShow").find("li").eq(_index).find("i").html() == "上传图片") {
+                        $("#shopShow").find("li").eq(_index).find("i").html("设为封面");
+                        $("#shopShow").find("li").eq(_index).find(".del_img").show();
+                    }
+                });
+            });
+            //点击 “设为封面”
+            $("#shopShow li").on("click", "i", function() {
+                if ($(this).html() == "设为封面") {
+                    $("#shopShow i").removeClass("active");
+                    $("#shopShow li").attr("isCover", "N");
+                    $(this).addClass("active");
+                    $(this).closest("li").attr("isCover", "Y"); //设为封面
+                }
+            });
+            //选择上传视频
+            $("#shopShow").on("change", ".upVideo", function() {
+                myLoad.blackLoading();
+                var $this = $(this);
+                var _index = $this.closest("li").index();
+                var input1 = $this.get(0);
+                var imgDom = $this.prev().get(0);
+                var videoBox = $("#video");
+                var thisId = $(this).attr("id");
+                var postUrl = location.origin + "/ueditor?action=uploadvideo";
+                sessionStorage.setItem("businessImgIndex", _index + "");
+                uploadRequest(postUrl, thisId, function(videoUrl) {
+                    upVideo(input1, imgDom, videoBox, videoUrl, function() {
+                        myLoad.removeLoading();
+                        var _index = Number(sessionStorage.getItem("businessImgIndex"));
+                        $("#shopShow").find("li").eq(_index).find("b").html("查看视频");
+                        $("#shopShow").find("li").eq(_index).find(".del_img").show();
+                    })
+                });
+            });
+            //点击 “查看视频"
+            $(".look_video").on("click", function() {
+                if ($(this).html() == "查看视频") {
+                    $("#video").show();
+                }
+            });
+            //点击 “删除” 按钮
+            $(".del_img").on("click", function() {
+                $(this).closest("li").find("img").attr("src", "");
+                $(this).closest("li").find("input[type=file]").val("");
+                $(this).closest("li").find("b").html("上传视频");
+                $(this).closest("li").find("i").html("上传图片");
+                $(this).hide();
+            });
+            //点击 视频 遮罩 ,隐藏
+            $("#video").on("click", function() {
+                $(this).hide();
+            });
+        })
+    </script>
+</body>
