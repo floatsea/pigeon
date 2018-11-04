@@ -18,6 +18,7 @@ var raceObj = {
                     raceObj.getBannerInfo(data.data); //banner信息
                     var raceitems = data.data.raceitems;
                     raceObj.getRaceArrange(raceitems);
+                    $(".entry_con").html(data.data.raceDesc);
                 } else if (data.code == "401") {
                     getLogin({
                         "openId": openid
@@ -97,6 +98,9 @@ var raceObj = {
 
                 if (data.code == "0") {
                     myAlert.createBox("报名成功~");
+                    $("#sign_btn").html("已报名");
+                    $("#sign_mark").hide();
+                    $("#sign_btn").unbind("click", fn);
                     callback && callback();
                 }
             },

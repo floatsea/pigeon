@@ -65,6 +65,11 @@
     <script src="../js/order_sure.js"></script>
     <script>
         //页面初始化
+        if(sessionStorage.getItem("pigeonsInfoArr")){
+            var pigeonsInfoArr = JSON.parse(sessionStorage.getItem("pigeonsInfoArr"));
+        }else{
+           var pigeonsInfoArr = [];
+        }
         orderSureObj.initPageItem(pigeonsInfoArr);
         //事件
         $(".sub_btn").on("click", function() {
@@ -87,6 +92,14 @@
             }
             orderSureObj.findCheckInp(); //判断所有全选的
             var allPrice = orderSureObj.changeAllPrice();
+            if(allPrice > 9999999){
+                if(allPrice>999999999){
+                    $("#all_price").html(allPrice.substr(0,4));
+                }else{
+                    $(".combined_r").css("font-size", ".6rem");
+                }
+                
+            }
             $("#all_price").html(allPrice);
         });
         $("#item_box").on("change", ".j_check", function() {
@@ -180,10 +193,16 @@
                     orderSureObj.submitOrder(orderData, function() {
                         checkedInp.each(function(index) {
                             var businessNum = checkedInp.eq(index).closest(".order_item_list").attr("businessNum"); //第几个商家
-                            pigeonsInfoArr[businessNum].pigeonArr.splice(index, 1); //删除第几只鸽子
-                            if (pigeonsInfoArr[businessNum].pigeonArr.length == 0) {
-                                pigeonsInfoArr.splice(businessNum, 1);
+                            var pigeonId = checkedInp.eq(index).closest(".item-single").attr("pigeonId"); //第几个商家
+                            for(let i= pigeonsInfoArr[businessNum].pigeonArr.length-1;i>=0 ;i--){
+                                if(pigeonsInfoArr[businessNum].pigeonArr[i].pigeonId == pigeonId){
+                                    pigeonsInfoArr[businessNum].pigeonArr.splice(i, 1);
+                                }
                             }
+                            // pigeonsInfoArr[businessNum].pigeonArr.splice(index, 1); //删除第几只鸽子
+                            // if (pigeonsInfoArr[businessNum].pigeonArr.length == 0) {
+                            //     pigeonsInfoArr.splice(businessNum, 1);
+                            // }
                             sessionStorage.setItem("pigeonsInfoArr", JSON.stringify(pigeonsInfoArr));
                         });
                         setTimeout(() => {

@@ -35,7 +35,7 @@
             <div class="device_tit" id="banner_tit">
                 <h5>比利时~耶乐.隆吉尔</h5>
                 <p>最佳种鸽作育幼鸽</p>
-                <i>商家简介</i>
+                <i id="business_introduce">商家简介</i>
             </div>
         </section>
         <!--商家动态-->
@@ -316,6 +316,11 @@
             });
             $(".in_foot_me").on("click", function() { //我的
                 location.href = "mine.html?openid=" + openid;
+            });
+
+            //点击 “商家简介”
+            $("#business_introduce").on("click", function() {
+                location.href = "business_introduce.html?openid=" + openid + "&businessid=" + businessid;
             });
         })
     </script>

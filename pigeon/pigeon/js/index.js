@@ -123,7 +123,7 @@ var indexObj = {
             var pigeonListStr = ""; //鸽子列表
             bVal.pigeons.forEach(function(pigeonVal) {
                 pigeonListStr += '<li pigeonId="' + pigeonVal.pigeonId + '">' +
-                    '<img src="' + pigeonVal.pigeonImg + '" alt="">' +
+                    '<div class="pigeonImgContainer"><img src="' + pigeonVal.pigeonImg + '" alt=""></div>' +
                     '<h4>' + pigeonVal.pigeonName + '</h4>' +
                     '<p class="in_hot_type_txt">' + pigeonVal.pigeonDesc + '</p>' +
                     '<p class="in_hot_type_money">¥' + pigeonVal.pigeonPrice + '</p>' +

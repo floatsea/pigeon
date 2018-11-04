@@ -7,8 +7,8 @@ var orderid = getParameter("orderid") || "";
 var orderDetailObj = {
     initPageRequest: function(postData) {
         $.ajax({
-            url: location.origin + " ",
-            type: "post ",
+            url: location.origin + "/operator/orders/find",
+            type: "post",
             data: JSON.stringify(postData),
             dataType: "json ",
             contentType: "application/json ",
@@ -25,7 +25,8 @@ var orderDetailObj = {
                     });
                 }
             },
-            error: function() {
+            error: function(e) {
+                alert(e);
                 myAlert.createBox("服务器开小差！ ")
             }
         })
@@ -61,3 +62,5 @@ var orderDetailObj = {
         $("#logistics_num").html(""); //物流单号
     }
 }
+var postData = { "orderId": orderid};
+orderDetailObj.initPageRequest(postData);

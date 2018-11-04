@@ -238,9 +238,9 @@
             $("#my_order_box>div").eq(_index).show();
         });
         /*点击每个列表跳转到订单详情*/
-        $(".order_del").on("click", function() {
-            location.href = "order_details.html?openid=" + openid + "&orderid" + $(this).attr("orderId");
-        });
+        function goDtl(orderId){
+            location.href = "order_details.html?openid=" + openid + "&orderid=" + orderId;
+        }
         //上拉加载更多
         $(window).on("scroll", function() {
             var scrolT = $(document).scrollTop(); //滚动距离

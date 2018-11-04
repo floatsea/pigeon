@@ -24,7 +24,7 @@ var pigeonObj = {
             },
             error: function() {
                 var list = pigeonDetail.data;
-                pigeonObj.createBanner(list.pigeons[0].pigeonShow.images); //banner 展示
+                pigeonObj.createBanner(list.pigeons[0].pigeonShow); //banner 展示
                 pigeonObj.createOtherInfo(list.pigeons[0]); //其它信息
 
             }
@@ -32,8 +32,33 @@ var pigeonObj = {
     },
     createBanner: function(pigeonShow) { //banner 模块展示
         document.getElementById("myVideo").src = pigeonShow.videos[0].video;
-        // $("#banner_img").attr("href", images[0].url); //跳转链接
         $("#banner_img img").attr("src", pigeonShow.images[0].img); //图片链接
+        var liStr = ""
+        pigeonShow.images.forEach(function(val) {
+            liStr += '<li class="swiper-slide">' +
+                '<img src="' + val.img + '" alt="">' +
+                '</li>';
+        });
+        $(".swiper-wrapper").append(liStr);
+        $("#swiper_num_sum").html($(".swiper-wrapper li").length);
+        var mySwiper = new Swiper('.swiper-container', {
+            onSlideNext: function(swiper) {
+                var actIndex = swiper.activeIndex + 1;
+                $("#swiper_num").html(actIndex);
+            },
+            onSlidePrev: function(swiper) {
+                var actIndex = swiper.activeIndex + 1;
+                $("#swiper_num").html(actIndex);
+            }
+        });
+        $("#title_btn span").on("click", function() {
+            document.getElementById("myVideo").pause();
+            var _index = $(this).index();
+            $("#swiper_num").html(_index + 1);
+            mySwiper.swipeTo(_index, 1000, false);
+            $("#title_btn span").removeClass("active");
+            $(this).addClass("active");
+        });
     },
     createOtherInfo: function(pigeons) {
         $("#parent_box").attr("businessId", pigeons.businessId);

@@ -282,6 +282,18 @@ var pigeonDetail = {
                     "url": "图片链接",
                     "alt": "图片提示",
                     "desc": "图片描述"
+                }, {
+                    "img": "../image/pro_banner.png",
+                    "isCover": "标记为封面",
+                    "url": "图片链接",
+                    "alt": "图片提示",
+                    "desc": "图片描述"
+                }, {
+                    "img": "../image/pro_banner.png",
+                    "isCover": "标记为封面",
+                    "url": "图片链接",
+                    "alt": "图片提示",
+                    "desc": "图片描述"
                 }]
             },
             "pigeonStatus": " 鸽子状态", //: 下架, 0,上架, 1; 预定,2 ; 已售, 3;,

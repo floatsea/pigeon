@@ -1,5 +1,5 @@
-var businessid = getParameter("businessid");
-var openid = getParameter("openid")||"";
+var businessid = getParameter("businessid") || "";
+var openid = getParameter("openid") || "";
 var scrollFlag = true; //滚动加载标志
 /**
  * 整个页面分2部分
@@ -53,9 +53,13 @@ var businessDetailObj = {
         });
     },
     setBusinessBanner: function(obj) { //设置banner标题、资讯等
+        setLocVal("shopName", (obj.shopName || obj.shopNameEn)); //店铺名称
+        setLocVal("shopDesc", (obj.shopDesc || obj.shopDescEn||""));//商家简介
+        // setLocVal("shopName", (obj.shopName || obj.shopNameEn));
+
         $("#banner_tit h5").html((obj.shopName || obj.shopNameEn)); //店铺名称
         $("#banner_tit h5").attr("shopName", (obj.shopName || obj.shopNameEn))
-        $("#banner_tit p").html(obj.shopIntro || obj.shopIntroEn) //商家简介
+        $("#banner_tit p").html(obj.shopIntro || obj.shopIntroEn) //特色描述
             //资讯
         var msgStr = "";
         obj.newses.forEach(function(val, index) {

@@ -10,28 +10,35 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <link rel="stylesheet" href="../css/reset.css" />
     <link rel="stylesheet" href="../css/m_style.css" />
+    <link rel="stylesheet" href="../dist/idangerous.swiper.css">
+    <script src="../dist/idangerous.swiper.min.js"></script>
     <style>
 
     </style>
 </head>
 
 <body>
-    <div class="pro_det" id="parent_box" businessId="">
+    <div class="pro_det" id="parent_box">
         <!--首部视频-->
         <div class="pro_header">
-            <ul class="pro_banner banner_box" id="title_box">
-                <!-- <li><img src="../image/pro_banner.png" alt=""></li> -->
-                <li class="video_box">
-                    <video controls="controls" src="" id="myVideo"></video>
-                </li>
-                <li style="display:none;">
-                    <a href="javascript:;" id="banner_img"><img src="../image/pro_banner.png" alt=""></a>
-                </li>
-            </ul>
+            <div class="swiper-container">
+                <ul class="swiper-wrapper">
+                    <li class="video_box swiper-slide">
+                        <video controls="controls" src="" id="myVideo"></video>
+                    </li>
+                    <!-- <li class="swiper-slide">
+                        <img src="../image/pro_banner.png" alt="">
+                    </li>
+                    <li class="swiper-slide">
+                        <img src="../image/pro_banner.png" alt="">
+                    </li> -->
+                </ul>
+            </div>
             <div class="pro_header_btn" id="title_btn">
                 <span class="active"><img src="../image/v.png" alt="">视频</span>
                 <span>图片</span>
             </div>
+            <div class="pro_banner_num"><i id="swiper_num">1</i>/<i id="swiper_num_sum">5</i></div>
         </div>
         <div class="pro_cont">
             <p class="pro_cont_money">
@@ -130,14 +137,13 @@
         pigeonObj.initPageQuery(_data);
         /*点击事件*/
         //头部视频图片切换
-        $("#title_btn span").on("click", function() {
-            document.getElementById("myVideo").pause();
-            var _index = $(this).index();
-            $("#title_box li").hide();
-            $("#title_box li").eq(_index).show();
-            $("#title_btn span").removeClass("active");
-            $(this).addClass("active");
-        });
+        // $("#title_btn span").on("click", function() {
+        //     document.getElementById("myVideo").pause();
+        //     var _index = $(this).index();
+        //     mySwiper.slides[_index].isActive()
+        //     $("#title_btn span").removeClass("active");
+        //     $(this).addClass("active");
+        // });
 
         //点击特征分类
         var liW = $(".pro_type_list li").eq(0).width();
@@ -220,7 +226,7 @@
         //点击购物车
         $(".product_buy_box").on("click", function() {
             if (count == 0) {
-                myAlert.createBox("购物车中还没有商品哦(*￣︶￣)");
+                myAlert.createBox("购物车中还没有商品哦");
                 return;
             } else {
                 location.replace("order_sure.html?openid=" + openid);
@@ -242,7 +248,7 @@
             var $this = $(this);
             pigeonObj.setFlow(flowData, function() {
                 $this.find("img").attr("src", "../image/look2.png")
-                $this.find("span").css("color", "#f73e6a");
+                $this.find("span").css("color", "#dc3d27");
             });
         });
     </script>

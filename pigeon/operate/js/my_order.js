@@ -54,7 +54,7 @@ var myOrderObj = {
                         '</li>';
                     sumMoney += Number(imgVal.goodsPrice);
                 });
-                payOrderStr += '<div class="order_del" orderId="' + val.orderId + '">' +
+                payOrderStr += '<div class="order_del" onclick="goDtl(\'' + val.orderId + '\')" orderId="' + val.orderId + '">' +
                     '<div class="order_num clearfix">' +
                     '<p class="order_number">订单号：' + val.orderId + '</p>' +
                     '<p class="order_w">等待付款</p>' +
@@ -98,7 +98,7 @@ var myOrderObj = {
 
             });
             if (imgList) {
-                sendOrderStr += '<div class="order_del">' +
+                sendOrderStr += '<div class="order_del"  onclick="goDtl(\'' + val.orderId + '\')">' +
                     '<div class="order_num clearfix">' +
                     '<p class="order_number">订单号：' + val.orderId + '</p>' +
                     '<p class="order_w">等待收货</p>' +
@@ -129,7 +129,7 @@ var myOrderObj = {
             });
             console.log(val.orderStatus)
             var orderstatus = myOrderObj.setOrderStatus(val.orderStatus);
-            allOrderStr += '<div class="order_del" orderId="' + val.orderId + '">' +
+            allOrderStr += '<div class="order_del"  onclick="goDtl(' + val.orderId + ')" orderId="' + val.orderId + '">' +
                 '<div class="order_num clearfix">' +
                 '<p class="order_number">订单号：' + val.orderId + '</p>' +
                 '<p class="order_w">' + orderstatus + '</p>' +

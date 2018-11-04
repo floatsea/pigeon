@@ -264,13 +264,13 @@
                 }
                 oneloftObj.setFlow(flowData, function() {
                     $("#flow_id img").attr("src", "../image/look2.png");
-                    $("#flow_id").css("color", "rgb(247, 62, 106)");
+                    $("#flow_id").css("color", "#dc3d27");
                 });
             });
 
             //点击简介
             $("#loft_intro").on("click", function() {
-                alert("和基哥确认，等待提供")
+                location.href = "loft_introduce.html?openid=" + openid + "&oneloftid=" + oneloftid
             })
 
             //点击位置  调起高德地图
