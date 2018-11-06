@@ -358,7 +358,6 @@ body {
     line-height: 80px;
 }
 
-
 /*已付款*/
 
 .payment_order_time {
@@ -413,7 +412,6 @@ body {
     padding-right: 20px;
 }
 
-
 /*待发货*/
 
 .pro_det2 ol li.payment_order_price,
@@ -424,7 +422,6 @@ body {
 .pro_det2 div.payment_det_last {
     width: 15%;
 }
-
 
 /*已完成*/
 
@@ -454,9 +451,7 @@ body {
     margin-right: 14px;
 }
 
-
 /*编辑产品*/
-
 
 /*所有查询小按钮的公用样式*/
 
@@ -530,7 +525,6 @@ body {
 .w_dis button {
     margin-top: 30px;
 }
-
 
 /*首页*/
 
@@ -632,7 +626,6 @@ body {
     margin-top: 20px;
     font-size: 20px;
 }
-
 
 /* input_information.html 录入资讯 */
 
@@ -800,7 +793,6 @@ body {
     margin-right: 20px;
 }
 
-
 /* 富文本插件 */
 
 .editor_box {
@@ -808,7 +800,6 @@ body {
     z-index: 1;
     width: 95%;
 }
-
 
 /* order_detail.html 订单详情*/
 
@@ -969,9 +960,7 @@ body {
     border-radius: 4px;
 }
 
-
 /* 运营端 */
-
 
 /* 商家基本信息  business_information.html*/
 
@@ -980,7 +969,6 @@ body {
     color: #a7a7a7;
     width: auto;
 }
-
 
 /* 商品管理 */
 
@@ -994,7 +982,6 @@ body {
     padding-top: 15px;
     height: auto;
 }
-
 
 /* product_editor.html编辑商品 */
 
@@ -1090,7 +1077,6 @@ body {
     z-index: 100;
 }
 
-
 /* 视频放大*/
 
 .video_box {
@@ -1143,7 +1129,6 @@ body {
     margin-top: -1rem;
 }
 
-
 /* 放大缩略图 */
 
 .pay_big_img_box {
@@ -1174,4 +1159,38 @@ body {
     top: 50%;
     -webkit-transform: translate(0, -50%);
     transform: translate(0, -50%)
+}
+
+@font-face {
+    font-family: "iconfont";
+    src: url('iconfont.eot?t=1541429926574');
+    /* IE9*/
+    src: url('iconfont.eot?t=1541429926574#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('data:application/x-font-woff;charset=utf-8;base64,d09GRgABAAAAAAQkAAsAAAAABnQAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABHU1VCAAABCAAAADMAAABCsP6z7U9TLzIAAAE8AAAARAAAAFZC6E5kY21hcAAAAYAAAABLAAABcO2ayQBnbHlmAAABzAAAAG8AAAB40BdKnGhlYWQAAAI8AAAALwAAADYTLDtJaGhlYQAAAmwAAAAcAAAAJAfeA4NobXR4AAACiAAAAAgAAAAICAAAAGxvY2EAAAKQAAAABgAAAAYAPAAAbWF4cAAAApgAAAAgAAAAIAEPAC1uYW1lAAACuAAAAUUAAAJtPlT+fXBvc3QAAAQAAAAAIwAAADZNWlZNeJxjYGRgYOBikGPQYWB0cfMJYeBgYGGAAJAMY05meiJQDMoDyrGAaQ4gZoOIAgCKIwNPAHicY2BkYWCcwMDKwMHUyXSGgYGhH0IzvmYwYuRgYGBiYGVmwAoC0lxTGBzeFL0pYm7438AQw9zA0AAUZgTJAQDv8QzTeJxjYGBgZWBgYAZiHSBmYWBgDGFgZAABP6AoI1icmYELLM7CoARWwwISf1P0/z+MBPJZwCQDIxvDKOABkzJQHjisIJiBEQBOgQtJAHicY2BmYPi/gPkBcwIDN4M4gwIDA6sag7oZg7kYgzgbA7OgiJiRmamgiZoSG7Mco5EZiMHEcObfR1ZWRv4zZxj5WVn/fXwjJCMERAKM0hrSQJSAJHUGqJTp9r8FfEJCfIwJQPLvIxGQGmkAkJYcugB4nGNgZGBgAOLZHHfd4vltvjJwszCAwA226mUI+v8CFgbmBCCXg4EJJAoAEoAJhQB4nGNgZGBgbvjfwBDDwgACQJKRARUwAQBHCAJrBAAAAAQAAAAAAAAAADwAAAABAAAAAgAhAAMAAAAAAAIAAAAKAAoAAAD/AAAAAAAAeJxlj01OwzAQhV/6B6QSqqhgh+QFYgEo/RGrblhUavdddN+mTpsqiSPHrdQDcB6OwAk4AtyAO/BIJ5s2lsffvHljTwDc4Acejt8t95E9XDI7cg0XuBeuU38QbpBfhJto41W4Rf1N2MczpsJtdGF5g9e4YvaEd2EPHXwI13CNT+E69S/hBvlbuIk7/Aq30PHqwj7mXle4jUcv9sdWL5xeqeVBxaHJIpM5v4KZXu+Sha3S6pxrW8QmU4OgX0lTnWlb3VPs10PnIhVZk6oJqzpJjMqt2erQBRvn8lGvF4kehCblWGP+tsYCjnEFhSUOjDFCGGSIyujoO1Vm9K+xQ8Jee1Y9zed0WxTU/3OFAQL0z1xTurLSeTpPgT1fG1J1dCtuy56UNJFezUkSskJe1rZUQuoBNmVXjhF6XNGJPyhnSP8ACVpuyAAAAHicY2BigAAuBuyAiZGJkZmBpySzIjMvvTgDRDEwAAAvpgVIAA==') format('woff'), url('iconfont.ttf?t=1541429926574') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+    url('iconfont.svg?t=1541429926574#iconfont') format('svg');
+    /* iOS 4.1- */
+}
+
+.iconfont {
+    font-family: "iconfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-tixingshixin:before {
+    content: "\ec72";
+}
+
+.red {
+    color: red;
+}
+
+.warn {
+    position: absolute;
+    bottom: -25px;
+    left: 140px;
+    font-size: 10px;
+    color: red;
 }
