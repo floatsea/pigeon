@@ -163,7 +163,7 @@
                     Authorization: Authorization
                 },
                 success: function(data) {
-                    
+
                     myAlert.createBox("提交成功");
                     setTimeout(function() {
                         window.history.go(-1);
@@ -183,7 +183,7 @@
                     "address": $("#city").val(),
                     "idCard": $("#cardid").val(),
                     "mobile": $("#mobile").val(),
-                    "nickName": $("#nickName").html(),
+                    "nickName": $("#nickName").val(),
                     "profilePhoto": custumerInfo.profilePhoto || "",
                     "realName": $("#name").val(),
                     "userName": custumerInfo.userName || ""

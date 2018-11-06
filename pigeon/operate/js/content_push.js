@@ -36,6 +36,7 @@ var contentObj = {
                 case "pigeon": //商家及鸽子
                     $("#business_list").attr("configId", val.configId);
                     contentObj.createBusiness(val.configValue.businesses);
+                    $("#business_list li").eq(0).trigger("click");
                     break;
                 case "advertisment": //banner
                     $("#banner_box").attr("configId", val.configId);
@@ -57,7 +58,7 @@ var contentObj = {
      *http://域名/operator/business/findList
      *希望提供个新接口，把该商家名下对应的所有鸽子都查询出来
      */
-    businessRequest: function(businessData) {
+    businessRequest: function(businessData, callback) {
         $.ajax({
             url: location.origin + "/operator/business/findList",
             type: "post",
@@ -68,7 +69,11 @@ var contentObj = {
                 errorToken(data.code);
                 if (data.code == 0) {
                     var list = data.data.list;
-                    contentObj.createBusiness(list);
+                    var totalNum = data.data.total; //商家总数
+                    contentObj.createBusinessMark(list);
+                    $("#business_sum_num").html(totalNum);
+                    contentObj.getPageNumer(totalNum, "business_page_btn");
+                    callback && callback();
                 }
             },
             error: function() {
@@ -84,9 +89,7 @@ var contentObj = {
         var pigeonTab = "";
         var tbodyStr = "";
         list.forEach(function(val, i) {
-            var classStr = i == 0 ? 'active' : '';
-            var tabClass = (i == 0) ? '' : 'hide';
-            liStr += '<li class="' + classStr + '" pigeons="' + val.pigeonCount + '" businessId="' + val.businessId + '">' +
+            liStr += '<li pigeonCount="' + val.pigeonCount + '" businessId="' + val.businessId + '">' +
                 '<span>' + val.shopName + '</span>' +
                 '<img src="../image/g1.png" class="set_bus" />' +
                 '<img src="../image/close.png" class="del_bus" />' +
@@ -96,7 +99,7 @@ var contentObj = {
             } else {
                 tabClass = "hide";
             }
-            pigeonTab += '<table class="' + tabClass + '" businessId="' + val.businessId + '">' +
+            pigeonTab += '<table class="hide" businessId="' + val.businessId + '">' +
                 '<thead>' +
                 '<tr>' +
                 '<td style="width:30%">产品名称</td>' +
@@ -105,12 +108,27 @@ var contentObj = {
                 '<td style="width:15%">操作</td>' +
                 '</tr>' +
                 '</thead>' +
-                '<tbody>' + tbodyStr + '</tbody>' +
+                '<tbody class="pigeonbody">' + tbodyStr + '</tbody>' +
                 '</table>';
         });
-        $("#business_list").attr("list", list);
-        $("#business_list").html(liStr); // 商家列表
-        $("#business_pigeon_list").html(pigeonTab); //鸽子列表
+        $("#business_list").append(liStr); // 商家列表
+        $("#business_pigeon_list").append(pigeonTab); //鸽子列表
+    },
+    /**
+     * 创建蒙层商家列表
+     */
+    createBusinessMark: function(list) {
+        var str = '<dt>商家列表</dt>';
+        list.forEach(function(val) {
+            str += '<dd businessId="' + val.businessId + '" pigeonCount="' + val.pigeonCount + '">' +
+                '<label for="">' +
+                '<input type="checkbox">' +
+                '<i></i>' +
+                '<span class="shopName">' + val.shopName + '</span>' +
+                '</label>' +
+                '</dd>';
+        });
+        $("#business_list_box_dl").html(str);
     },
     /**
      * 创建展示鸽子列表
@@ -130,7 +148,7 @@ var contentObj = {
                 '<td>' +
                 '<input class="pigeonDesc" type="text" placeholder="" value="' + val.pigeonDesc + '" />' +
                 '</td>' +
-                '<td>¥<i class="pigeonPrice">' + val.pigeonPrice + '</i></td>' +
+                '<td>¥<i class="pigeonPrice">' + parseInt(val.pigeonPrice) + '</i></td>' +
                 '<td class="operation">' +
                 '<span><img class="up" src="../image/up.png"></span>' +
                 '<span><img class="down" src="../image/down.png"></span>' +
@@ -144,8 +162,9 @@ var contentObj = {
      * 44、信鸽列表接口
      * http://域名/operator/pigeon/findList
      * 点击 "商家" 按钮时，查询对应商家的鸽子列表
+     * busIndex有值的情况，说明是通过搜索出来的，默认展示5个鸽子
      */
-    pigeonRequest: function(proListData) {
+    pigeonRequest: function(proListData, callback) {
         $.ajax({
             url: location.origin + "/operator/pigeon/findList",
             type: "post",
@@ -155,11 +174,16 @@ var contentObj = {
             success: function(data) {
                 errorToken(data.code);
                 if (data.code == "0") {
-                    var infoList = data.data.list;
-                    var totalNum = data.data.total; //商品总数
-                    $("#pigeon_sum_num").html(totalNum);
-                    contentObj.getPageNumer(totalNum, "pigeon_page_btn"); //分页
-                    contentObj.createPigeonMark(infoList);
+                    if (callback) {
+                        var list = data.data.list.splice(0, 5);
+                        callback(list);
+                    } else {
+                        var infoList = data.data.list;
+                        var totalNum = data.data.total; //商品总数
+                        $("#pigeon_sum_num").html(totalNum);
+                        contentObj.getPageNumer(totalNum, "pigeon_page_btn"); //分页
+                        contentObj.createPigeonMark(infoList);
+                    }
                 }
             },
             error: function() {
@@ -171,6 +195,13 @@ var contentObj = {
     createPigeonMark: function(list) {
         var str = "";
         list.forEach(function(val) {
+            var imgSrc = "";
+            val.pigeonShow.images.forEach(function(imginfoVal) {
+                if (imginfoVal.isCover == "Y") {
+                    imgSrc = imginfoVal.img;
+                }
+            });
+            imgSrc = !imgSrc ? val.pigeonShow.images[0].img : imgSrc;
             str += '<tr pigeonId="' + val.pigeonId + '">' +
                 '<td>' +
                 '<input type="checkbox">' +
@@ -179,7 +210,7 @@ var contentObj = {
                 '<td>' +
                 '<div class="clearfix">' +
                 '<div>' +
-                '<img class="pigeon_img" src="../image/cp.png" alt="">' +
+                '<img class="pigeon_img" src="' + imgSrc + '" alt="">' +
                 '</div>' +
                 '<span class="pigeon_name">' + val.pigeonName + ' ' + val.pigeonNo + '</span>' +
                 '</div>' +
@@ -187,7 +218,7 @@ var contentObj = {
                 '<td>' +
                 '<span class="pigeon_point">' + val.pigeonPoint + '</span>' +
                 '</td>' +
-                '<td>¥<i class="pigeon_price">' + val.pigeonPrice + '<i></td>' +
+                '<td>¥<i class="pigeon_price">' + parseInt(val.pigeonPrice) + '<i></td>' +
                 '</tr>';
         });
         $("#pigeon_mark_list").html(str);
@@ -347,8 +378,10 @@ var contentObj = {
     createOneloft: function(list) {
         var str = "";
         list.forEach(function(val) {
+            var oneloftShow = JSON.stringify(val.oneloftShow);
+            oneloftShow = encodeURI(oneloftShow);
             var oneloftType = val.oneloftType == 0 ? "春棚" : "秋棚";
-            str += '<tr oneloftId="' + val.oneloftId + '" location="' + val.location + '" distance="' + val.distance + '">' +
+            str += '<tr oneloftId="' + val.oneloftId + '" location="' + val.location + '" distance="' + val.distance + '" oneloftShow="' + oneloftShow + '" logo="' + val.logo + '">' +
                 '<td>' +
                 '<div class="oneloft_name" class="clearfix">' + val.oneloftName +
                 '</div>' +
@@ -399,8 +432,10 @@ var contentObj = {
     createMarkOneloft: function(list) {
         var str = "";
         list.forEach(function(val) {
+            var oneloftShow = JSON.stringify(val.oneloftShow);
+            oneloftShow = encodeURI(oneloftShow);
             var oneloftType = val.oneloftType == 0 ? "春棚" : "秋棚";
-            str += '<tr oneloftId="' + val.oneloftId + '" location="' + val.location + '" distance="' + val.distance + '">' +
+            str += '<tr oneloftId="' + val.oneloftId + '" location="' + val.location + '" distance="' + val.distance + '" oneloftShow="' + oneloftShow + '" logo="' + val.logo + '">' +
                 '<td>' +
                 '<input type="checkbox">' +
                 '<label for=""></label>' +

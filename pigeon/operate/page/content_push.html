@@ -52,7 +52,7 @@
                     </div>
                 </div>
                 <ol class="content_rem_name clearfix" id="business_list">
-                    <li class="active">
+                    <!-- <li class="active">
                         <span>乔.巴特斯</span>
                         <img src="../image/g1.png" class="set_bus" />
                         <img src="../image/close.png" class="del_bus" />
@@ -61,71 +61,10 @@
                         <span>比利时.龙吉尔</span>
                         <img src="../image/g1.png" class="set_bus" />
                         <img src="../image/close.png" class="del_bus" />
-                    </li>
+                    </li> -->
                 </ol>
                 <div class="content_rem_list" id="business_pigeon_list">
-                    <table>
-                        <thead>
-                            <tr>
-                                <td style="width:30%">产品名称</td>
-                                <td style="width:30%">卖点</td>
-                                <td>价格</td>
-                                <td style="width:15%">操作</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- <tr>
-                                <td>
-                                    <div class="clearfix">
-                                        <div>
-                                            <img src="../image/cp.png" alt="">
-                                        </div>
-                                        <input type="text" placeholder="长距离赛手BE17-4244533" />
-                                    </div>
-                                </td>
-                                <td>
-                                    <input type="text" placeholder="独家呈现！血统优秀！" />
-                                </td>
-                                <td>¥<i>500.00</i></td>
-                                <td class="operation">
-                                    <span><img class="up" src="../image/up.png"></span>
-                                    <span><img class="down" src="../image/down.png"></span>
-                                    <span><img class="del" src="../image/close.png"></span>
-                                </td>
-                            </tr> -->
-                        </tbody>
-                    </table>
-                    <table style="display:none;">
-                        <thead>
-                            <tr>
-                                <td style="width:30%">产品名称</td>
-                                <td style="width:30%">卖点</td>
-                                <td>价格</td>
-                                <td style="width:15%">操作</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <div class="clearfix">
-                                        <div>
-                                            <img src="../image/cp.png" alt="">
-                                        </div>
-                                        <input type="text" placeholder="长距离赛手BE17-4244533" />
-                                    </div>
-                                </td>
-                                <td>
-                                    <input type="text" placeholder="独家呈现！血统优秀！" />
-                                </td>
-                                <td>¥1888.00</td>
-                                <td class="operation">
-                                    <span><img src="../image/up.png"></span>
-                                    <span><img src="../image/down.png"></span>
-                                    <span><img src="../image/close.png"></span>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+
                 </div>
             </div>
             <!--广告位-->
@@ -161,7 +100,7 @@
                         <button id="import_race">导入赛事</button>
                     </div>
                 </div>
-                <div class="user_cont pro_mana_cont content_rem_list">
+                <div class="user_cont pro_mana_cont content_rem_list" id="match_table">
                     <table>
                         <thead>
                             <tr>
@@ -204,7 +143,7 @@
                             <button id="import_oneloft">导入公棚</button>
                         </div>
                     </div>
-                    <div class="content_rem_list">
+                    <div class="content_rem_list" id="oneloft_table">
                         <table>
                             <thead>
                                 <tr>
@@ -241,19 +180,35 @@
             <button class="input_info_save" id="save_btn">保存</button>
         </div>
     </div>
-    <!--修改商家-->
-    <!-- <div class="business_mark" style="display:none;">
-        <div class="business_mark_box">
-            <div>
-                <span>商家名称</span>
-                <input type="text" />
+    <!--商家列表-->
+    <div class="business_mark" style="display:none">
+        <div class="business_list_box">
+            <dl id="business_list_box_dl">
+                <!-- <dt>商家列表</dt> -->
+                <!-- <dd>
+                    <label for="">
+                        <input type="checkbox">
+                        <i></i>
+                        <span>冰雪鸽子</span>
+                    </label>
+                </dd> -->
+            </dl>
+            <div class="public_footer clearfix">
+                <ul class="clearfix" id="business_page_btn">
+                    <!-- <li class="active">1</li>
+                    <li>2</li>
+                    <li>3</li>
+                    <li>4</li>
+                    <li>5</li> -->
+                </ul>
+                <div>共<span id="business_sum_num">0</span>条，每页显示<span>5</span>条</div>
             </div>
-            <div class="btn_box">
-                <button class="cancel_btn">取消</button>
-                <button class="sure_btn">确定</button>
+            <div class="editor_button">
+                <button class="cancel" id="business_mask_close">关闭</button>
+                <button id="business_mask_sure">确定</button>
             </div>
         </div>
-    </div> -->
+    </div>
     <!--鸽子列表-->
     <div class="pigeon_mark" style="display:none;">
         <div class="content_rem_list">
@@ -261,17 +216,14 @@
                 <thead>
                     <tr>
                         <td>
-                            <!-- <input type="checkbox" id="sel_all">
-                            <label for=""></label> -->
                         </td>
                         <td style="width:30%">产品名称</td>
                         <td style="width:30%">卖点</td>
                         <td>价格</td>
-                        <!-- <td style="width:15%">操作</td> -->
                     </tr>
                 </thead>
                 <tbody id="pigeon_mark_list">
-                    <tr pigeonId="11">
+                    <!--  <tr pigeonId="11">
                         <td>
                             <input type="checkbox">
                             <label for=""></label>
@@ -288,7 +240,7 @@
                             <span class="pigeon_point">独家呈现！血统优秀！</span>
                         </td>
                         <td>¥ <i class="pigeon_price">1888.00</i></td>
-                    </tr>
+                    </tr>-->
                 </tbody>
             </table>
             <div class="public_footer clearfix">
@@ -455,16 +407,95 @@
             "orderBy": "createdTime",
             "orderDesc": "desc"
         };
-        $("#search_business").on("click", function() { //点击 “搜索 商家”
+        //点击 “搜索 商家”， 蒙层显示
+        $("#search_business").on("click", function() {
             businessData.keyword = $("#businessKey").val();
-            contentObj.businessRequest(businessData);
+            contentObj.businessRequest(businessData, function() {
+                $(".business_mark").show();
+            });
         });
+        $("#business_list_box_dl").on("click", "input[type=checkbox]", function() {
+            var $this = $(this);
+            var nowBusinessId = $this.closest("dd").attr("businessId");
+            var alreadyCheckBusiness = $("#business_list li");
+            alreadyCheckBusiness.each(function(i) {
+                if (nowBusinessId == alreadyCheckBusiness.eq(i).attr("businessId")) {
+                    myAlert.createBox("已经选择过该商家!");
+                    $this.prop("checked", false);
+                    return;
+                }
+            });
+        });
+        //点击 商家列表蒙层 “确定”
+        var checkedBusArr = [];
+        $("#business_mask_sure").on("click", function() {
+            var checkedBus = $("#business_list_box_dl").find("input:checked").closest("dd");
+            checkedBusArr = [];
+            checkedBus.each(function(i) {
+                (function(a) {
+                    var businessId = checkedBus.eq(a).attr("businessId");
+                    contentObj.pigeonRequest({
+                        "businessId": businessId,
+                        "pigeonStatus": "1",
+                    }, function(pigeons) {
+                        var arr = setPigeons(pigeons);
+                        checkedBusArr.push({
+                            "businessId": businessId,
+                            "shopName": checkedBus.eq(a).find(".shopName").text(),
+                            "pigeonCount": checkedBus.eq(a).attr("pigeonCount"),
+                            "pigeons": arr
+                        });
+                    });
+                })(i)
+            });
+            setTimeout(() => {
+                contentObj.createBusiness(checkedBusArr);
+                $(".business_mark").hide();
+                if ($("#business_list li").length > 1) {
+                    $("#business_list li").find(".del_bus").show();
+                }
+            }, 1000);
+        });
+        // 重组查询出来的鸽子数据
+        function setPigeons(pigeons) {
+            var pigeonList = [];
+            pigeons.forEach(function(val) {
+                var imgSrc = "";
+                val.pigeonShow.images.forEach(function(imginfoVal) {
+                    if (imginfoVal.isCover == "Y") {
+                        imgSrc = imginfoVal.img;
+                    }
+                });
+                imgSrc = !imgSrc ? val.pigeonShow.images[0].img : imgSrc;
+                pigeonList.push({
+                    "pigeonImg": imgSrc, //图片
+                    "pigeonId": val.pigeonId, // id
+                    "pigeonUrl": "",
+                    "pigeonName": val.pigeonName, //鸽子名称
+                    "pigeonNo": val.pigeonNo, // 鸽子编号
+                    "pigeonPrice": parseInt(val.pigeonPrice), //价格
+                    "pigeonDesc": val.pigeonPoint
+                });
+            });
+            return pigeonList;
+        };
+
+        // 点击关闭 商家列表蒙层
+        $("#business_mask_close").on("click", function() {
+            $(".business_mark").hide();
+        });
+
         //点击 切换商家
         $("#business_list").on("click", "li", function() {
             $("#business_list").find("li").removeClass("active");
             var _index = $(this).index();
             $("#business_pigeon_list").find("table").hide();
-            $("#business_pigeon_list").find("table").eq(_index).show();
+            var thisTbody = $("#business_pigeon_list").find("table").eq(_index).find("tbody").html()
+            if (thisTbody) {
+                $("#business_pigeon_list").find("table").eq(_index).show();
+            } else {
+                $("#business_pigeon_list").find("table").eq(_index).hide();
+            }
             $(this).addClass("active");
         });
 
@@ -490,14 +521,15 @@
          *  分页展示
          */
         var pigeonData = {
-                "businessId": "",
-                "keyword": "",
-                "pageSize": "20",
-                "pageNum": "1",
-                "orderBy": "publishedTime",
-                "orderDesc": "desc"
-            }
-            //点击设置 “商家” 展示对应 鸽子列表
+            "businessId": "",
+            "pigeonStatus": "1",
+            "keyword": "",
+            "pageSize": "20",
+            "pageNum": "1",
+            "orderBy": "publishedTime",
+            "orderDesc": "desc"
+        };
+        //点击设置 “商家” 展示对应 鸽子列表
         $("#business_list").on("click", ".set_bus", function(ev) {
             ev.stopPropagation();
             var _index = $(this).closest("li").index(); //锁定第几个商家
@@ -535,7 +567,7 @@
             })
 
         });
-        //点击商家 蒙层 确定 
+        //点击鸽子 蒙层 确定 
         $("#pigeon_mask_sure").on("click", function() {
             // 锁定 第几个商家
             var _index = $(this).closest(".pigeon_mark").attr("_index");
@@ -574,11 +606,11 @@
         //点击 删除 鸽子列表
         $("#business_pigeon_list").on("click", ".del", function() {
             var $this = $(this);
-            $this.closest("tr").remove();
-            var trlen = $("#business_pigeon_list").find("tr").length;
-            if (trlen == 0) {
-                $this.closest("table").hide();
+            var trlen = $this.closest(".pigeonbody").find("tr").length;
+            if (trlen == 1) {
+                $this.closest(".pigeonbody").parent().hide();
             }
+            $this.closest("tr").remove();
         });
         /***********************************鸽子列表结束***************************************/
         /*点击 “页码”
@@ -662,6 +694,9 @@
                     "reward": tr.find(".reward").html()
                 });
             });
+            if (checkArr.length > 0) {
+                $("#match_table table").show();
+            }
             //选中的赛事列表 字符
             var str = contentObj.createRace(checkArr);
             $("#race_box").append(str);
@@ -686,11 +721,11 @@
         // 点击 赛事列表 删除
         $("#race_box").on("click", ".del", function() {
             var $this = $(this);
-            $this.closest("tr").remove();
-            var trlen = $("#race_box").find("tr").length;
-            if (trlen == 0) {
+            var trlen = $this.closest("tbody").find("tr").length;
+            if (trlen == 1) {
                 $this.closest("table").hide();
             }
+            $this.closest("tr").remove();
         });
         /************************************赛事结束****************************/
         /**
@@ -751,10 +786,14 @@
                     "cityCode": tr.find(".cityCode").html(),
                     "oneloftType": tr.find(".oneloftType").attr("oneloftType"),
                     "location": tr.attr("location"),
-                    "distance": tr.attr("distance")
-
+                    "distance": tr.attr("distance"),
+                    "oneloftShow": JSON.parse(decodeURI(tr.attr("oneloftShow"))),
+                    "logo": tr.attr("logo")
                 });
             });
+            if (checkArr.length > 0) {
+                $("#oneloft_table table").show();
+            }
             //选中的鸽子列表 字符
             var str = contentObj.createOneloft(checkArr);
             $("#oneloft_box").append(str);
@@ -778,11 +817,11 @@
         // 点击 公棚列表 删除
         $("#oneloft_box").on("click", ".del", function() {
             var $this = $(this);
-            $this.closest("tr").remove();
-            var len = $("#oneloft_box").find("tr").length;
-            if (len == 0) {
+            var len = $this.closest("tbody").find("tr").length;
+            if (len == 1) {
                 $this.closest("table").hide();
             }
+            $this.closest("tr").remove();
         });
         /*--------------------------------交互结束-----------------------------------*/
         //保存
@@ -861,7 +900,9 @@
                     "cityCode": oneloftList.eq(i).find(".cityCode").html(),
                     "oneloftType": oneloftList.eq(i).find(".oneloftType").attr("oneloftType"),
                     "location": oneloftList.eq(i).attr("location"),
-                    "distance": oneloftList.eq(i).attr("distance")
+                    "distance": oneloftList.eq(i).attr("distance"),
+                    "oneloftShow": JSON.parse(decodeURI(oneloftList.eq(i).attr("oneloftShow"))),
+                    "logo": oneloftList.eq(i).attr("logo")
                 })
             });
             var saveData = {

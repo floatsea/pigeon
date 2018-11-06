@@ -44,7 +44,7 @@ var indexObj = {
             headers: { Authorization: Authorization },
             success: function(data) {
                 $(".myLoading").hide();
-                
+
                 if (data.code == "0") {
                     var list = data.data.list;
                     list.forEach(function(val) {
@@ -123,7 +123,7 @@ var indexObj = {
             var pigeonListStr = ""; //鸽子列表
             bVal.pigeons.forEach(function(pigeonVal) {
                 pigeonListStr += '<li pigeonId="' + pigeonVal.pigeonId + '">' +
-                    '<div class="pigeonImgContainer"><img src="' + pigeonVal.pigeonImg + '" alt=""></div>' +
+                    '<img src="' + pigeonVal.pigeonImg + '" alt="">' +
                     '<h4>' + pigeonVal.pigeonName + '</h4>' +
                     '<p class="in_hot_type_txt">' + pigeonVal.pigeonDesc + '</p>' +
                     '<p class="in_hot_type_money">¥' + pigeonVal.pigeonPrice + '</p>' +
@@ -136,7 +136,7 @@ var indexObj = {
                 var cl = "";
                 var ulCl = "";
             }
-            busiNameStr += '<li pigeonCount="'+bVal.pigeonCount+'" businessId="' + bVal.businessId + '" class="' + cl + '">' + bVal.shopName + '</li>';
+            busiNameStr += '<li pigeonCount="' + bVal.pigeonCount + '" businessId="' + bVal.businessId + '" class="' + cl + '">' + bVal.shopName + '</li>';
             pigeonsStr += '<ul class="' + ulCl + '">' + pigeonListStr + '</ul>';
         })
         $("#business_hot").html(busiNameStr);
@@ -210,7 +210,7 @@ var indexObj = {
                 '</div>' +
                 '<div class="in_gp_list_r_address">' +
                 '<img src="image/in_address.png" alt="">' +
-                '<span>' + (val.cityCode||"") + '&nbsp 距离' + (val.distance||"") + 'km</span>' +
+                '<span>' + (val.cityCode || "") + '&nbsp 距离' + (val.distance || "") + 'km</span>' +
                 '</div>' +
                 '</div>' +
                 '</li>';

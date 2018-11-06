@@ -9,7 +9,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <link rel="stylesheet" href="../css/reset.css" />
-    <link rel="stylesheet" href="../css/m_style.css?v=1" />
+    <link rel="stylesheet" href="../css/m_style.css" />
 </head>
 
 <body class="order_box">
@@ -17,7 +17,6 @@
         <div class="order_tab_box">
             <ul class="pro_type_list order_tab clearfix" id="order_tit">
                 <li class="active">待付款</li>
-                <!-- <li>待发货</li> -->
                 <li>待收货</li>
                 <li>全部</li>
             </ul>
@@ -55,8 +54,6 @@
                     </div>
                 </div> -->
             </div>
-            <!--待发货-->
-            <!-- <div id="goods_send_box" style="display:block"></div> -->
             <!--待收货-->
             <div id="goods_box" style="display:block">
                 <!-- <div class="order_del">
@@ -213,8 +210,7 @@
             "left": (lineL + titLiW * tab) + "px"
         });
         if (tab == 0) postData.orderitemStatus = "0"; //待付款
-        // if (tab == 1) postData.orderitemStatus = "2"; //待发货
-        if (tab == 1) postData.orderitemStatus = "3"; //待收货
+        if (tab == 1) postData.orderitemStatus = "4"; //待收货
         if (tab == 2) postData.orderitemStatus = ""; //全部
         myOrderObj.initRequest(postData); //页面出初始化
         $("#my_order_box>div").eq(tab).show();
@@ -227,13 +223,11 @@
             $("#order_tit li").removeClass("active");
             $(this).addClass("active");
             $(".my_order_line").css({
-                "left":(lineL + titLiW * _index) + "px"
+                "left": +(lineL + titLiW * _index) + "px"
             });
             postData.pageNum = 1;
             if (_index == 0) {
                 postData.orderitemStatus = "0"; //"待付款";
-            // } else if (_index == 1) {
-            //     postData.orderitemStatus = "2"; //"待发货";
             } else if (_index == 1) {
                 postData.orderitemStatus = "3"; //"待收货";
             } else {
@@ -244,9 +238,9 @@
             $("#my_order_box>div").eq(_index).show();
         });
         /*点击每个列表跳转到订单详情*/
-            function goDtl(orderId) {
-                location.href = "order_details.html?openid=" + openid + "&orderid=" + orderId;
-            }
+        $(".order_del").on("click", function() {
+            location.href = "order_details.html?openid=" + openid + "&orderid" + $(this).attr("orderId");
+        });
         //上拉加载更多
         $(window).on("scroll", function() {
             var scrolT = $(document).scrollTop(); //滚动距离
@@ -352,33 +346,5 @@
         });
     </script>
 </body>
-<style>
-    .container{
-        display: flex;
-        border-top: 1px solid #f3f3f3;
-        border-bottom: 1px solid #f2f2f2;
-    }
-    .item{
-        color: #000;
-        padding: .2rem;
-        font-size: .6rem;
-        width: 100%;
-        position: relative;
-    }
-    .itemTitle{
-        line-height: 1rem;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-    }
-    .itemDesc{
-        margin-top: .2rem;
-    font-size: .4rem;
-    }
-    .itemStatus{
-        padding: .1rem .2rem;border: 1px solid #f9454e;/* float: right; */border-radius: .4rem;color: #f9454e;bottom: 0.2rem;position: absolute;right: .6rem;font-weight: bold;
-    }
-</style>
+
 </html>

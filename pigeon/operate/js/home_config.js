@@ -69,8 +69,9 @@ $(function() {
                 $("#pageContent").attr("src", "page/live_management.html");
                 break;
         }
+        // setHomeHeight();
     });
-    
+
 
     $(".infor_seconds div").on("click", function(ev) {
         ev.stopPropagation();
@@ -81,7 +82,11 @@ $(function() {
             $("#pageContent").attr("src", "page/information_loft.html?channelType=oneloft");
         }
     });
-
-    var rightHeight = $("body").height();
-    //$("#homeLeft").css("height",rightHeight);
+    var bodyHeight = document.documentElement.clientHeight;
+    var pageContent = document.getElementById("pageContent");
+    var homeLeft = document.getElementById("homeLeft");
+    pageContent.style.height = bodyHeight + "px";
+    homeLeft.style.height = bodyHeight + "px";
+    var mobile = getParameter("mobile");
+    $("#mobile").html(mobile);
 })

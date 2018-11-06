@@ -23,7 +23,7 @@ var businessDetailObj = {
                     var obj = data.data;
                     businessDetailObj.createSwiperDom(obj);
                     businessDetailObj.setBusinessBanner(obj); //店铺标题及资讯
-                }else if(data.code=="401"){
+                } else if (data.code == "401") {
                     getLogin({
                         "openId": openid
                     });
@@ -39,7 +39,7 @@ var businessDetailObj = {
         var imgStr = "";
         bgImgList.forEach(function(val) {
             imgStr += '<div class="swiper-slide">' +
-                '<img src="'+val.img+'" alt="" />' +
+                '<img src="' + val.img + '" alt="" />' +
                 '</div>';
         });
         $("#swiper_box").html(imgStr);
@@ -53,13 +53,9 @@ var businessDetailObj = {
         });
     },
     setBusinessBanner: function(obj) { //设置banner标题、资讯等
-        setLocVal("shopName", (obj.shopName || obj.shopNameEn)); //店铺名称
-        setLocVal("shopDesc", (obj.shopDesc || obj.shopDescEn||""));//商家简介
-        // setLocVal("shopName", (obj.shopName || obj.shopNameEn));
-
         $("#banner_tit h5").html((obj.shopName || obj.shopNameEn)); //店铺名称
         $("#banner_tit h5").attr("shopName", (obj.shopName || obj.shopNameEn))
-        $("#banner_tit p").html(obj.shopIntro || obj.shopIntroEn) //特色描述
+        $("#banner_tit p").html(obj.shopIntro || obj.shopIntroEn) //商家简介
             //资讯
         var msgStr = "";
         obj.newses.forEach(function(val, index) {
@@ -97,7 +93,7 @@ var businessDetailObj = {
             dataType: "json",
             contentType: "application/json",
             success: function(data) {
-               //
+                //
                 if (data.code == "0") {
                     var list = data.data.list;
                     scrollFlag = data.data.hasNextPage;

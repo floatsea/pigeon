@@ -6,8 +6,8 @@
     <title>公棚基本信息</title>
     <link rel="stylesheet" href="../css/reset.css">
     <link rel="stylesheet" href="../css/my_style.css">
-
     <script src="../js/jquery-1.10.2.min.js"></script>
+    <script src="../js/ajaxfileupload.js"></script>
     <script src="../js/public.js"></script>
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=McNGNstqGgRVbESkMBUmfciFxnsWpQ0g"></script>
     <style>
@@ -35,7 +35,7 @@
                 <ol class="clearfix">
                     <li class="clearfix">
                         <span>公棚ID</span>
-                        <span id="oneloftId">12399007788</span>
+                        <span id="oneloftId_dom">12399007788</span>
                     </li>
                     <li>
                         <span>注册日期</span>
@@ -93,70 +93,83 @@
                     <ul class="loft_img_box clearfix" id="oneloftShow">
                         <li>
                             <div class="up_box">
-                                <img src="" alt="">
-                                <input type="file" name="upfile" multiple="multiple" class="upVideo" id="pigeon_video"/>
+                                <img src="../image/load2.gif" id="videoLoading" style="display:none;">
+                                <video src="" id="small_video"></video>
+                                <input type="file" name="upfile" multiple="multiple" class="upVideo" id="pigeon_video" accept="video/*" />
                                 <b class="look_video">上传视频</b>
                             </div>
-                            <div id="video" class="video_box show_mark"></div>
                             <em class="del_img"></em>
                         </li>
                         <li>
                             <div class="up_box j_up_img">
                                 <img src="" alt="">
-                                <input type="file" name="upfile" class="upImg show_mark" id="up_img1"/>
-                                <div class="video_box show_mark"></div>
+                                <input type="file" name="upfile" class="upImg" id="up_img1" accept="image/*" />
                                 <i>上传图片</i>
-                            </div>  
+                            </div>
                             <em class="del_img"></em>
                         </li>
                         <li>
                             <div class="up_box j_up_img">
                                 <img src="" alt="">
-                                <input type="file" name="upfile" class="upImg show_mark" id="up_img2"/>
-                                <div class="video_box show_mark"></div>
+                                <input type="file" name="upfile" class="upImg" id="up_img2" accept="image/*" />
                                 <i>上传图片</i>
-                            </div>  
+                            </div>
                             <em class="del_img"></em>
                         </li>
                         <li>
                             <div class="up_box j_up_img">
                                 <img src="" alt="">
-                                <input type="file" name="upfile" class="upImg show_mark" id="up_img3"/>
-                                <div class="video_box show_mark"></div>
+                                <input type="file" name="upfile" class="upImg" id="up_img3" accept="image/*" />
                                 <i>上传图片</i>
-                            </div>  
+                            </div>
                             <em class="del_img"></em>
                         </li>
                         <li>
                             <div class="up_box j_up_img">
                                 <img src="" alt="">
-                                <input type="file" name="upfile" class="upImg show_mark" id="up_img4"/>
-                                <div class="video_box show_mark"></div>
+                                <input type="file" name="upfile" class="upImg" id="up_img4" accept="image/*" />
                                 <i>上传图片</i>
-                            </div>  
+                            </div>
                             <em class="del_img"></em>
                         </li>
                     </ul>
                 </div>
 
                 <div class="input_info_chose">
-                    <h3>公棚logo
+                    <h3 class="clearfix">
+                        <span>公棚logo</span>
                         <span id="no_logo">未选择文件</span>
-                        <img src="" id="logo_img" />
+                        <div class="oneloft_logo">
+                            <img src="" id="logo_img" />
+                        </div>
+
                     </h3>
                     <div class="input_info_btn">
-                        <input type="file" id="uploadLogo"> 选择文件
+                        <input type="file" name="upfile" id="uploadLogo" accept="image/*"> 选择文件
                     </div>
                 </div>
             </div>
+            <div class="editor_button" style="padding-top:30px;">
+                <button id="return_btn">返回</button>
+                <button id="save_btn">保存</button>
+            </div>
         </div>
-        <div class="editor_button">
-            <button id="return_btn">返回</button>
-            <button id="save_btn">保存</button>
+    </div>
+    <!--视频放大-->
+    <div id="video" class="video_box">
+        <div>
+            <video id="big_video" controls="controls"></video>
+        </div>
+    </div>
+    <!--缩略图放大-->
+    <div class="pay_big_img_box" style="display:none">
+        <div>
+            <img src="../image/cp.png" />
         </div>
     </div>
     <script>
         // 百度地图API功能
+        var oneloftId = getParameter("oneloftId");
         var city = $("#address").val() || "北京";
         var map = new BMap.Map("container");
         var locationStr = ""
@@ -185,7 +198,7 @@
                 map.addOverlay(marker);
                 var content = addressDom.val() + "<br/><br/>经度：" + poi.point.lng + "<br/>纬度：" + poi.point.lat;
                 var infoWindow = new BMap.InfoWindow("<p style='font-size:14px;'>" + content + "</p>");
-                locationStr = poi.point.lng + " " +  poi.point.lat;
+                locationStr = poi.point.lng + " " + poi.point.lat;
                 marker.addEventListener("click", function() {
                     this.openInfoWindow(infoWindow);
                 });
@@ -216,37 +229,45 @@
         };
 
         function setInfo(oneloftObj) {
-            $("#createTime").html(oneloftObj.createdTime); //创建时间
-            $("#loginTime").html(oneloftObj.loginTime); //最后登录时间
-            $("#oneloftName").val(oneloftObj.oneloftName); //公棚名称
-            $("#mobile").val(oneloftObj.mobile).prop("readonly",true); //手机号
+            $("#createTime").html(oneloftObj.createdTime || "-"); //创建时间
+            $("#loginTime").html(oneloftObj.loginTime || "-"); //最后登录时间
+            $("#oneloftName").val(oneloftObj.oneloftName || "-"); //公棚名称
+            if (oneloftObj.logo) {
+                $("#logo_img").attr("src", oneloftObj.logo);
+                $("#logo_img").parent().show();
+                $("#no_logo").hide();
+            }
+            $("#mobile").val(oneloftObj.mobile).prop("readonly", true); //手机号
             $("#oneloftType").find("input[type=radio]").eq(oneloftObj.oneloftType).prop("checked", true); //公棚类型 0 春棚 1秋棚
 
             $("#buildTime").val(oneloftObj.establishTime); //成立日期
             var liStr = "";
-            oneloftObj.oneloftShow.images.forEach(function(val, index) {
-                $("#oneloftShow li").eq(index).find("img").attr("src", val.img);
-                if (oneloftObj.oneloftShow.videos.length>0) {
-                    var video = oneloftObj.oneloftShow.videos[0];
-                    $("#oneloftShow li").eq(0).find("img").attr("src", video.video);
-                }
-                if(shopShow.images.length>0){
-                    shopShow.images.forEach(function(val, index) {
-                        $("#shopShow li").eq(index + 1).find("img").attr("src", val.img);
-                        $("#shopShow li").eq(index + 1).find("em").show();
-                        if(val.isCover&&val.isCover=="Y"){
-                            $("#shopShow li").eq(index + 1).find("i").html("设为封面").addClass("active");
-                        }else{
-                            $("#shopShow li").eq(index + 1).find("i").html("上传图片");
-                        }
-                    })
-                }
-            });
+            var oneloftShowObj = oneloftObj.oneloftShow;
+            if (oneloftShowObj.images.length > 0) {
+                oneloftShowObj.images.forEach(function(val, index) {
+                    $("#oneloftShow li").eq(index + 1).find("img").attr("src", val.img);
+                    $("#oneloftShow li").eq(index + 1).find("input").hide();
+                    $("#oneloftShow li").eq(index + 1).find("em").show();
+                    if (val.isCover && val.isCover == "Y") {
+                        $("#oneloftShow li").eq(index + 1).find("i").html("设为封面").addClass("active");
+                    } else {
+                        $("#oneloftShow li").eq(index + 1).find("i").html("上传图片");
+                    }
+                })
+            }
+            if (oneloftShowObj.videos && oneloftShowObj.videos.length > 0) {
+                var videoURL = oneloftShowObj.videos[0].video;
+                $("#small_video").attr("src", videoURL);
+                $("#big_video").attr("src", videoURL)
+                $("#oneloftShow li").eq(0).find("b").html("查看视频");
+                $("#oneloftShow li").eq(0).find(".del_img").show();
+                $("#oneloftShow li").eq(0).find("input").hide();
+            }
         };
 
         /**
          * 添加
-         * 没有接口
+         * 
          */
         function saveRequest(saveData) {
             $.ajax({
@@ -268,16 +289,17 @@
          * 编辑
          * 50、公棚编辑接口
          */
-        function editorRequest(editorData) {
+        function editorRequest(editorData, callback) {
             $.ajax({
                 url: location.origin + "/operator/oneloft/edit",
                 type: "post",
-                data: JSON.stringify(saveData),
+                data: JSON.stringify(editorData),
                 dataType: "json",
                 contentType: "application/json",
                 success: function(data) {
                     errorToken(data.code);
                     myAlert.createBox("保存成功");
+                    callback && callback();
                 },
                 error: function() {
                     myAlert.createBox("网络不给力")
@@ -286,8 +308,7 @@
         }
 
         $(function() {
-            var oneloftId = getParameter("oneloftId");
-            $("#oneloftId").html(oneloftId);
+            $("#oneloftId_dom").html(oneloftId);
             initRequestPage();
             //输入地理位置
             $("#address").on("keyup", function() {
@@ -301,77 +322,71 @@
             });
             //点击保存
             $("#save_btn").on("click", function() {
+                var upImgObj = $("#oneloftShow").find(".j_up_img").find("img");
                 var imgArr = [];
-                var videoArr = [];
-                $("#oneloftShow li").forEach(function(val,i){
-                    if(i!=0){
+                upImgObj.each(function(index) {
+                    var isCover = $(this).closest("li").attr("isCover");
+                    var imgSrc = upImgObj.eq(index).attr("src");
+                    if (imgSrc) {
                         imgArr.push({
-                            "img": val.find("img").attr("src"),
-                            "isCover": val.attr("isCover")?val.attr("isCover"):"N"
+                            "img": imgSrc, //name ?
+                            "isCover": isCover, //1:设置封面，0：不设封面
                         });
-                    }else{
-                        videoArr.push({
-                            "video": $("#video").find("video").attr("src")
-                        })
                     }
-                })
+                });
+                var videoArr = [];
+                if ($("#small_video").attr("src")) {
+                    videoArr.push({
+                        "video": $("#small_video").attr("src"),
+                        "alt": "",
+                        "desc": ""
+                    })
+                }
                 var saveData = {
                     "address": city,
                     "cityCode": city,
                     "location": locationStr,
-                    "establishTime":$("#buildTime").val(),
+                    "establishTime": $("#buildTime").val(),
                     "logo": $("#logo_img").attr("src"),
                     "oneloftDesc": "",
-                    "oneloftId": $("#oneloftId").html(),
+                    "oneloftId": $("#oneloftId_dom").html(),
                     "oneloftName": $("#oneloftName").val(),
-                    "oneloftShow":{
+                    "oneloftShow": {
                         "images": imgArr,
                         "videos": videoArr
                     },
                     "oneloftType": $("#oneloftType").find("input[type=radio]:checked").index(),
                     "provinceCode": "",
                     "realName": "",
+                    "logo": $("#logo_img").attr("src")
                 }
-                editorRequest(saveData);
-                // if (oneloftId) { //编辑
-                //     editorRequest(saveData);
-                // } else { //添加
-                //     saveRequest(saveData);
-                // }
+                editorRequest(saveData, function() {
+                    window.history.go(-1);
+                });
             })
 
             /**
              * 橱窗
              */
-            //选择图片上传 
-            // $("#oneloftShow").on("change", ".upImg", function() {
-            //     var $this = $(this);
-            //     var _index = $this.index();
-            //     var input1 = $this.get(0);
-            //     var imgDom = $this.prev().get(0);
-            //     readFile(input1, imgDom, function() {
-            //         if ($this.closest("li").find("i").html() == "上传图片") {
-            //             $this.closest("li").find("i").html("设为封面");
-            //             $this.closest("li").find(".del_img").show();
-            //         }
-            //     });
-            // });
-            //选择图片上传 
             $("#oneloftShow").on("change", ".upImg", function() {
                 var $this = $(this);
                 var _index = $this.closest("li").index();
-                var input1 = $this.get(0);
                 var imgDom = $this.prev().get(0);
                 var thisId = $(this).attr("id");
-                var postUrl = location.origin+'/ueditor?action=uploadimage';
-                sessionStorage.setItem("businessImgIndex", _index+"");
-                uploadRequest(postUrl,thisId,function(imgUrl){
+                var postUrl = location.origin + '/ueditor?action=uploadimage';
+                sessionStorage.setItem("businessImgIndex", _index + "");
+                if (!$this.val()) {
+                    return;
+                }
+                imgDom.src = "../image/load2.gif";
+                uploadRequest(postUrl, thisId, function(imgUrl) {
                     imgDom.src = imgUrl;
-                     var _index = Number(sessionStorage.getItem("businessImgIndex"));
-                     var iDom = $("#oneloftShow").find("li").eq(_index).find("i");
+                    var _index = Number(sessionStorage.getItem("businessImgIndex"));
+                    var iDom = $("#oneloftShow").find("li").eq(_index).find("i");
                     if (iDom.html() == "上传图片") {
                         iDom.html("设为封面");
-                        $("#oneloftShow").find("li").find(".del_img").show();
+                        $("#oneloftShow").find("li").eq(_index).find(".del_img").show();
+                        $("#oneloftShow").find("li").eq(_index).find("input").hide();
                     }
                 });
             });
@@ -385,45 +400,42 @@
                 }
             });
             //选择上传视频
-            // $("#oneloftShow").on("change", ".upVideo", function() {
-            //     var $this = $(this);
-            //     var _index = $this.index();
-            //     var input1 = $this.get(0);
-            //     var imgDom = $this.prev().get(0);
-            //     var videoBox = $("#video");
-            //     upVideo(input1, imgDom, videoBox, function() {
-            //         $this.closest("li").find("b").html("查看视频");
-            //         $this.closest("li").find(".del_img").show();
-            //     })
-            // });
             $("#oneloftShow").on("change", ".upVideo", function() {
                 var $this = $(this);
                 var _index = 0;
                 var input1 = $this.get(0);
-                var imgDom = $this.prev().get(0);
-                var videoBox = $("#video");
                 var thisId = $(this).attr("id");
-                var postUrl = location.origin +"/ueditor?action=uploadvideo";
-                uploadRequest(postUrl,thisId,function(videoUrl){
-                    alert(videoUrl);
-                    upVideo(input1, imgDom, videoBox,videoUrl, function() {
-                        $("#oneloftShow").find("li").eq(0).find("b").html("查看视频");
-                        $("#oneloftShow").find("li").eq(0).find(".del_img").show();
-                    })
+                var postUrl = location.origin + "/ueditor?action=uploadvideo";
+                $("#videoLoading").show();
+                $("#small_video").hide();
+                uploadRequest(postUrl, thisId, function(videoUrl) {
+                    $("#videoLoading").hide();
+                    $("#small_video").show();
+                    $("#small_video").attr("src", videoUrl);
+                    $("#big_video").attr("src", videoUrl);
+                    $("#oneloftShow").find("li").eq(0).find("b").html("查看视频");
+                    $("#oneloftShow").find("li").eq(0).find(".del_img").show();
+                    $("#oneloftShow").find("li").eq(0).find("input").hide();
                 });
             });
             //点击 “查看视频"
-            $(".look_video").on("click", function() {
-                if ($(this).html() == "查看视频") {
+            $(".look_video, #small_video").on("click", function() {
+                if ($(".look_video").html() == "查看视频") {
                     $("#video").show();
                 }
             });
             //点击 “删除” 按钮
             $(".del_img").on("click", function() {
-                $(this).closest("li").find("img").attr("src", "");
+                $(this).closest("li").find("i").removeClass("active");
                 $(this).closest("li").find("input[type=file]").val("");
-                $(this).closest("li").find("b").html("上传视频");
-                $(this).closest("li").find("i").html("上传图片");
+                if ($(this).closest("li").index() == 0) {
+                    $(this).closest("li").find("video").attr("src", "");
+                    $(this).closest("li").find("b").html("上传视频");
+                } else {
+                    $(this).closest("li").find("img").attr("src", "");
+                    $(this).closest("li").find("i").html("上传图片");
+                }
+                $(this).closest("li").find("input[type=file]").show();
                 $(this).hide();
             });
             //点击 视频 遮罩 ,隐藏
@@ -438,11 +450,25 @@
                 var input1 = $this.get(0);
                 var imgDom = $("#logo_img").get(0);
                 var thisId = "uploadLogo";
-                var postUrl = location.origin+'/ueditor?action=uploadimage';
-                uploadRequest(postUrl,thisId,function(imgUrl){
+                var postUrl = location.origin + '/ueditor?action=uploadimage';
+                uploadRequest(postUrl, thisId, function(imgUrl) {
+                    $("#no_logo").hide();
+                    $(".oneloft_logo").show();
                     imgDom.src = imgUrl;
                 });
             });
+        });
+        //点击查看 原图
+        $(".j_up_img img").on("click", function() {
+            $(".pay_big_img_box img").attr("src", $(this).attr("src"));
+            $(".pay_big_img_box").show();
+        });
+        //缩略图 关闭
+        $(".pay_big_img_box").on("click", function() {
+            $(this).hide();
+        });
+        $(".pay_big_img_box img").on("click", function(ev) {
+            ev.stopPropagation();
         });
     </script>
 </body>

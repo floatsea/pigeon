@@ -1,6 +1,6 @@
 var oneloftId = getParameter("oneloftId") || ""; //有oneloftId：公棚 “添加赛事”
 var raceId = getParameter("raceId") || ""; //编辑
-var oneloftName = decodeURI(getParameter("oneloftName")||"");
+var oneloftName = decodeURI(getParameter("oneloftName") || "");
 /**
  * 47、赛事详情接口
  * http://域名/operator/race/find
@@ -50,7 +50,7 @@ var matchEditoObj = {
                 '<span>放飞日期</span>' +
                 '<div class="J-datepicker c-datepicker">' +
                 '<i class=""></i>' +
-                '<input type="text" autocomplete="off" name="" placeholder="选择日期" class="startedTime" value="' + val.startedTime + '">' +
+                '<input type="text" autocomplete="off" name="" placeholder="选择日期" class="startedTime" value="' + (val.startedTime || '') + '">' +
                 '</div>' +
                 '</div>' +
                 '<div class="schedule_time_ff schedule_time_ff2">' +
@@ -68,19 +68,26 @@ var matchEditoObj = {
     },
     //橱窗图片
     createUpfile: function(raceShow) {
-        if(raceShow.videos.length>0){// 视频缩略图
-            $("#raceShow li").eq(0).find("img").attr("src", raceShow.videos[0].video);
-            $("#raceShow li").eq(0).find("b").html("查看视频");
-        }
-        if(raceShow.images.length>0){
+        if (raceShow.images.length > 0) {
             raceShow.images.forEach(function(val, _index) {
                 $("#raceShow li").eq(_index + 1).find("img").attr("src", val.img);
-                $("#raceShow li").eq(_index + 1).find("i").html("设为封面")
+                $("#raceShow li").eq(_index + 1).find("input").hide();
                 $("#raceShow li").eq(_index + 1).find("em").show();
-                if(val.isCover&&val.isCover=="Y"){
-                    $("#raceShow li").eq(_index + 1).find("i").addClass("active");
+                if (val.isCover && val.isCover == "Y") {
+                    $("#raceShow li").eq(_index + 1).find("i").html("设为封面").addClass("active");
+                } else {
+                    $("#raceShow li").eq(_index + 1).find("i").html("设为封面");
                 }
             });
+        }
+        // video
+        if (raceShow.videos.length > 0) {
+            var videoURL = raceShow.videos[0].video;
+            $("#small_video").attr("src", videoURL);
+            $("#big_video").attr("src", videoURL)
+            $("#raceShow li").eq(0).find("b").html("查看视频");
+            $("#raceShow li").eq(0).find(".del_img").show();
+            $("#raceShow li").eq(0).find("input").hide();
         }
     },
     /**
@@ -109,7 +116,7 @@ var matchEditoObj = {
      * 31、编辑赛事接口
      * http://域名/operator/race/edit
      */
-    saveMatch: function(saveData) {
+    saveMatch: function(saveData, callback) {
         $.ajax({
             url: location.origin + "/operator/race/edit",
             type: "post",
@@ -120,11 +127,40 @@ var matchEditoObj = {
                 errorToken(data.code);
                 if (data.code == 0) {
                     myAlert.createBox("保存成功！");
+                    callback && callback();
                 }
             },
             error: function() {
                 myAlert.createBox("网络不给力！");
             }
         })
+    },
+    //校验所有输入框
+    isInputText: function() {
+        var inputText = $("input[type=text]"); //所有输入框
+        for (var i = 0; i < inputText.length; i++) {
+            if (inputText.eq(i).val() == "") {
+                return false;
+            }
+        }
+        return true;
+    },
+    //校验图片选择
+    isInputFile: function() {
+        var inputCheck = $("#raceShow li").find("img");
+        for (var i = 0; i < inputCheck.length; i++) {
+            if (inputCheck.eq(i).attr("src")) {
+                return true;
+            }
+        }
+        return false;
+    },
+    //校验页面信息是否填写完整
+    isAllInfo: function() {
+        if (!matchEditoObj.isInputText() || !matchEditoObj.isInputFile()) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }

@@ -10,8 +10,8 @@ var PAYWAY = ["银行转账", "微信", "支付宝"];
 var orderDetailObj = {
     initPageRequest: function() {
         $.ajax({
-            url: location.origin + "/operator/orders/find",
-            type: "post",
+            url: location.origin + " ",
+            type: "post ",
             data: JSON.stringify(postData),
             dataType: "json",
             contentType: "application/json",
@@ -30,8 +30,7 @@ var orderDetailObj = {
                     }, orderDetailObj.initPageRequest);//, 
                 }
             },
-            error: function(e) {
-                alert(e);
+            error: function() {
                 myAlert.createBox("服务器开小差！ ")
             }
         })

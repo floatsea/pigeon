@@ -22,13 +22,13 @@
                 <span>
                     网站名称
                 </span>
-                <input type="text" id="webName"/>
+                <input type="text" id="webName" />
             </div>
             <div class="pl_article clearfix">
                 <span>
                     关键词
                 </span>
-                <input type="text" id="keyWords"/>
+                <input type="text" id="keyWords" />
             </div>
             <div class="pl_article clearfix">
                 <span>描述</span>
@@ -156,31 +156,12 @@
                     </div>
                 </li>
             </ul>
-            
+
             <div class="pl_article_btn clearfix">
                 <h4>筛选条件管理</h4>
-                <ul>
-                    <li>
+                <ul id="select_box">
+                    <li class="active">
                         <span>血统</span>
-                        <div class="mark" style="display:none">
-                            <dl>
-                                <dt>血统</dt>
-                                <dd>
-                                    <label for="">
-                                        <input type="radio"/>
-                                        <i></i>
-                                        白雪公主
-                                    </label>
-                                </dd>
-                                <dd>
-                                    <label for="">
-                                        <input type="radio"/>
-                                        <i></i>
-                                        白雪公主
-                                    </label>
-                                </dd>
-                            </dl>
-                        </div>
                     </li>
                     <li>
                         <span>距离</span>
@@ -190,14 +171,81 @@
                     </li>
                 </ul>
             </div>
-            <div class="editor_button">
+            <div class="platform_set_pigeon">
+                <dl class="j_ancestry">
+                    <dt></dt>
+                    <dd>
+                        <label for="xt0">
+                            <input type="checkbox" id="xt0"/>
+                            <i></i>
+                            <b>白雪公主</b>
+                        </label>
+                    </dd>
+                    <dd>
+                        <label for="xt1">
+                            <input type="checkbox" id="xt1"/>
+                            <i></i>
+                            <b>白雪公主</b>
+                        </label>
+                    </dd>
+                </dl>
+                <dl style="display:none;" class="j_distance">
+                    <dt></dt>
+                    <dd>
+                        <label for="jl0">
+                            <input type="radio" id="jl0"/>
+                            <i></i>
+                            <b>短</b>
+                        </label>
+                    </dd>
+                    <dd>
+                        <label for="jl1">
+                                <input type="radio" id="jl1"/>
+                                <i></i>
+                                <b>中</b>
+                            </label>
+                    </dd>
+                    <dd>
+                        <label for="jl2">
+                            <input type="radio" id="jl2"/>
+                            <i></i>
+                            <b>长</b>
+                        </label>
+                    </dd>
+                </dl>
+                <dl style="display:none;" class="j_features">
+                    <dt></dt>
+                    <dd>
+                        <label for="tz0">
+                            <input type="radio" id="tz0"/>
+                            <i></i>
+                            <b>适合雨天</b>
+                        </label>
+                    </dd>
+                    <dd>
+                        <label for="tz1">
+                            <input type="radio" id="tz1"/>
+                            <i></i>
+                            <b>适合晴天</b>
+                        </label>
+                    </dd>
+                    <dd>
+                        <label for="tz2">
+                            <input type="radio" id="tz2"/>
+                            <i></i>
+                            <b>耐热</b>
+                        </label>
+                    </dd>
+                </dl>
+            </div>
+
+            <div class="editor_button" style="margin-top:50px">
                 <button id="save_btn">保存</button>
             </div>
         </div>
     </div>
     <script src="../js/platform_set.js"></script>
     <script>
-
     </script>
 </body>
 

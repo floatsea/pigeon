@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../css/reset.css">
     <link rel="stylesheet" href="../css/style.css">
     <script src="../js/jquery-1.10.2.min.js"></script>
+    <script src="../js/ajaxfileupload.js"></script>
     <script src="../js/public.js"></script>
 </head>
 
@@ -448,6 +449,40 @@
             </div>
         </div>
     </div>
+    <div class="send_goods_mark">
+        <div class="send_goods_mark_cont">
+            <h5>请补充发货信息</h5>
+            <div class="clearfix">
+                <span>承运商</span>
+                <input type="text" value="" placeholder="请输入承运商" id="carrier" />
+            </div>
+            <div class="clearfix">
+                <span>物流单号</span>
+                <input type="text" value="" placeholder="请输入物流编号" id="logistics" />
+            </div>
+            <div class="clearfix">
+                <span>物流凭证</span>
+                <input type="file" value="" name="upfile" accept="image/*" id="logistics_img" />
+                <em>选择文件</em>
+            </div>
+            <ul class="pay_img_box clearfix">
+                <!-- <li>
+                    <div><img src="../image/tit.png" /></div>
+                    <i></i>
+                </li> -->
+            </ul>
+            <div class="send_goods_btn_box">
+                <button class="cancel_btn" id="send_doods_cancel">取消</button>
+                <button class="sure_btn" id="send_goods_srue">确认发货</button>
+            </div>
+        </div>
+    </div>
+    <!--缩略图放大-->
+    <div class="pay_big_img_box" style="display:none">
+        <div>
+            <img src="../image/cp.png" />
+        </div>
+    </div>
     <script src="../js/order_management.js?v=1"></script>
     <script>
         //页面初始化 请求入参
@@ -467,6 +502,7 @@
         //顶部“订单状态”切换状态
         $("#order_tit span").on("click", function() {
             $("#order_tit span").removeClass("active");
+            $("#order_sel_all").prop("checked", false);
             $(this).addClass("active");
             var _index = $(this).index();
             postData.orderitemStatus = orderListObj.getOrderitemStatus(_index); //获取订单状态 
@@ -560,6 +596,7 @@
                     "orderId": orderId
                 }, function() {
                     $this.html("已收款");
+                    $("#order_tit span").eq(0).trigger("click");
                 });
             }
         });
@@ -576,14 +613,79 @@
         // 点击 “待发货” 的 “确认发货” 
         $("#order_list_goods").on("click", ".sendSure_goods_btn", function() {
             var $this = $(this);
-            var orderId = $this.closest("tr").attr("orderId");
-            orderListObj.sendSureGoodsMsg({
-                "orderId": orderId,
-                "carrier": "", //承运快递
-                "expressNo": "" //运单号码
-            }, function() {
-
+            var orderitemId = $this.closest("tr").attr("orderitemId");
+            $(".send_goods_mark").attr("orderitemId", orderitemId).show();
+        });
+        // 上传物流凭证
+        $("#logistics_img").on("change", function() {
+            var $this = $(this);
+            var thisId = $(this).attr("id");
+            var postUrl = location.origin + '/ueditor?action=uploadimage';
+            uploadRequest(postUrl, thisId, function(imgUrl) {
+                var liStr = '<li>' +
+                    '<div><img src="' + imgUrl + '" /></div>' +
+                    '<i></i>' +
+                    '</li>';
+                $(".pay_img_box").append(liStr);
             });
+        });
+        // 删除物流凭证
+        $(".pay_img_box").on("click", "i", function() {
+            $(this).closest("li").remove();
+        });
+        // 确认发货弹窗  “确认”
+        $("#send_goods_srue").on("click", function() {
+            var orderitemId = $(".send_goods_mark").attr("orderitemId");
+            var carrierStr = $("#carrier").val(); //承运商
+            var logisticsStr = $("#logistics").val(); //物流单号
+            var liList = $(".pay_img_box li");
+            if (carrierStr == "") {
+                myAlert.createBox("请输入承运商");
+                return;
+            } else {
+                if (!stripScript(carrierStr)) {
+                    myAlert.createBox("承运商格式有误，请重新输入！");
+                    return;
+                }
+            }
+            if (!logisticsStr) {
+                myAlert.createBox("请输入承运商");
+                return;
+            } else {
+                var reg = /^[a-zA-Z0-9]$/;
+                if (reg.test(carrierStr)) {
+                    myAlert.createBox("物流单号格式有误，请重新输入！");
+                    return;
+                }
+            }
+            if (liList.length == 0) {
+                myAlert.createBox("请上传物流凭证！");
+                return;
+            }
+            var imgArr = [];
+            $(".pay_img_box li").each(function(i) {
+                imgArr.push({
+                    "img": $(".pay_img_box li").eq(i).find("img").attr("src"),
+                    "alt": "物流凭证",
+                    "isCover": "N",
+                    "url": "",
+                    "desc": "物流凭证"
+                });
+            });
+            orderListObj.sendSureGoodsMsg({
+                "orderitemId": orderitemId,
+                "carrier": carrierStr, //承运快递
+                "expressNo": logisticsStr, //运单号码
+                "expressVoucher": {
+                    "images": imgArr
+                }
+            }, function() {
+                $(".send_goods_mark").hide();
+                $("#order_tit span").eq(2).trigger("click");
+            });
+        });
+        $("#send_doods_cancel").on("click", function() {
+            $(".send_goods_mark").hide();
         });
         // 点击 “待收货” 的 “确认收货”
         $("#order_list_collect").on("click", ".collect_goods_btn", function() {
@@ -592,7 +694,7 @@
             orderListObj.collectGoods({
                 "orderitemId": orderitemId
             }, function() {
-
+                $("#order_tit span").eq(3).trigger("click");
             });
         });
         // 点击 “完成” 的 “确认打款”
@@ -603,7 +705,7 @@
                 orderListObj.sureMoney({
                     "orderitemId": orderitemId
                 }, function() {
-                    $this.html("已打款");
+                    $("#order_tit span").eq(4).trigger("click");;
                 });
             }
 
@@ -616,7 +718,7 @@
                 orderListObj.cancelOrder({
                     "orderId": orderId
                 }, function() {
-                    $this.html("已取消");
+                    $("#order_tit span").eq(0).trigger("click");
                 });
             }
         });
@@ -636,8 +738,22 @@
                     "orderId": orderIdArr.join(",")
                 }, function() {
                     checkOrder.closest("tr").find(".cancel_order_btn").html("已取消");
+                    $("#order_tit span").eq(0).trigger("click");
                 });
             }
+        });
+
+        //上传物流凭证 点击放大
+        $(".pay_img_box").on("click", "img", function() {
+            var imgSrc = $(this).attr("src");
+            $(".pay_big_img_box img").attr("src", imgSrc);
+            $(".pay_big_img_box").show();
+        });
+        $(".pay_big_img_box").on("click", function() {
+            $(this).hide();
+        });
+        $(".pay_big_img_box img").on("click", function(ev) {
+            ev.stopPropagation();
         });
     </script>
 </body>

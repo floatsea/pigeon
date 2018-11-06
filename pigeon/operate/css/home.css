@@ -18,6 +18,11 @@ body {
     zoom: 1;
 }
 
+
+/* ::-webkit-scrollbar {
+    width: 10px
+} */
+
 .home_box {
     width: 100%;
     min-height: 100%;
@@ -26,15 +31,15 @@ body {
 
 .home_left {
     float: left;
-    width: 140px;
-    min-height: 100%;
-    padding-bottom:100px;
+    width: 160px;
+    padding-bottom: 100px;
     background: #333;
-    /* overflow-y: auto; */
+    overflow-y: auto;
+    cursor: pointer;
 }
 
 .home_type {
-    width: 140px;
+    width: 160px;
     height: 100px;
     background: #333;
     padding: 20px 0 12px 30px;
@@ -70,9 +75,9 @@ body {
 
 .home_right {
     float: left;
-    width: -webkit-calc(100% - 140px);
-    width: -moz-calc(100% - 140px);
-    width: calc(100% - 140px);
+    width: -webkit-calc(100% - 160px);
+    width: -moz-calc(100% - 160px);
+    width: calc(100% - 160px);
 }
 
 .home_right_tit {

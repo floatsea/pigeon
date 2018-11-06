@@ -75,14 +75,14 @@
                     <p>关注</p>
                 </div>
             </h3>
-            <!-- <ul>
+            <ul>
                 <li><span>宗旨</span>做赛鸽公益事业，打造全国首家以慈善为目的的国际化赛鸽公棚</li>
                 <li><span>使命</span>一切为了孩子、为了中国的未来、为了实现中国梦</li>
                 <li><span>愿景</span>致力于打造真正的公平化、正规化、国际化、专业化的赛鸽平台</li>
-            </ul> -->
+            </ul>
         </div>
         <!--参赛规则-->
-        <!-- <div class="rules_box">
+        <div class="rules_box">
             <ul class="rules">
                 <li class="rules-hov">参赛条件<i class="rules_line"></i></li>
                 <li>参赛费用</li>
@@ -90,9 +90,10 @@
                 <li>奖项设置</li>
                 <li>精英单机</li>
             </ul>
-        </div> -->
+
+        </div>
         <div class="entry_con">
-            <!-- <ul>
+            <ul>
                 <li>
                     <span>1</span>参赛鸽必须佩戴所属国家或地区2018年正式足环一枚。
                 </li>
@@ -100,7 +101,7 @@
                 <li><span>3</span>公棚统一为参赛鸽接种疫苗。如交鸽前鸽主自行接种，请在交鸽时予以说明大家都在发大家都在发大家都在发大家都在发</li>
                 <li><span>4</span>公棚统一为参赛鸽接种疫苗。如交鸽前鸽主自行接种，请在交鸽时予以说明大家都在发大家都在发大家都在发大家都在发</li>
                 <li><span>5</span>公棚统一为参赛鸽接种疫苗。如交鸽前鸽主自行接种，请在交鸽时予以说明大家都在发大家都在发大家都在发大家都在发</li>
-            </ul> -->
+            </ul>
         </div>
     </div>
     <footer class="event_detail_foot">
@@ -146,7 +147,7 @@
             });
 
             //点击 报名
-            $("#sign_btn").bind("click", fn=function() {
+            $("#sign_btn").on("click", function() {
                 $("#sign_mark").show();
             })
 
@@ -203,9 +204,6 @@
 
             //提交
             $("#submit_btn").on("click", function() {
-                if($("#submit_btn").html() == "已报名"){
-                    return;
-                }
                 if ($("#cust_name").val() == "" || $("#mobile").val() == "" || $("#card").val() == "") {
                     myAlert.createBox("亲，您的信息填写不完整，赶快完善吧");
                     return;

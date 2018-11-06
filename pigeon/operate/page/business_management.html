@@ -306,7 +306,6 @@
             //公棚——点击 “赛事”
             $("#loft_list").on("click", ".match_list", function() {
                 var oneloftName = $(this).closest("tr").attr("oneloftName")
-                alert(oneloftName + "business_management")
                 location.href = "match_management.html?oneloftId=" + $(this).closest("tr").attr("oneloftId") + "&oneloftName=" + encodeURI(oneloftName);
             });
             //公棚——点击 "资讯"

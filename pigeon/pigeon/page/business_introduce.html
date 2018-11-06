@@ -36,7 +36,7 @@
     <script type="text/javascript" src="../js/weixin_init.js"></script>
     <script>
         var openid = getParameter("openid"); //openid
-        // var Authorization = localStorage.getItem("Authorization") || "";
+        var Authorization = localStorage.getItem("Authorization") || "";
         //var WX_USERINFO = getParameter("WX_USERINFO"); //用户信息
         // var custumerInfo = JSON.parse(sessionStorage.getItem("custumerInfo"));
         // $("#nickName").html(custumerInfo.nickName); //昵称
@@ -46,8 +46,6 @@
         // $("#birthday").val(getDateToAge(custumerInfo.idCard));
         // $("#city").val(custumerInfo.address);
         // $("#mobile").val(custumerInfo.mobile);
-        $("#nickName").html(getLocVal("shopName")||"");
-        $(".introduce_content_txt").html(getLocVal("shopDesc")||"");
     </script>
 </body>
 

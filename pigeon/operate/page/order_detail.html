@@ -161,6 +161,12 @@
                 <button id="return_btn">返回</button>
             </div>
         </div>
+        <!--缩略图放大-->
+        <div class="pay_big_img_box" style="display:none">
+            <div>
+                <img src="../image/cp.png" />
+            </div>
+        </div>
     </div>
     <script src="../js/order_detail.js"></script>
     <script>
@@ -169,7 +175,19 @@
         //点击返回键
         $("#return_btn").on("click", function() {
             window.history.go(-1)
-        })
+        });
+        //点击支付凭证 缩略图 查看 原图
+        $("#payImgList").on("click", "img", function() {
+            var imgSrc = $(this).attr("src");
+            $(".pay_big_img_box img").attr("src", imgSrc);
+            $(".pay_big_img_box").show();
+        });
+        $(".pay_big_img_box").on("click", function() {
+            $(this).hide();
+        });
+        $(".pay_big_img_box img").on("click", function(ev) {
+            ev.stopPropagation();
+        });
     </script>
 </body>
 

@@ -624,11 +624,6 @@ function uploadRequest(postUrl,id,callback) {
             alert(e);
         }
     });
-}
-function setLocVal(name, val){
-    localStorage.setItem(name, val);
-}
-function getLocVal(name) {
-    localStorage.getItem(name);
+    
 }
 
