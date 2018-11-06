@@ -13,7 +13,6 @@ body {
     clear: both;
 }
 
-
 /*我的页面头部登录注册部分*/
 
 .mine_box {
@@ -86,7 +85,6 @@ body {
     width: 0.768rem;
 }
 
-
 /*收藏消息*/
 
 .collect-messages {
@@ -112,7 +110,6 @@ body {
     line-height: 1rem;
     font-size: 0.55rem;
 }
-
 
 /*交易信息*/
 
@@ -189,7 +186,6 @@ body {
 .trad_information li a p {
     text-align: center;
 }
-
 
 /*我的关注*/
 
@@ -291,12 +287,9 @@ body {
     color: #f9454e;
 }
 
-
 /*我的页面结束*/
 
-
 /*橱窗*/
-
 
 /*搜索框*/
 
@@ -327,7 +320,6 @@ body {
     -webkit-transform: translateY(-50%);
     transform: translateY(-50%);
 }
-
 
 /*最新发布导航栏*/
 
@@ -479,7 +471,6 @@ body {
     margin-top: -0.1rem;
 }
 
-
 /*橱窗的内容*/
 
 .release_box {
@@ -571,9 +562,7 @@ body {
     margin-left: 1.493rem;
 }
 
-
 /*公棚*/
-
 
 /*搜索框*/
 
@@ -629,7 +618,6 @@ body {
 .loft_search_l span {
     float: left;
 }
-
 
 /*公棚导航*/
 
@@ -715,7 +703,6 @@ body {
 .cnr_c {
     margin-top: 0.2rem;
 }
-
 
 /*赛事发布信息*/
 
@@ -855,9 +842,7 @@ body {
     background: #fff;
 }
 
-
 /*列表视图*/
-
 
 /*列表栏*/
 
@@ -965,7 +950,6 @@ body {
     color: #666;
     margin-bottom: 0.5rem;
 }
-
 
 /*种鸽店面*/
 
@@ -1080,9 +1064,7 @@ body {
     line-height: 0.98rem;
 }
 
-
 /*公棚详情*/
-
 
 /*头部*/
 
@@ -1252,7 +1234,6 @@ body {
     transform: translateY(-50%);
 }
 
-
 /*赛事详情*/
 
 .latest_events {
@@ -1322,7 +1303,6 @@ body {
     line-height: 1.4rem;
     box-shadow: 0px 10px 10px 3px rgba(253, 32, 42, 0.05);
 }
-
 
 /*公棚动态*/
 
@@ -1398,9 +1378,7 @@ body {
     height: 0.811rem;
 }
 
-
 /*赛事详情*/
-
 
 /*首部*/
 
@@ -1536,7 +1514,6 @@ body {
     padding-bottom: 0.3rem;
 }
 
-
 /*捐款详情*/
 
 .donations_in {
@@ -1628,7 +1605,6 @@ body {
     margin-top: -0.9rem;
 }
 
-
 /*参赛规则*/
 
 .rules_box {
@@ -1695,9 +1671,7 @@ body {
     margin-right: 0.2rem;
 }
 
-
 /* index.html首页 */
-
 
 /* swiper——style */
 
@@ -1786,7 +1760,6 @@ body {
     display: block;
     width: 100%;
 }
-
 
 /* 首页——热卖种鸽 */
 
@@ -1996,7 +1969,6 @@ body {
     top: 1.6rem;
 }
 
-
 /* index.html===最新赛事 */
 
 .in_new,
@@ -2114,7 +2086,6 @@ body {
     top: 43%;
 }
 
-
 /* index.html===公棚 */
 
 .in_gp h3 {
@@ -2210,7 +2181,6 @@ body {
     top: 40%;
 }
 
-
 /* index.html====底部 */
 
 .in_foot {
@@ -2258,7 +2228,6 @@ body {
 .in_foot .in_foot_me img {
     width: 0.8rem;
 }
-
 
 /* product_detail.html产品详情 */
 
@@ -2500,7 +2469,7 @@ body {
     float: right;
     max-width: 4rem;
     width: 4rem;
-    text-align:right;
+    text-align: right;
 }
 
 .pro_type_cont tr:nth-child(odd) {
@@ -2641,9 +2610,7 @@ body {
     margin: 0 auto;
 }
 
-
 /*订单确认*/
-
 
 /*订单详情部分*/
 
@@ -2823,7 +2790,6 @@ body {
     font-size: 0.8rem;
 }
 
-
 /*底部价钱合计*/
 
 .pri_tot {}
@@ -2918,7 +2884,6 @@ body {
     margin-top: -0.1rem;
 }
 
-
 /*完善信息弹窗*/
 
 .order_sure_mark {
@@ -3010,7 +2975,6 @@ body {
     border-radius: 1.5rem;
     margin: 0 auto;
 }
-
 
 /*我的订单*/
 
@@ -3158,7 +3122,6 @@ body {
     padding-right: 0.75rem;
 }
 
-
 /* 新增橱窗页面release.html轮播图 */
 
 .release_banner {
@@ -3191,7 +3154,6 @@ body {
 .release_banner .search input {
     border: 1px solid #a1b2cb;
 }
-
 
 /* 我的赛事 my_event*/
 
@@ -3227,7 +3189,6 @@ body {
     margin-left: -0.75rem;
     box-shadow: 0px 4px 10px 3px rgba(253, 32, 42, 0.04);
 }
-
 
 /* 关注列表 follow_list.html */
 
@@ -3278,7 +3239,6 @@ body {
     transition: all 0.5s ease;
 }
 
-
 /* 取消收藏 */
 
 .collect_cancel_btn,
@@ -3298,7 +3258,6 @@ body {
 .atten_cancel_btn {
     height: 6rem;
 }
-
 
 /* 新增筛选弹窗 橱窗列表release.html + 视图列表 list_view.html*/
 
@@ -3411,7 +3370,6 @@ body {
     z-index: 1000;
 }
 
-
 /*公棚详情  高德地图*/
 
 .map_mask {
@@ -3423,7 +3381,6 @@ body {
     bottom: 0;
     display: none;
 }
-
 
 /* my_order.html 新增支付信息弹窗 */
 
@@ -3534,7 +3491,6 @@ body {
     border-radius: 100px;
 }
 
-
 /* follow_list.html 新增*/
 
 .att_box_con li {
@@ -3591,7 +3547,6 @@ body {
     border-radius: 100px;
 }
 
-
 /* loading */
 
 .myLoading {
@@ -3625,4 +3580,26 @@ body {
     top: 54%;
     -webkit-transform: translate(-50%, 0);
     transform: translate(-50%, 0);
+}
+
+@font-face {
+    font-family: "iconfont";
+    src: url('iconfont.eot?t=1541429926574');
+    /* IE9*/
+    src: url('iconfont.eot?t=1541429926574#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('data:application/x-font-woff;charset=utf-8;base64,d09GRgABAAAAAAQkAAsAAAAABnQAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABHU1VCAAABCAAAADMAAABCsP6z7U9TLzIAAAE8AAAARAAAAFZC6E5kY21hcAAAAYAAAABLAAABcO2ayQBnbHlmAAABzAAAAG8AAAB40BdKnGhlYWQAAAI8AAAALwAAADYTLDtJaGhlYQAAAmwAAAAcAAAAJAfeA4NobXR4AAACiAAAAAgAAAAICAAAAGxvY2EAAAKQAAAABgAAAAYAPAAAbWF4cAAAApgAAAAgAAAAIAEPAC1uYW1lAAACuAAAAUUAAAJtPlT+fXBvc3QAAAQAAAAAIwAAADZNWlZNeJxjYGRgYOBikGPQYWB0cfMJYeBgYGGAAJAMY05meiJQDMoDyrGAaQ4gZoOIAgCKIwNPAHicY2BkYWCcwMDKwMHUyXSGgYGhH0IzvmYwYuRgYGBiYGVmwAoC0lxTGBzeFL0pYm7438AQw9zA0AAUZgTJAQDv8QzTeJxjYGBgZWBgYAZiHSBmYWBgDGFgZAABP6AoI1icmYELLM7CoARWwwISf1P0/z+MBPJZwCQDIxvDKOABkzJQHjisIJiBEQBOgQtJAHicY2BmYPi/gPkBcwIDN4M4gwIDA6sag7oZg7kYgzgbA7OgiJiRmamgiZoSG7Mco5EZiMHEcObfR1ZWRv4zZxj5WVn/fXwjJCMERAKM0hrSQJSAJHUGqJTp9r8FfEJCfIwJQPLvIxGQGmkAkJYcugB4nGNgZGBgAOLZHHfd4vltvjJwszCAwA226mUI+v8CFgbmBCCXg4EJJAoAEoAJhQB4nGNgZGBgbvjfwBDDwgACQJKRARUwAQBHCAJrBAAAAAQAAAAAAAAAADwAAAABAAAAAgAhAAMAAAAAAAIAAAAKAAoAAAD/AAAAAAAAeJxlj01OwzAQhV/6B6QSqqhgh+QFYgEo/RGrblhUavdddN+mTpsqiSPHrdQDcB6OwAk4AtyAO/BIJ5s2lsffvHljTwDc4Acejt8t95E9XDI7cg0XuBeuU38QbpBfhJto41W4Rf1N2MczpsJtdGF5g9e4YvaEd2EPHXwI13CNT+E69S/hBvlbuIk7/Aq30PHqwj7mXle4jUcv9sdWL5xeqeVBxaHJIpM5v4KZXu+Sha3S6pxrW8QmU4OgX0lTnWlb3VPs10PnIhVZk6oJqzpJjMqt2erQBRvn8lGvF4kehCblWGP+tsYCjnEFhSUOjDFCGGSIyujoO1Vm9K+xQ8Jee1Y9zed0WxTU/3OFAQL0z1xTurLSeTpPgT1fG1J1dCtuy56UNJFezUkSskJe1rZUQuoBNmVXjhF6XNGJPyhnSP8ACVpuyAAAAHicY2BigAAuBuyAiZGJkZmBpySzIjMvvTgDRDEwAAAvpgVIAA==') format('woff'), url('iconfont.ttf?t=1541429926574') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+    url('iconfont.svg?t=1541429926574#iconfont') format('svg');
+    /* iOS 4.1- */
+}
+
+.iconfont {
+    font-family: "iconfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-tixingshixin:before {
+    content: "\ec72";
 }
