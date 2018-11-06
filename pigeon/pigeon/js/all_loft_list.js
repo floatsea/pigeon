@@ -30,7 +30,7 @@ var loftListObj = {
                         $("#load_more_txt").html("没有更多的数据");
                         return;
                     }
-                }else if(data.code=="401"){
+                } else if (data.code == "401") {
                     getLogin({
                         "openId": openid
                     });
