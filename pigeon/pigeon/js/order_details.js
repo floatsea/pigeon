@@ -10,7 +10,7 @@ var PAYWAY = ["银行转账", "微信", "支付宝"];
 var orderDetailObj = {
     initPageRequest: function() {
         $.ajax({
-            url: location.origin + " ",
+            url: location.origin + "/operator/orders/find",
             type: "post",
             data: JSON.stringify(postData),
             dataType: "json",
@@ -24,10 +24,18 @@ var orderDetailObj = {
                     orderDetailObj.showPayInfo(data.data);
                     orderDetailObj.showLogistics(data.data);
                 }else if(data.code == "401"){
-                    // reloadToken();
-                    getLogin({
-                        "openId": openid
-                    }, orderDetailObj.initPageRequest);//, 
+                    reloadToken({
+                        Authorization: Authorization
+                    }, {
+                        openid: openid
+                    }, function () {
+                        Authorization = localStorage.getItem("Authorization") || "";
+                        // orderDetailObj.initPageRequest();
+                        getLogin({ "orderId": orderid });
+                    })
+                    // getLogin({
+                    //     "openId": openid
+                    // }, orderDetailObj.initPageRequest);//, 
                 }
             },
             error: function (e) {
