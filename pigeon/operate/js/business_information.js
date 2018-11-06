@@ -33,13 +33,10 @@ var businessInfoObj = {
         businessInfoObj.createImg(businessObj.shopShow); //图片展示
     },
     createImg: function(shopShow) {
-        if (shopShow.videos && shopShow.videos.length > 0) {
-            var video = shopShow.videos[0];
-            $("#shopShow li").eq(0).find("img").attr("src", video.video);
-        }
         if (shopShow.images.length > 0) {
             shopShow.images.forEach(function(val, index) {
                 $("#shopShow li").eq(index + 1).find("img").attr("src", val.img);
+                $("#shopShow li").eq(index + 1).find("input").hide();
                 $("#shopShow li").eq(index + 1).find("em").show();
                 if (val.isCover && val.isCover == "Y") {
                     $("#shopShow li").eq(index + 1).find("i").html("设为封面").addClass("active");
@@ -48,7 +45,15 @@ var businessInfoObj = {
                 }
             })
         }
-
+        // video
+        if (shopShow.videos && shopShow.videos.length > 0) {
+            var videoURL = shopShow.videos[0].video;
+            $("#small_video").attr("src", videoURL);
+            $("#big_video").attr("src", videoURL)
+            $("#shopShow li").eq(0).find("b").html("查看视频");
+            $("#shopShow li").eq(0).find(".del_img").show();
+            $("#shopShow li").eq(0).find("input").hide();
+        }
     },
     /**
      * 8、商家修改接口

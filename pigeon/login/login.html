@@ -16,15 +16,16 @@
         <!--客户-->
         <!--默认状态-->
         <div class="login_left1" style="display:block" id="default_left">
-            <img src="image/pigeon_f.png" class="logo">
-            <img src="image/con_txt.png" class="con_txt">
-        </div>
-        <!--鼠标移入-->
-        <div class="login_left2" style="display:none" id="phone_left">
-            <img src="image/pigeon_f.png" class="logo">
-            <img src="image/phone.png" class="phone">
-            <img src=" image/code_img.png" class="code_img" />
-            <p>请使用微信扫描二维码登录</p>
+            <div class="defaultLeft">
+                <img src="image/pigeon_f.png" class="logo">
+                <img src="image/con_txt.png" class="con_txt">
+            </div>
+            <div class="phoneLeft" style="display:none">
+                <img src="image/pigeon_f.png" class="logo">
+                <img src="image/phone.png" class="phone">
+                <img src=" image/code_img.png" class="code_img" />
+                <p>请使用微信扫描二维码登录</p>
+            </div>
         </div>
         <!--商家-->
         <div class="login_right" id="login_right_box">
@@ -43,13 +44,13 @@
                         <li>公棚登录</li>
                     </ul>
                     <ul class="login_list">
-                        <li class="clearfix" id="email_box" style="">
+                        <li class="clearfix" id="email_box">
                             <span>邮箱</span>
-                            <input type="text" maxlength="11" id="login_email" />
+                            <input type="text" id="login_email" style="width:70%" />
                         </li>
                         <li class="clearfix" id="iphone_box" style="display:none;">
                             <span>手机号</span>
-                            <input type="text" maxlength="11" id="login_tel" />
+                            <input type="text" maxlength="11" id="login_tel" style="width:70%" />
                         </li>
                         <li class="clearfix">
                             <span>验证码</span>
@@ -74,13 +75,13 @@
                         </li>
                     </ul>
                     <ul class="login_list">
-                        <li class="clearfix" id="regist_email">
+                        <li class="clearfix" id="regist_email_box">
                             <span>邮箱</span>
-                            <input type="text" maxlength="11" id="regist_email" />
+                            <input type="text" id="regist_email" style="width:70%" />
                         </li>
                         <li class="clearfix" id="regist_tel" style="display:none;">
                             <span>手机号</span>
-                            <input type="text" maxlength="11" id="regist_tel" />
+                            <input type="text" maxlength="11" id="regist_tel" style="width:70%" />
                         </li>
                         <li class="clearfix">
                             <span>验证码</span>
@@ -89,7 +90,7 @@
                         </li>
                         <li class="clearfix">
                             <span>设置密码</span>
-                            <input type="password" id="password" />
+                            <input type="password" id="password" style="width:70%" />
                         </li>
                     </ul>
                     <button class="login_btn" id="regist_btn">注册</button>

@@ -1,5 +1,6 @@
 var businessId = getParameter("businessId") || ""; //有businessId：从商家列表页进入此页面，businessId为空时，说明是订单管理页面
 var shopName = getParameter("businessId") || "";
+var pigeonImgSrc = location.origin + "/operate/image/cp.png"; //默认鸽子图片
 /**
  * 11、商家订单列表接口
  * http://域名/operator/orderitem/findList
@@ -117,7 +118,7 @@ var orderListObj = {
                     '<td>' +
                     '<div class="clearfix">' +
                     '<div  style="float:left;">' +
-                    '<img src="' + val.goodsDesc.pigeonPic + '" alt="">' +
+                    '<img src="' + (val.goodsDesc.pigeonPic || pigeonImgSrc) + '" alt="">' +
                     '</div>' +
                     '<span class="order_list_pigeon">' + val.orderId + '<br>' + val.goodsDesc.pigeonName + ' ' + val.goodsDesc.pigeonNo + '</span>' +
                     '</div>' +
@@ -149,7 +150,7 @@ var orderListObj = {
                     '<td>' +
                     '<div class="clearfix">' +
                     '<div  style="float:left;">' +
-                    '<img src="' + val.goodsDesc.pigeonPic + '" alt="">' +
+                    '<img src="' + (val.goodsDesc.pigeonPic || pigeonImgSrc) + '" alt="">' +
                     '</div>' +
                     '<span class="order_list_pigeon">' + val.orderId + '<br>' + val.goodsDesc.pigeonName + ' ' + val.goodsDesc.pigeonNo + '</span>' +
                     '</div>' +
@@ -176,11 +177,11 @@ var orderListObj = {
 
         if (list.length > 0) {
             list.forEach(function(val) {
-                listStr += '<tr orderId="' + val.orderId + '">' +
+                listStr += '<tr orderId="' + val.orderId + '" orderitemId="' + val.orderitemId + '">' +
                     '<td style="text-align:left;">' +
                     '<div class="clearfix">' +
                     '<div  style="float:left;">' +
-                    '<img src="' + val.goodsDesc.pigeonPic + '" alt="">' +
+                    '<img src="' + (val.goodsDesc.pigeonPic || pigeonImgSrc) + '" alt="">' +
                     '</div>' +
                     '<span class="order_list_pigeon">' + val.orderId + '<br>' + val.goodsDesc.pigeonName + ' ' + val.goodsDesc.pigeonNo + '</span>' +
                     '</div>' +
@@ -192,7 +193,7 @@ var orderListObj = {
                     '<td>' +
                     '<span class="order_detail">订单详情</span>|' +
                     '<span class="send_goods_btn">提醒卖家发货</span>|' +
-                    '<span class="sendSure_goods_btn">确认发货</span>|' +
+                    '<span class="sendSure_goods_btn">确认发货</span>' +
                     '</td>' +
                     '</tr>';
             });
@@ -210,7 +211,7 @@ var orderListObj = {
                     '<td style="text-align:left;">' +
                     '<div class="clearfix">' +
                     '<div  style="float:left;">' +
-                    '<img src="' + val.goodsDesc.pigeonPic + '" alt="">' +
+                    '<img src="' + (val.goodsDesc.pigeonPic || pigeonImgSrc) + '" alt="">' +
                     '</div>' +
                     '<span class="order_list_pigeon">' + val.orderId + '<br>' + val.goodsDesc.pigeonName + ' ' + val.goodsDesc.pigeonNo + '</span>' +
                     '</div>' +
@@ -239,7 +240,7 @@ var orderListObj = {
                     '<td style="text-align:left;">' +
                     '<div class="clearfix">' +
                     '<div  style="float:left;">' +
-                    '<img src="' + val.goodsDesc.pigeonPic + '" alt="">' +
+                    '<img src="' + (val.goodsDesc.pigeonPic || pigeonImgSrc) + '" alt="">' +
                     '</div>' +
                     '<span class="order_list_pigeon">' + val.orderId + '<br>' + val.goodsDesc.pigeonName + ' ' + val.goodsDesc.pigeonNo + '</span>' +
                     '</div>' +
@@ -268,7 +269,7 @@ var orderListObj = {
                     '<td style="text-align:left;">' +
                     '<div class="clearfix">' +
                     '<div  style="float:left;">' +
-                    '<img src="' + val.goodsDesc.pigeonPic + '" alt="">' +
+                    '<img src="' + (val.goodsDesc.pigeonPic || pigeonImgSrc) + '" alt="">' +
                     '</div>' +
                     '<span class="order_list_pigeon">' + val.orderId + '<br>' + val.goodsDesc.pigeonName + ' ' + val.goodsDesc.pigeonNo + '</span>' +
                     '</div>' +
@@ -296,7 +297,7 @@ var orderListObj = {
                     '<td style="text-align:left;">' +
                     '<div class="clearfix">' +
                     '<div  style="float:left;">' +
-                    '<img src="' + val.goodsDesc.pigeonPic + '" alt="">' +
+                    '<img src="' + (val.goodsDesc.pigeonPic || pigeonImgSrc) + '" alt="">' +
                     '</div>' +
                     '<span class="order_list_pigeon">' + val.orderId + '<br>' + val.goodsDesc.pigeonName + ' ' + val.goodsDesc.pigeonNo + '</span>' +
                     '</div>' +

@@ -79,18 +79,17 @@
                     <ul class="clearfix" id="pigeonShow">
                         <li>
                             <div class="up_box">
-                                <img src="" alt="" id="small_img">
-                                <input type="file" name="upfile" multiple="multiple" class="upVideo" id="pigeon_video" />
+                                <img src="../image/load2.gif" id="videoLoading" style="display:none;">
+                                <video src="" id="small_video"></video>
+                                <input type="file" name="upfile" multiple="multiple" class="upVideo" id="pigeon_video" accept="video/*" />
                                 <b class="look_video">上传视频</b>
                             </div>
-                            <div id="video" class="video_box show_mark"></div>
                             <em class="del_img"></em>
                         </li>
                         <li>
                             <div class="up_box j_up_img">
                                 <img src="" alt="">
-                                <input type="file" name="upfile" class="upImg show_mark" id="up_img1" />
-                                <div class="video_box show_mark"></div>
+                                <input type="file" name="upfile" class="upImg" id="up_img1" accept="image/*" />
                                 <i>上传图片</i>
                             </div>
                             <em class="del_img"></em>
@@ -98,8 +97,7 @@
                         <li>
                             <div class="up_box j_up_img">
                                 <img src="" alt="">
-                                <input type="file" name="upfile" class="upImg show_mark" id="up_img2" />
-                                <div class="video_box show_mark"></div>
+                                <input type="file" name="upfile" class="upImg" id="up_img2" accept="image/*" />
                                 <i>上传图片</i>
                             </div>
                             <em class="del_img"></em>
@@ -107,8 +105,7 @@
                         <li>
                             <div class="up_box j_up_img">
                                 <img src="" alt="">
-                                <input type="file" name="upfile" class="upImg show_mark" id="up_img3" />
-                                <div class="video_box show_mark"></div>
+                                <input type="file" name="upfile" class="upImg" id="up_img3" accept="image/*" />
                                 <i>上传图片</i>
                             </div>
                             <em class="del_img"></em>
@@ -116,8 +113,7 @@
                         <li>
                             <div class="up_box j_up_img">
                                 <img src="" alt="">
-                                <input type="file" name="upfile" class="upImg show_mark" id="up_img4" />
-                                <div class="video_box show_mark"></div>
+                                <input type="file" name="upfile" class="upImg" id="up_img4" accept="image/*" />
                                 <i>上传图片</i>
                             </div>
                             <em class="del_img"></em>
@@ -135,6 +131,18 @@
                 <button id="return_btn">返回</button>
                 <button id="save_btn">保存</button>
             </div>
+        </div>
+    </div>
+    <!--视频放大-->
+    <div id="video" class="video_box">
+        <div>
+            <video id="big_video" controls="controls"></video>
+        </div>
+    </div>
+    <!--缩略图放大-->
+    <div class="pay_big_img_box" style="display:none">
+        <div>
+            <img src="../image/cp.png" />
         </div>
     </div>
 
@@ -155,10 +163,13 @@
             $("#pigeonShow").on("change", ".upImg", function() {
                 var $this = $(this);
                 var _index = $this.closest("li").index();
-                var input1 = $this.get(0);
                 var imgDom = $this.prev().get(0);
                 var thisId = $(this).attr("id");
                 var postUrl = location.origin + '/ueditor?action=uploadimage';
+                if (!$this.val()) {
+                    return;
+                }
+                imgDom.src = "../image/load2.gif";
                 sessionStorage.setItem("businessImgIndex", _index + "");
                 uploadRequest(postUrl, thisId, function(imgUrl) {
                     imgDom.src = imgUrl;
@@ -166,6 +177,7 @@
                     if ($("#pigeonShow").find("li").eq(_index).find("i").html() == "上传图片") {
                         $("#pigeonShow").find("li").eq(_index).find("i").html("设为封面");
                         $("#pigeonShow").find("li").eq(_index).find(".del_img").show();
+                        $("#pigeonShow").find("li").eq(_index).find("input").hide();
                     }
                 });
             });
@@ -182,31 +194,41 @@
             $("#pigeonShow").on("change", ".upVideo", function() {
                 var $this = $(this);
                 var _index = 0;
-                var input1 = $this.get(0);
-                var imgDom = $this.prev().get(0);
-                var videoBox = $("#video");
                 var thisId = $(this).attr("id");
                 var postUrl = location.origin + "/ueditor?action=uploadvideo";
+                if (!$this.val()) {
+                    return;
+                }
+                $("#videoLoading").show();
+                $("#small_video").hide();
                 uploadRequest(postUrl, thisId, function(videoUrl) {
-                    upVideo(input1, imgDom, videoBox, videoUrl, function() {
-                        $("#pigeonShow li").eq(0).find("b").html("查看视频");
-                        $("#pigeonShow li").eq(0).find(".del_img").show();
-                    })
+                    $("#videoLoading").hide();
+                    $("#small_video").show();
+                    $("#small_video").attr("src", videoUrl);
+                    $("#big_video").attr("src", videoUrl);
+                    $("#pigeonShow li").eq(0).find("b").html("查看视频");
+                    $("#pigeonShow li").eq(0).find(".del_img").show();
+                    $("#pigeonShow").find("li").eq(0).find("input").hide();
                 });
             });
             //点击 “查看视频"
-            $(".look_video").on("click", function() {
-                if ($(this).html() == "查看视频") {
+            $(".look_video, #small_video").on("click", function() {
+                if ($(".look_video").html() == "查看视频") {
                     $("#video").show();
                 }
             });
             //点击 “删除” 按钮
             $(".del_img").on("click", function() {
-                $(this).closest("li").find("img").attr("src", "");
                 $(this).closest("li").find("input[type=file]").val("");
-                $(this).closest("li").find("b").html("上传视频");
-                $(this).closest("li").find("i").html("上传图片");
                 $(this).closest("li").find("i").removeClass("active");
+                if ($(this).closest("li").index() == 0) {
+                    $(this).closest("li").find("video").attr("src", "");
+                    $(this).closest("li").find("b").html("上传视频");
+                } else {
+                    $(this).closest("li").find("img").attr("src", "");
+                    $(this).closest("li").find("i").html("上传图片");
+                }
+                $(this).closest("li").find("input[type=file]").show();
                 $(this).hide();
             });
             //点击 视频 遮罩 ,隐藏
@@ -234,11 +256,14 @@
                         });
                     }
                 });
-                var videoArr = [{
-                    "video": $("#video").find("video").eq(0).attr("src"),
-                    "alt": "",
-                    "desc": $("#small_img").attr("src")
-                }];
+                var videoArr = [];
+                if ($("#small_video").attr("src")) {
+                    videoArr.push({
+                        "video": $("#small_video").attr("src"),
+                        "alt": "",
+                        "desc": ""
+                    })
+                }
                 var saveData = { // 入参缺少标签 字段
                     "businessId": businessId || "",
                     "createdTime": nowTime,
@@ -256,22 +281,32 @@
                         "images": imgArr,
                         "videos": videoArr
                     },
-                    "pigeonTags": "标签",
+                    "pigeonTags": $("#pigeonTab").val(),
                     "stickyTime": "" //置顶时间: 毫秒值
                 };
                 if (!pigeonId) { //添加
                     proEditorObj.addRequst(saveData, function() {
-                        //location.href = "product_management.html";
                         window.history.go(-1);
 
                     });
                 } else { //编辑 保存、
                     proEditorObj.saveRequst(saveData, function() {
-                        //location.href = "product_management.html";
                         window.history.go(-1);
                     });
                 }
-            })
+            });
+            //点击查看 原图
+            $(".j_up_img img").on("click", function() {
+                $(".pay_big_img_box img").attr("src", $(this).attr("src"));
+                $(".pay_big_img_box").show();
+            });
+            //缩略图 关闭
+            $(".pay_big_img_box").on("click", function() {
+                $(this).hide();
+            });
+            $(".pay_big_img_box img").on("click", function(ev) {
+                ev.stopPropagation();
+            });
         })
     </script>
 </body>

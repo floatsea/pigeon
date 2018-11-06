@@ -575,3 +575,16 @@ function getNow() {
     var nowTime = oDate.getFullYear() + "-" + toDou((oDate.getMonth() + 1)) + "-" + toDou(oDate.getDate()) + " " + toDou(oDate.getHours()) + ":" + toDou(oDate.getMinutes()) + ":" + toDou(oDate.getSeconds());
     return nowTime;
 }
+// 邮箱校验
+function checkEmail(str) {
+    if (str == "") {
+        myAlert.createBox("邮箱不能为空！");
+    }
+    var re = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
+    if (re.test(str)) {
+        return true;
+    } else {
+        myAlert.createBox("邮箱格式有误！");
+        return false;
+    }
+}

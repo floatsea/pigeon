@@ -60,6 +60,16 @@ body {
     background: url(../image/bg_l.png) no-repeat;
     background-size: cover;
     z-index: 1;
+    -webkit-transition: all 0.3s ease-in;
+    transition: all 0.3s ease-in;
+}
+
+.defaultLeft {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
 }
 
 .login_left3 {
@@ -68,7 +78,7 @@ body {
     background-size: cover;
 }
 
-.login_left1 .logo {
+.defaultLeft .logo {
     width: 43.7%;
     position: absolute;
     left: 28.5%;
@@ -79,7 +89,7 @@ body {
     width: 45%;
 }
 
-.login_left1 .con_txt {
+.defaultLeft .con_txt {
     width: 8%;
     position: absolute;
     left: 46.7%;
@@ -99,16 +109,26 @@ body {
     background: url(../image/bg_l2.png) no-repeat;
     background-size: cover;
     z-index: 1;
+    -webkit-transition: all 0.3s ease-in;
+    transition: all 0.3s ease-in;
 }
 
-.login_left2 .logo {
+.phoneLeft {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+}
+
+.phoneLeft .logo {
     width: 40.6%;
     position: absolute;
     left: 26.9%;
     top: 14.8%;
 }
 
-.login_left2 .phone {
+.phoneLeft .phone {
     width: 37.6%;
     height: 60.8%;
     position: absolute;
@@ -116,14 +136,14 @@ body {
     top: 40%;
 }
 
-.login_left2 .code_img {
+.phoneLeft .code_img {
     width: 22.3%;
     position: absolute;
     left: 35.83%;
     top: 47.8%;
 }
 
-.login_left2 p {
+.phoneLeft p {
     color: #fff;
     font-size: 10px;
     position: absolute;
@@ -148,7 +168,7 @@ body {
     right: 20.3%;
     top: 39.6%;
     border-radius: 6px;
-    padding-bottom: 10px;
+    padding-bottom: 26px;
 }
 
 .login_tit,
@@ -195,8 +215,8 @@ body {
 
 .login_list li span {
     float: left;
-    height:40px;
-    line-height:40px;
+    height: 40px;
+    line-height: 40px;
     width: 30%;
     color: #333;
     font-size: 16px;
@@ -207,15 +227,15 @@ body {
     font-size: 16px;
     color: #333;
     width: 40%;
-    height:40px;
-    line-height:40px;
+    height: 40px;
+    line-height: 40px;
 }
 
 .login_list li button {
     float: right;
     width: 30%;
-    height:40px;
-    line-height:40px;
+    height: 40px;
+    line-height: 40px;
     color: #448af8;
     font-size: 14px;
     border: none;

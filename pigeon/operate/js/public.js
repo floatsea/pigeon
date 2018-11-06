@@ -20,20 +20,14 @@ myLoad.removeLoading = function() {
 var myAlert = {};
 
 myAlert.createBox = function(htmlStr) {
-        if ($(".alert_box").length == 0) {
-            var alert_box_str = '<div class="alert_mask"><div class="alert_box">' + htmlStr + '</div></div>';
-            $('body').append(alert_box_str);
-            setTimeout(function() {
-                $(".alert_mask").remove();
-            }, 2000);
-        }
-    }
-    /*$(window).on("click",function () {
-        if($(".alert_mask").length>0){
+    if ($(".alert_box").length == 0) {
+        var alert_box_str = '<div class="alert_mask"><div class="alert_box">' + htmlStr + '</div></div>';
+        $('body').append(alert_box_str);
+        setTimeout(function() {
             $(".alert_mask").remove();
-        }
-    });*/
-    /*姓名校验*/
+        }, 2000);
+    }
+}
 var checkFn = {};
 checkFn.applicantName = function(val, el) {
         var value = removeSpace(val);

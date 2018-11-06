@@ -6,7 +6,8 @@
  */
 var orderId = getParameter("orderId") || "";
 var shopName = decodeURI(getParameter("shopName")) || "";
-var orderType = getParameter("orderType"); //0：待付款， 1：待发货， 2：待收货， 3：已完成
+var orderType = getParameter("orderType") || "";
+var pigeonImgSrc = location.origin + "/operate/image/cp.png"; //默认鸽子图片
 var orderDetailObj = {
     initPageRequest: function() {
         $.ajax({
@@ -33,7 +34,8 @@ var orderDetailObj = {
         $("#buyer").html(obj.orderitems[0].userName); //买家
         $("#business").html(shopName); //卖家
         orderDetailObj.creatOrderList(obj);
-        if (obj.orderStatus == 0 || obj.orderStatus == 1) { //待付款、已取消
+        //0：待付款，1：待确认， 2：待发货， 3：待收货， 4：已完成，5：已取消，"":全部
+        if (obj.orderStatus == 0 || obj.orderStatus == 5) { //待付款、已取消、2：待发货
             $("#pay_date").hide();
         } else {
             orderDetailObj.createPayInfo(obj);
@@ -52,7 +54,7 @@ var orderDetailObj = {
             str += '<li>' +
                 '<div class="order_all_cont clearfix">' +
                 '<div>' +
-                '<img src="' + val.goodsDesc.pigeonPic + '" alt="" style="width:100%">' +
+                '<img src="' + (val.goodsDesc.pigeonPic || pigeonImgSrc) + '" alt="" style="width:100%">' +
                 '</div>' +
                 '<div>' +
                 '<p>' + val.goodsDesc.pigeonName + ' ' + val.goodsDesc.pigeonNo +
@@ -105,7 +107,7 @@ var orderDetailObj = {
     },
     //支付方式
     createPayInfo: function(obj) {
-        $("#paidTime").html(obj.paidTime); //支付时间
+        $("#paidTime").html(obj.paidTime || "无"); //支付时间
         var payWay = "无";
         if (obj.payway == 0) {
             payWay = "银行转账";

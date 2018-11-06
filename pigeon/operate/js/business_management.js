@@ -116,6 +116,7 @@ var loftObj = {
                 errorToken(data.code);
                 loftTotalNum = data.data.total; //查询的数据总数
                 var onelofts = data.data.list;
+                $("#loft_sum_num").html(loftTotalNum);
                 loftObj.getLoftPageNumer(loftTotalNum); //页码
                 loftObj.createLoftList(onelofts); //商家列表
             },
@@ -132,7 +133,7 @@ var loftObj = {
             disHtml = val.isDisabled ? "解冻" : "冻结";
             var setTopHtml = "置顶";
             setTopHtml = (val.stickyTime == 0) ? "置顶" : "取消置顶";
-            listStr += '<tr oneloftId="' + val.oneloftId + '" oneloftName="'+val.oneloftName+'">' +
+            listStr += '<tr oneloftId="' + val.oneloftId + '" oneloftName="' + val.oneloftName + '">' +
                 '<td>' +
                 '<input type="checkbox">' +
                 '<label for=""></label>' +

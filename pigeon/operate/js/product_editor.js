@@ -52,6 +52,7 @@ var proEditorObj = {
         if (pigeonShow.images.length > 0) {
             pigeonShow.images.forEach(function(val, _index) {
                 $("#pigeonShow li").eq(_index + 1).find("img").attr("src", val.img);
+                $("#pigeonShow li").eq(_index + 1).find("input").hide();
                 $("#pigeonShow li").eq(_index + 1).find("em").show();
                 if (val.isCover && val.isCover == "Y") {
                     $("#pigeonShow li").eq(_index + 1).find("i").html("设为封面").addClass("active");
@@ -62,30 +63,13 @@ var proEditorObj = {
         }
         // video
         if (pigeonShow.videos.length > 0) {
-            $("#pigeonShow li").eq(0).find("img").attr("src", pigeonShow.videos[0].desc);
             var videoURL = pigeonShow.videos[0].video;
-            var videoURL2 = pigeonShow.videos[0].desc;
-            var videoStr = '<video src="' + videoURL + '" controls="controls></video><video style="display:none" src="' + videoURL2 + '" controls="controls" onloaddata="proEditorObj.captureImage"></video>';
-            $("#video").html(videoStr);
+            $("#small_video").attr("src", videoURL);
+            $("#big_video").attr("src", videoURL)
+            $("#pigeonShow li").eq(0).find("b").html("查看视频");
+            $("#pigeonShow li").eq(0).find(".del_img").show();
+            $("#pigeonShow li").eq(0).find("input").hide();
         }
-
-    },
-    captureImage: function(video) { //截图 
-        var scale = 0.25;
-        try {
-            var videocanvas = $("<canvas/>")[0];
-            video.setAttribute('crossOrigin', 'Anonymous'); //anonymous
-            videocanvas.width = video.videoWidth * scale;
-            videocanvas.height = video.videoHeight * scale;
-            videocanvas.getContext('2d').drawImage(video, 0, 0, videocanvas.width, videocanvas.height);
-            var dataUrl = videocanvas.toDataURL("image/png", 1);
-            console.log(dataUrl)
-            $("#small_img").get(0).src = dataUrl;
-            delete videocanvas;
-        } catch (e) {
-            // $("#pigeonShow li").eq(0).find("img").attr("src", "../image/load.gif");
-        }
-
     },
     /**
      * 保存

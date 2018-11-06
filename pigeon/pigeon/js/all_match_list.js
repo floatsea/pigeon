@@ -42,7 +42,7 @@ var matchListObj = {
     },
     createMatchList: function(list) { //创建赛事列表
         list.forEach(function(val) {
-            var enrolledTime = val.startedTime.split(" ")[0]; //报名开始时间enrolledTime
+            var enrolledTime = val.enrolledTime.split(" ")[0]; //报名开始时间
             var startedTime = val.startedTime.split(" ")[0]; //赛事开始时间
             var endedTime = val.endedTime.split(" ")[0]; //赛事截止时间
             var M = startedTime.split("-")[1];

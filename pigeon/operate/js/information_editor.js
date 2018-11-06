@@ -27,7 +27,6 @@ var inforEditor = {
                     if (businessId) {
                         inforEditor.createBusinessData(data.data);
                     }
-
                 }
             },
             error: function() {
@@ -52,17 +51,17 @@ var inforEditor = {
         }, 1000);
         //inforEditor.showImg(data.newsShow); //橱窗展示
     },
-    showImg: function(newsShow) {
-        $("#newsShow li").eq(0).find("img").attr("src", newsShow.videos[0].video); // 视频缩略图
-        newsShow.images.forEach(function(val, _index) {
-            $("#newsShow li").eq(_index + 1).find("img").attr("src", val.img);
-        });
-    },
+    // showImg: function(newsShow) {
+    //     $("#newsShow li").eq(0).find("img").attr("src", newsShow.videos[0].video); // 视频缩略图
+    //     newsShow.images.forEach(function(val, _index) {
+    //         $("#newsShow li").eq(_index + 1).find("img").attr("src", val.img);
+    //     });
+    // },
     /**
      *38、新增资讯接口
      *http://域名/operator/news/add
      */
-    addInfor: function(saveData) {
+    addInfor: function(saveData, callback) {
         $.ajax({
             url: location.origin + "/operator/news/add",
             type: "post",
@@ -73,6 +72,7 @@ var inforEditor = {
                 errorToken(data.code);
                 if (data.code == 0) {
                     myAlert.createBox("保存成功");
+                    callback && callback();
                 }
             },
             error: function() {
@@ -84,7 +84,7 @@ var inforEditor = {
      *39、编辑资讯接口
      *http://域名/operator/news/edit
      */
-    saveInfor: function(saveData) {
+    saveInfor: function(saveData, callback) {
         $.ajax({
             url: location.origin + "/operator/news/edit",
             type: "post",
@@ -95,6 +95,7 @@ var inforEditor = {
                 errorToken(data.code);
                 if (data.code == 0) {
                     myAlert.createBox("保存成功");
+                    callback && callback();
                 }
             },
             error: function() {

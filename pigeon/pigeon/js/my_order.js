@@ -1,17 +1,6 @@
 var openid = getParameter("openid");
 var scrollFlag = true; //上拉加载更多 标识， true 可以加载， false不可加载
 var Authorization = localStorage.getItem("Authorization") || "";
-
-var itemStaus={
-    "0": "待付款",
-    "1": "已付款",
-    "2": "待发货",
-    "3": "已发货",
-    "4": "已完成",
-    "5": "已完成",
-    "-1": "已取消"
-};
-
 var myOrderObj = {
     initRequest: function(myOrderPostData) { //接口21
         $.ajax({
@@ -32,9 +21,6 @@ var myOrderObj = {
                         case "0": //待付款
                             myOrderObj.createPayList(list);
                             break;
-                        // case "2": //待发货
-                        //     myOrderObj.createSendGoods(list,1);
-                        //     break;
                         case "3": //待收货
                             myOrderObj.createSendGoods(list);
                             break;
@@ -69,32 +55,17 @@ var myOrderObj = {
             var sumMoney = 0;
             orderitems.forEach(function(imgVal) {
                 //orderitemStatus
-                // imgList += '<div class="container">'
-                //             +'<div><li><img src="' + imgVal.goodsDesc.pigeonPic + '"></li></div>'
-                //             +'<div class="item">'
-                //                 +'<div class="itemTitle">' + imgVal.goodsDesc.pigeonName + '</div>'
-                //                 +'<div class="itemDesc">商家：' + imgVal.goodsDesc.shopName + '</div>'
-                //                 + '<span class="itemStatus">' + itemStaus[imgVal.orderitemStatus+""]+'</span>'
-                //             +'</div>'
-                //         +'</div>'
-                imgList += '<li class="list_images_n clearfix">' +
-                    '<div class="list_images_l">' +
+                imgList += '<li>' +
                     '<img src="' + imgVal.goodsDesc.pigeonPic + '">' +
-                    '</div>' +
-                    '<div class="list_images_r">' +
-                    '<p class="list_images_rn">' + imgVal.goodsDesc.pigeonName + '<span>' + imgVal.goodsDesc.pigeonNo + '</span></p>' +
-                    '<p class="dove_price1"><span>&yen</span>' + imgVal.goodsPrice + '元</p>' +
-                    '</div>' +
-                    '<button class="goods_sure_btn" orderitemId="' + imgVal.orderitemId + '">确认收货</button>' +
                     '</li>';
                 sumMoney += Number(imgVal.goodsPrice);
             });
             payOrderStr += '<div class="order_del" orderId="' + val.orderId + '">' +
-                '<div class="order_num clearfix" onclick="goDtl(\'' + val.orderId + '\')">' +
-                    '<p class="order_number">订单号：' + val.orderId + '</p>' +
-                    '<p class="order_w">等待付款</p>' +
+                '<div class="order_num clearfix">' +
+                '<p class="order_number">订单号：' + val.orderId + '</p>' +
+                '<p class="order_w">等待付款</p>' +
                 '</div>' +
-                '<div class="on_hot_banner" onclick="goDtl(\'' + val.orderId + '\')">' +
+                '<div class="on_hot_banner">' +
                 '<ul class="order_img">' + imgList + '</ul>' +
                 '</div>' +
                 '<div class="price_sum clearfix">' +
@@ -111,7 +82,7 @@ var myOrderObj = {
         })
         $("#pay_order_box").append(payOrderStr);
     },
-    createSendGoods: function(list,index) { //待收货
+    createSendGoods: function(list) { //待收货
         var sendOrderStr = "";
         list.forEach(function(val) {
             var orderitems = val.orderitems;
@@ -132,12 +103,12 @@ var myOrderObj = {
 
             });
             if (imgList) {
-                sendOrderStr += '<div class="order_del" >' +
-                    '<div class="order_num clearfix" onclick="goDtl(\'' + val.orderId + '\')">' +
-                        '<p class="order_number">订单号：' + val.orderId + '</p>' +
-                        '<p class="order_w">等待收货</p>' +
+                sendOrderStr += '<div class="order_del">' +
+                    '<div class="order_num clearfix">' +
+                    '<p class="order_number">订单号：' + val.orderId + '</p>' +
+                    '<p class="order_w">等待收货</p>' +
                     '</div>' +
-                    '<div onclick="goDtl(\'' + val.orderId + '\')">' +
+                    '<div>' +
                     '<ul class="goods_items">' + imgList + '</ul>' +
                     '</div>' +
                     '<div class="price_sum clearfix">' +
@@ -149,12 +120,7 @@ var myOrderObj = {
                     '</div>';
             }
         })
-        // if(index ==2){  //待发货
-        //     $("#goods_send_box").append(sendOrderStr);
-        // }else{  //待收货
-            $("#goods_box").append(sendOrderStr);
-        // }
-        
+        $("#goods_box").append(sendOrderStr);
     },
     createAllList: function(list) { //全部
         var allOrderStr = "";
@@ -162,36 +128,18 @@ var myOrderObj = {
             var orderitems = val.orderitems;
             var imgList = "";
             orderitems.forEach(function(imgVal) {
-                // imgList += '<li>' +
-                //     '<img src="' + imgVal.goodsDesc.pigeonPic + '">' +
-                //     '</li>';
-                // imgList += '<li class="list_images_n clearfix">' +
-                //     '<div class="list_images_l">' +
-                //     '<img src="' + imgVal.goodsDesc.pigeonPic + '">' +
-                //     '</div>' +
-                //     '<div class="list_images_r">' +
-                //     '<p class="list_images_rn">' + imgVal.goodsDesc.pigeonName + '<span>' + imgVal.goodsDesc.pigeonNo + '</span></p>' +
-                //     '<p class="dove_price1"><span>&yen</span>' + imgVal.goodsPrice + '元</p>' +
-                //     '</div>' +
-                //     '<button class="goods_sure_btn" orderitemId="' + imgVal.orderitemId + '">确认收货</button>' +
-                //     '</li>';
-                imgList += '<div class="container">'
-                            +'<div><li><img src="' + imgVal.goodsDesc.pigeonPic + '"></li></div>'
-                            +'<div class="item">'
-                                +'<div class="itemTitle">' + imgVal.goodsDesc.pigeonName + '</div>'
-                                +'<div class="itemDesc">商家：' + imgVal.goodsDesc.shopName + '</div>'
-                                + '<span class="itemStatus">' + itemStaus[imgVal.orderitemStatus+""]+'</span>'
-                            +'</div>'
-                        +'</div>'
+                imgList += '<li>' +
+                    '<img src="' + imgVal.goodsDesc.pigeonPic + '">' +
+                    '</li>';
             });
             console.log(val.orderStatus)
             var orderstatus = myOrderObj.setOrderStatus(val.orderStatus);
-            allOrderStr += '<div class="order_del"   orderId="' + val.orderId + '">' +
-                '<div class="order_num clearfix" onclick="goDtl(\'' + val.orderId + '\')">' +
+            allOrderStr += '<div class="order_del" orderId="' + val.orderId + '">' +
+                '<div class="order_num clearfix">' +
                 '<p class="order_number">订单号：' + val.orderId + '</p>' +
-                // '<p class="order_w">' + orderstatus + '</p>' +
+                '<p class="order_w">' + orderstatus + '</p>' +
                 '</div>' +
-                '<div class="on_hot_banner" onclick="goDtl(\'' + val.orderId + '\')">' +
+                '<div class="on_hot_banner">' +
                 '<ul class="order_img">' + imgList + '</ul>' +
                 '</div>' +
                 '<div class="price_sum clearfix">' +
