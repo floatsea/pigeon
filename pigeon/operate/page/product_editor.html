@@ -7,6 +7,13 @@
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <link rel="stylesheet" href="../css/reset.css">
     <link rel="stylesheet" href="../css/m_style.css">
+    <style>
+        .input_info_tit{
+            position: relative;
+        }
+        .iconfont{font-size: 11px;}
+        .warn{text-align: left !important;font-size: 11px !important;left:170px;}
+    </style>
     <script src="../js/jquery-1.10.2.min.js"></script>
     <script src="../js/ajaxfileupload.js"></script>
     <script src="../js/public.js"></script>
@@ -25,10 +32,13 @@
             <div class="input_info_tit clearfix">
                 <span>商家</span>
                 <input type="text" placeholder="" id="businesName" readonly="readonly">
+                <span class="warn"><i class="iconfont red icon-tixingshixin"></i>请填写商家名称</span>
             </div>
             <div class="input_info_tit clearfix">
                 <span>商品名称</span>
                 <input type="text" placeholder="请输入商品名称" id="pigeonName">
+                <span class="warn">
+                    <i class="iconfont red icon-tixingshixin"></i>请填写商品名称</span>
             </div>
             <div class="input_info_tit clearfix">
                 <span>标签</span>
@@ -37,6 +47,8 @@
             <div class="input_info_tit clearfix">
                 <span>环号</span>
                 <input type="text" placeholder="请输入环号" id="pigeonNo">
+                <span class="warn">
+                    <i class="iconfont red icon-tixingshixin"></i>请填写环号</span>
             </div>
             <div class="input_info_tit clearfix " id="pigeonGender">
                 <span>性别</span>
@@ -54,6 +66,8 @@
             <div class="input_info_tit clearfix">
                 <span>羽色</span>
                 <input type="text" placeholder="请输入羽色" id="pigeonFeather">
+                <span class="warn">
+                    <i class="iconfont red icon-tixingshixin"></i>请填写羽色</span>
             </div>
             <div class="input_info_tit clearfix">
                 <span>眼砂</span>
@@ -62,15 +76,21 @@
             <div class="input_info_tit clearfix">
                 <span>血统</span>
                 <input type="text" placeholder="请输入血统" id="pigeonBlood">
+                <span class="warn">
+                    <i class="iconfont red icon-tixingshixin"></i>请填写血统</span>
             </div>
             <div class="input_info_tit clearfix">
                 <span>卖点</span>
                 <input type="text" placeholder="请输入卖点" id="pigeonPoint">
+                <span class="warn">
+                    <i class="iconfont red icon-tixingshixin"></i>请填写卖点</span>
             </div>
             <div class="input_info_tit clearfix">
                 <span>价格</span>
                 <input type="text" placeholder="请输入价格" style="width:25%" id="pigeonPrice">
                 <span style="color:#bbb;">单位：人民币（元）</span>
+                <span class="warn">
+                    <i class="iconfont red icon-tixingshixin"></i>请填写价格</span>
             </div>
             <div class="input_info_cont clearfix">
                 <span>橱窗展示</span>
