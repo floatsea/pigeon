@@ -8,7 +8,7 @@ var orderDetailObj = {
     initPageRequest: function(postData) {
         $.ajax({
             url: location.origin + " ",
-            type: "post ",
+            type: "post",
             data: JSON.stringify(postData),
             dataType: "json ",
             contentType: "application/json ",

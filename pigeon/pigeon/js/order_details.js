@@ -11,7 +11,7 @@ var orderDetailObj = {
     initPageRequest: function() {
         $.ajax({
             url: location.origin + " ",
-            type: "post ",
+            type: "post",
             data: JSON.stringify(postData),
             dataType: "json",
             contentType: "application/json",
@@ -30,7 +30,8 @@ var orderDetailObj = {
                     }, orderDetailObj.initPageRequest);//, 
                 }
             },
-            error: function() {
+            error: function (e) {
+                console.log(e);
                 myAlert.createBox("服务器开小差！ ")
             }
         })
