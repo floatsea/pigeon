@@ -28,9 +28,9 @@
             <div class="input_info_tit clearfix">
                 <span>商家</span>
                 <input type="text" placeholder="" id="businesName" readonly="readonly">
-                <p class="warn">
+                <!-- <p class="warn">
                     <i class="iconfont red icon-tixingshixin"></i>请填写商家名称
-                </p>
+                </p> -->
             </div>
             <div class="input_info_tit clearfix">
                 <span>商品名称</span>
@@ -181,8 +181,10 @@
         $(function() {
             if (pigeonId) { //编辑
                 proEditorObj.editorRequst();
+                $(".warn").hide();
             } else {
                 $("#businesName").val(shopName);
+                $(".warn").show();
             }
             //点击 “返回”
             $("#return_btn").on("click", function() {
@@ -340,9 +342,9 @@
 
             $("input[type=text]").on("keyup", function() {
                 if (!$(this).val()) {
-                    $(this).next().show();
+                    $(this).closest("div").find(".warn").show();
                 } else {
-                    $(this).next().hide();
+                    $(this).closest("div").find(".warn").hide();
                 }
             })
         })

@@ -20,67 +20,20 @@
             <span>录入资讯</span>
         </div>
         <div class="commodity_box">
-            <div class="input_info_tit clearfix">
+            <div class="input_info_tit clearfix" style="margin-bottom:30px;">
                 <span>公棚</span>
                 <input type="text" placeholder="" id="oneloftName">
+                <p class="warn">
+                    <i class="iconfont red icon-tixingshixin"></i>请填写公棚名称
+                </p>
             </div>
             <div class="input_info_tit clearfix">
                 <span>标题</span>
                 <input type="text" placeholder="" id="newsTitle">
+                <p class="warn">
+                    <i class="iconfont red icon-tixingshixin"></i>请填写资讯标题
+                </p>
             </div>
-            <!-- <div class="input_info_cont clearfix">
-                <span>橱窗展示</span>
-                <div class="input_info_list">
-                    <p>添加视频或者图片</p>
-                    <ul class="clearfix" id="newsShow">
-                        <li>
-                            <div class="up_box">
-                                <img src="" alt="">
-                                <input type="file" name="videos[] " multiple="multiple" class="upVideo" />
-                                <b class="look_video">上传视频</b>
-                            </div>
-                            <div id="video" class="video_box show_mark "></div>
-                            <em class="del_img"></em>
-                        </li>
-                        <li>
-                            <div class="up_box j_up_img ">
-                                <img src="" alt="">
-                                <input type="file" class="upImg show_mark " />
-                                <div class="video_box show_mark "></div>
-                                <i>上传图片</i>
-                            </div>
-                            <em class="del_img"></em>
-                        </li>
-                        <li>
-                            <div class="up_box j_up_img">
-                                <img src=" " alt="">
-                                <input type="file" class="upImg show_mark" />
-                                <div class="video_box show_mark"></div>
-                                <i>上传图片</i>
-                            </div>
-                            <em class="del_img"></em>
-                        </li>
-                        <li>
-                            <div class="up_box j_up_img">
-                                <img src=" " alt="">
-                                <input type="file " class="upImg show_mark " />
-                                <div class="video_box show_mark "></div>
-                                <i>上传图片</i>
-                            </div>
-                            <em class="del_img"></em>
-                        </li>
-                        <li>
-                            <div class="up_box j_up_img ">
-                                <img src=" " alt="">
-                                <input type="file" class="upImg show_mark" />
-                                <div class="video_box show_mark "></div>
-                                <i>上传图片</i>
-                            </div>
-                            <em class="del_img"></em>
-                        </li>
-                    </ul>
-                </div>
-            </div> -->
             <div class="input_info_cont clearfix">
                 <span>
                     资讯详情
@@ -98,94 +51,73 @@
     <script src="../js/information_editor.js"></script>
     <script>
         var ue = UE.getEditor('editor');
-        var newId = getParameter("newId") || ""; //有值：编辑 否则 “录入资讯” 进来的
+        var newsId = getParameter("newsId") || ""; //有值：编辑 否则 “录入资讯” 进来的
+        var oneloftName = ""; // 从哪里取？
+        if (oneloftName) {
+            $("#oneloftName").attr("readonly", "readonly");
+            $("#oneloftName").val(oneloftName);
+            $("#oneloftName").next().hide();
+        } else {
+            $("#oneloftName").attr("readonly", "");
+            $("#oneloftName").val("");
+            $("#oneloftName").next().show();
+        }
         if (newsId) {
-            $("#oneloftName").attr("readonly", true);
             var newsData = {
                 "newsId": newsId //资讯id
             }
             inforEditor.initRequest(newsData);
+            $("#newsTitle").next().hide();
         } else {
-            $("#oneloftName").attr("readonly", false);
+            $("#newsTitle").next().show();
         }
-        /**
-         * 橱窗
-         */
-        //选择图片上传 
-        $("#newsShow").on("change", ".upImg", function() {
-            var $this = $(this);
-            var _index = $this.index();
-            var input1 = $this.get(0);
-            var imgDom = $this.prev().get(0);
-            readFile(input1, imgDom, function() {
-                if ($this.closest("li").find("i").html() == "上传图片") {
-                    $this.closest("li").find("i").html("设为封面");
-                    $this.closest("li").find(".del_img").show();
+        //校验信息完整度
+        function isInputText() {
+            var inputText = $("input[type=text]"); //所有输入框
+            for (var i = 0; i < inputText.length; i++) {
+                if (inputText.eq(i).val() == "") {
+                    return false;
                 }
-            });
-        });
-        //点击 “设为封面”
-        $("#newsShow li").on("click", "i", function() {
-            if ($(this).html() == "设为封面") {
-                $("#newsShow i").removeClass("active");
-                $("#newsShow li").attr("isCover", "0");
-                $(this).addClass("active");
-                $(this).closest("li").attr("isCover", "1"); //设为封面
             }
-        });
-        //选择上传视频
-        $("#newsShow").on("change", ".upVideo", function() {
-            var $this = $(this);
-            var _index = $this.index();
-            var input1 = $this.get(0);
-            var imgDom = $this.prev().get(0);
-            var videoBox = $("#video");
-            upVideo(input1, imgDom, videoBox, function() {
-                $this.closest("li").find("b").html("查看视频");
-                $this.closest("li").find(".del_img").show();
-            })
-        });
-        //点击 “查看视频"
-        $(".look_video").on("click", function() {
-            if ($(this).html() == "查看视频") {
-                $("#video").show();
-            }
-        });
-        //点击 “删除” 按钮
-        $(".del_img").on("click", function() {
-            $(this).closest("li").find("img").attr("src", "");
-            $(this).closest("li").find("input[type=file]").val("");
-            $(this).closest("li").find("b").html("上传视频");
-            $(this).closest("li").find("i").html("上传图片");
-            $(this).hide();
-        });
-        //点击 视频 遮罩 ,隐藏
-        $("#video").on("click", function() {
-            $(this).hide();
-        });
-
+            return true;
+        }
         // 返回
         $(".return_button").on("click", function() {
             window.history.go(-1);
         });
         // 保存
         $(".save_button").on("click", function() {
+            if (!isInputText()) {
+                myAlert.createBox("信息填写不完整！");
+                return;
+            }
             if (newsId) {
                 var saveData = {
                     "newsContent": ue.getContent(), //"资讯内容",
                     "newsId": newsId,
                     "newsTitle": $("#newsTitle").val(),
                 };
-                inforEditor.saveInfor(saveData);
+                inforEditor.saveInfor(saveData, function() {
+                    window.history.go(-1);
+                });
             } else {
                 var saveData = {
                     "newsContent": ue.getContent(), //"资讯内容", 富文本
                     "oneloftName": $("#oneloftName").val(),
                     "newsTitle": $("#newsTitle").val(),
                     "ownerType": 2, //"资讯类型：商家：1，公棚：2",
-                    "ownerId": businessId //归属id,
+                    "ownerId": oneloftId //归属id,
                 }
-                inforEditor.addInfor(saveData);
+                inforEditor.addInfor(saveData, function() {
+                    window.history.go(-1);
+                });
+            }
+        });
+        $("input[type=text]").on("keyup", function() {
+            if (!$(this).val()) {
+                $(this).closest("div").find(".warn").show();
+            } else {
+                $(this).closest("div").find(".warn").hide();
             }
         });
     </script>

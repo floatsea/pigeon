@@ -6,9 +6,12 @@
     <title>公棚基本信息</title>
     <link rel="stylesheet" href="../css/reset.css">
     <link rel="stylesheet" href="../css/my_style.css">
+    <link rel="stylesheet" href="../css/datepicker.css">
     <script src="../js/jquery-1.10.2.min.js"></script>
     <script src="../js/ajaxfileupload.js"></script>
     <script src="../js/public.js"></script>
+    <script src="../js/moment.min.js"></script>
+    <script src="../js/datepicker.all.js"></script>
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=McNGNstqGgRVbESkMBUmfciFxnsWpQ0g"></script>
     <style>
         input[type=date]::-webkit-inner-spin-button {
@@ -21,6 +24,32 @@
             margin-left: 20px;
             padding: 0 20px;
             border: 1px solid #eee;
+        }
+        
+        .J-datepicker {
+            position: relative;
+            height: 32px;
+            background: #fff;
+            top: 20px;
+        }
+        
+        .J-datepicker i {
+            position: absolute;
+            width: 19px;
+            height: 19px;
+            top: 50%;
+            right: 10px;
+            background: url(../image/time.png) no-repeat;
+            margin-top: -9.5px;
+        }
+        
+        .J-datepicker input {
+            position: relative !important;
+            top: -20px;
+            z-index: 2;
+            padding-right: 20px;
+            background: rgba(0, 0, 0, 0);
+            cursor: pointer;
         }
     </style>
 </head>
@@ -72,8 +101,9 @@
                     </li>
                     <li>
                         <span>成立日期</span>
-                        <div>
-                            <input type="date" placeholder="2017-05-04" id="buildTime">
+                        <div class="J-datepicker">
+                            <i class=""></i>
+                            <input type="text" autocomplete="off" name="" placeholder="选择日期" id="buildTime" readonly="readonly">
                         </div>
                     </li>
                 </ul>
@@ -167,12 +197,13 @@
             <img src="../image/cp.png" />
         </div>
     </div>
+    <script src="../js/date.js "></script>
     <script>
         // 百度地图API功能
         var oneloftId = getParameter("oneloftId");
         var city = $("#address").val() || "北京";
         var map = new BMap.Map("container");
-        var locationStr = ""
+        var locationStr = "";
         map.centerAndZoom(city, 12);
         map.enableScrollWheelZoom(); //启用滚轮放大缩小，默认禁用
         map.enableContinuousZoom(); //启用地图惯性拖拽，默认禁用   
@@ -241,6 +272,8 @@
             $("#oneloftType").find("input[type=radio]").eq(oneloftObj.oneloftType).prop("checked", true); //公棚类型 0 春棚 1秋棚
 
             $("#buildTime").val(oneloftObj.establishTime); //成立日期
+            $("#address").attr("location", oneloftObj.location);
+            $("#address").val(oneloftObj.address);
             var liStr = "";
             var oneloftShowObj = oneloftObj.oneloftShow;
             if (oneloftShowObj.images.length > 0) {
@@ -308,6 +341,26 @@
         }
 
         $(function() {
+            //十分秒年月日单个
+            $('.J-datepicker').datePicker({
+                hasShortcut: true,
+                min: '',
+                max: '',
+                shortcutOptions: [{
+                    name: '今天',
+                    day: '0'
+                }, {
+                    name: '昨天',
+                    day: '-1',
+                    time: '00:00:00'
+                }, {
+                    name: '一周前',
+                    day: '-7'
+                }],
+                hide: function() {
+                    console.info(this)
+                }
+            });
             $("#oneloftId_dom").html(oneloftId);
             initRequestPage();
             //输入地理位置
@@ -322,6 +375,10 @@
             });
             //点击保存
             $("#save_btn").on("click", function() {
+                if (!isAllInfo()) {
+                    myAlert.createBox("信息填写不完整，请重新填写!");
+                    return false;
+                }
                 var upImgObj = $("#oneloftShow").find(".j_up_img").find("img");
                 var imgArr = [];
                 upImgObj.each(function(index) {
@@ -345,7 +402,7 @@
                 var saveData = {
                     "address": city,
                     "cityCode": city,
-                    "location": locationStr,
+                    "location": locationStr || $("#address").attr("location"),
                     "establishTime": $("#buildTime").val(),
                     "logo": $("#logo_img").attr("src"),
                     "oneloftDesc": "",
@@ -360,6 +417,7 @@
                     "realName": "",
                     "logo": $("#logo_img").attr("src")
                 }
+                alert(saveData.location)
                 editorRequest(saveData, function() {
                     window.history.go(-1);
                 });
@@ -470,6 +528,40 @@
         $(".pay_big_img_box img").on("click", function(ev) {
             ev.stopPropagation();
         });
+        //校验所有输入框
+        function isInputText() {
+            if (!$("#oneloftName").val()) {
+                myAlert.createBox("请填写公棚名称！");
+                return false;
+            }
+            if (!$("#buildTime").val()) {
+                myAlert.createBox("请填写成立日期！");
+                return false;
+            }
+            if (!$("#address").val()) {
+                myAlert.createBox("请填写地址！");
+                return false;
+            }
+            return true;
+        }
+        //校验图片选择
+        function isInputFile() {
+            var inputCheck = $("#oneloftShow li").find("img");
+            for (var i = 0; i < inputCheck.length; i++) {
+                if (inputCheck.eq(i).attr("src")) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        //校验页面信息是否填写完整
+        function isAllInfo() {
+            if (!isInputText() || !isInputFile()) {
+                return false;
+            } else {
+                return true;
+            }
+        }
     </script>
 </body>
 

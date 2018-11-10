@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../css/my_style.css">
     <link rel="stylesheet" href="../css/datepicker.css">
     <script src="../js/jquery-1.10.2.min.js"></script>
+    <script src="../js/ajaxfileupload.js"></script>
     <script src=" ../js/public.js "></script>
     <script src="../js/moment.min.js"></script>
     <script src="../js/datepicker.all.js"></script>
@@ -37,9 +38,9 @@
                     <span>起止日期</span>
                     <div class="J-datepicker-range c-data-product">
                         <i></i>
-                        <input placeholder="开始日期" name="" class="" value="" id="matchStartedTime">
+                        <input placeholder="开始日期" name="" class="" value="" id="matchStartedTime" readonly="readonly">
                         <span class="">-</span>
-                        <input placeholder="结束日期" name="" class="" value="" id="matchEndedTime">
+                        <input placeholder="结束日期" name="" class="" value="" id="matchEndedTime" readonly="readonly">
                     </div>
                 </li>
                 <li>
@@ -58,30 +59,30 @@
                         <span>报名截止日期</span>
                         <div class="J-datepicker c-datepicker">
                             <i class=""></i>
-                            <input type="text" autocomplete="off" name="" placeholder="选择日期" class="" value="" id="enrolledTime">
+                            <input type="text" autocomplete="off" name="" placeholder="选择日期" class="" value="" id="enrolledTime" readonly="readonly">
                         </div>
                     </div>
                 </div>
                 <ul id="race_item_box">
                     <li class="schedule_time clearfix">
                         <span>赛程1</span>
-                        <input type="text" placeholder="赛程名称 " class="schedule_time_name">
+                        <input type="text" placeholder="赛程名称 " class="schedule_time_name raceitemTitile">
                         <div class="schedule_time_ff">
                             <span>放飞日期</span>
                             <div class="J-datepicker c-datepicker">
                                 <i class=""></i>
-                                <input type="text" autocomplete="off" name="" placeholder="选择日期" class="" value="">
+                                <input type="text" autocomplete="off" name="" placeholder="选择日期" class="" value="" class="startedTime" readonly="readonly">
                             </div>
                         </div>
                         <div class="schedule_time_ff schedule_time_ff2">
                             <span>放飞地点</span>
                             <i class="address">
                             </i>
-                            <input type="text">
+                            <input type="text" class="startedPlace">
                         </div>
                         <div class="schedule_time_ff schedule_time_ff2">
                             <span>空距</span>
-                            <input type="text" placeholder=" ">
+                            <input type="text" placeholder=" " class="distance">
                         </div>
                     </li>
                 </ul>
@@ -95,47 +96,43 @@
                     <ul class="clearfix" id="raceShow">
                         <li>
                             <div class="up_box">
-                                <img src="" alt="">
-                                <input type="file" name="upfile" multiple="multiple" class="upVideo" id="pigeon_video"/>
+                                <img src="../image/load2.gif" id="videoLoading" style="display:none;">
+                                <video src="" id="small_video"></video>
+                                <input type="file" name="upfile" multiple="multiple" class="upVideo" id="pigeon_video" accept="video/*" />
                                 <b class="look_video">上传视频</b>
                             </div>
-                            <div id="video" class="video_box show_mark"></div>
                             <em class="del_img"></em>
                         </li>
                         <li>
                             <div class="up_box j_up_img">
                                 <img src="" alt="">
-                                <input type="file" name="upfile" class="upImg show_mark" id="up_img1"/>
-                                <div class="video_box show_mark"></div>
+                                <input type="file" name="upfile" class="upImg" id="up_img1" />
                                 <i>上传图片</i>
-                            </div>  
+                            </div>
                             <em class="del_img"></em>
                         </li>
                         <li>
                             <div class="up_box j_up_img">
                                 <img src="" alt="">
-                                <input type="file" name="upfile" class="upImg show_mark" id="up_img2"/>
-                                <div class="video_box show_mark"></div>
+                                <input type="file" name="upfile" class="upImg" id="up_img2" accept="image/*" />
                                 <i>上传图片</i>
-                            </div>  
+                            </div>
                             <em class="del_img"></em>
                         </li>
                         <li>
                             <div class="up_box j_up_img">
                                 <img src="" alt="">
-                                <input type="file" name="upfile" class="upImg show_mark" id="up_img3"/>
-                                <div class="video_box show_mark"></div>
+                                <input type="file" name="upfile" class="upImg" id="up_img3" accept="image/*" />
                                 <i>上传图片</i>
-                            </div>  
+                            </div>
                             <em class="del_img"></em>
                         </li>
                         <li>
                             <div class="up_box j_up_img">
                                 <img src="" alt="">
-                                <input type="file" name="upfile" class="upImg show_mark" id="up_img4"/>
-                                <div class="video_box show_mark"></div>
+                                <input type="file" name="upfile" class="upImg" id="up_img4" accept="image/*" />
                                 <i>上传图片</i>
-                            </div>  
+                            </div>
                             <em class="del_img"></em>
                         </li>
                     </ul>
@@ -153,6 +150,18 @@
             </div>
         </div>
     </div>
+    <!--视频放大-->
+    <div id="video" class="video_box">
+        <div>
+            <video id="big_video" controls="controls"></video>
+        </div>
+    </div>
+    <!--缩略图放大-->
+    <div class="pay_big_img_box" style="display:none">
+        <div>
+            <img src="../image/cp.png" />
+        </div>
+    </div>
     <script src="../js/match_editor.js "></script>
     <script src="../js/date.js "></script>
     <script>
@@ -162,9 +171,10 @@
             //初始化：
             if (raceId) { // 编辑
                 matchEditoObj.matchInfo();
-                $("#oneloftName").attr("readonly", true);
+                $("#oneloftName").attr("readonly", "readonly");
             } else {
-                $("#oneloftName").attr("readonly", false);
+                $("#oneloftName").attr("readonly", "");
+                $("#oneloftName").val(oneloftName)
             }
             /**
              *日期控件
@@ -238,19 +248,20 @@
             /**
              * 橱窗
              */
-            //选择图片上传 
             $("#raceShow").on("change", ".upImg", function() {
                 var $this = $(this);
-                var _index = $this.index();
+                var _index = $this.closest("li").index();
                 var input1 = $this.get(0);
                 var imgDom = $this.prev().get(0);
-                var thisId = $this.attr("id");
-                var postUrl = location.origin+'/ueditor?action=uploadimage';
-                uploadRequest(postUrl,thisId,function(imgUrl){
+                var thisId = $(this).attr("id");
+                var postUrl = location.origin + '/ueditor?action=uploadimage';
+                imgDom.src = "../image/load2.gif";
+                uploadRequest(postUrl, thisId, function(imgUrl) {
                     imgDom.src = imgUrl;
-                    if ($this.closest("li").find("i").html() == "上传图片") {
-                        $this.closest("li").find("i").html("设为封面");
-                        $this.closest("li").find(".del_img").show();
+                    if ($("#raceShow").find("li").eq(_index).find("i").html() == "上传图片") {
+                        $("#raceShow").find("li").eq(_index).find("i").html("设为封面");
+                        $("#raceShow").find("li").eq(_index).find(".del_img").show();
+                        $("#raceShow").find("li").eq(_index).find("input").hide();
                     }
                 });
             });
@@ -258,40 +269,47 @@
             $("#raceShow li").on("click", "i", function() {
                 if ($(this).html() == "设为封面") {
                     $("#raceShow i").removeClass("active");
-                    $("#raceShow li").attr("isCover", "0");
+                    $("#raceShow li").attr("isCover", "N");
                     $(this).addClass("active");
-                    $(this).closest("li").attr("isCover", "1"); //设为封面
+                    $(this).closest("li").attr("isCover", "Y"); //设为封面
                 }
             });
             //选择上传视频
             $("#raceShow").on("change", ".upVideo", function() {
                 var $this = $(this);
-                var _index = $this.index();
                 var input1 = $this.get(0);
-                var imgDom = $this.prev().get(0);
-                var videoBox = $("#video");
                 var thisId = $(this).attr("id");
-                var postUrl = location.origin +"/ueditor?action=uploadvideo";
-                uploadRequest(postUrl,thisId,function(videoUrl){
-                    alert(videoUrl);
-                    upVideo(input1, imgDom, videoBox,videoUrl, function() {
-                        $this.closest("li").find("b").html("查看视频");
-                        $this.closest("li").find(".del_img").show();
-                    })
+                var postUrl = location.origin + "/ueditor?action=uploadvideo";
+                $("#videoLoading").show();
+                $("#small_video").hide();
+                uploadRequest(postUrl, thisId, function(videoUrl) {
+                    $("#videoLoading").hide();
+                    $("#small_video").show();
+                    $("#small_video").attr("src", videoUrl);
+                    $("#big_video").attr("src", videoUrl);
+                    $("#raceShow").find("li").eq(0).find("b").html("查看视频");
+                    $("#raceShow").find("li").eq(0).find(".del_img").show();
+                    $("#raceShow").find("li").eq(0).find("input").hide();
                 });
             });
             //点击 “查看视频"
-            $(".look_video").on("click", function() {
-                if ($(this).html() == "查看视频") {
+            $(".look_video, #small_video").on("click", function() {
+                if ($(".look_video").html() == "查看视频") {
                     $("#video").show();
                 }
             });
             //点击 “删除” 按钮
             $(".del_img").on("click", function() {
-                $(this).closest("li").find("img").attr("src", "");
                 $(this).closest("li").find("input[type=file]").val("");
-                $(this).closest("li").find("b").html("上传视频");
-                $(this).closest("li").find("i").html("上传图片");
+                $(this).closest("li").find("i").removeClass("active");
+                if ($(this).closest("li").index() == 0) {
+                    $(this).closest("li").find("video").attr("src", "");
+                    $(this).closest("li").find("b").html("上传视频");
+                } else {
+                    $(this).closest("li").find("img").attr("src", "");
+                    $(this).closest("li").find("i").html("上传图片");
+                }
+                $(this).closest("li").find("input").show();
                 $(this).hide();
             });
 
@@ -310,7 +328,7 @@
                     '<span>放飞日期</span>' +
                     '<div class="J-datepicker c-datepicker">' +
                     '<i class=""></i>' +
-                    '<input type="text" autocomplete="off" name="" placeholder="选择日期" class="startedTime" value="">' +
+                    '<input class="startedTime"  type="text" autocomplete="off" name="" placeholder="选择日期" value="">' +
                     '</div>' +
                     '</div>' +
                     '<div class="schedule_time_ff schedule_time_ff2">' +
@@ -334,6 +352,10 @@
              *点击 “保存”
              */
             $("#save_btn").on("click", function() {
+                if (!matchEditoObj.isAllInfo()) {
+                    myAlert.createBox("信息填写不完整，请重新录入！");
+                    return;
+                }
                 //当前日期
                 var nowTime = getNow();
                 //获取上传的图片
@@ -349,23 +371,26 @@
                         });
                     }
                 });
-                var videoArr = [{
-                    "video": $("#video").find("video").attr("src"),
-                    "alt": "",
-                    "desc": ""
-                }];
+                var videoArr = [];
+                if ($("#small_video").attr("src")) {
+                    videoArr.push({
+                        "video": $("#small_video").attr("src"),
+                        "alt": "",
+                        "desc": ""
+                    })
+                }
                 //获取赛程
                 var raceItems = $("#race_item_box li");
                 var raceArr = [];
-                raceItems.each(function(index) {
-                    var thisRace = raceItems.eq(index);
+                raceItems.each(function(i) {
+                    console.log(raceItems.eq(i))
                     raceArr.push({
-                        "distance": thisRace.find(".distance").val(),
-                        "raceitemTitile": thisRace.find(".raceitemTitile").val(),
-                        "startedPlace": thisRace.find(".startedPlace").val(),
-                        "startedTime": thisRace.find(".startedTime").val(),
+                        "distance": raceItems.eq(i).find(".distance").val(),
+                        "raceitemTitile": raceItems.eq(i).find(".raceitemTitile").val(),
+                        "startedPlace": raceItems.eq(i).find(".startedPlace").val(),
+                        "startedTime": raceItems.eq(i).find(".startedTime").val(),
                         "raceId": raceId,
-                        "raceitemId": thisRace.attr("raceitemId") || "",
+                        "raceitemId": raceItems.eq(i).attr("raceitemId") || "",
                         "raceitemResult": "" //成绩文件
                     });
                 });
@@ -387,10 +412,24 @@
                 if (!raceId) { //添加
                     matchEditoObj.addMatch(saveData);
                 } else { //编辑 保存
-                    matchEditoObj.saveMatch(saveData);
+                    matchEditoObj.saveMatch(saveData, function() {
+                        window.history.go(-1);
+                    });
                 }
-            })
-        })
+            });
+            //点击查看 原图
+            $(".j_up_img img").on("click", function() {
+                $(".pay_big_img_box img").attr("src", $(this).attr("src"));
+                $(".pay_big_img_box").show();
+            });
+            //缩略图 关闭
+            $(".pay_big_img_box").on("click", function() {
+                $(this).hide();
+            });
+            $(".pay_big_img_box img").on("click", function(ev) {
+                ev.stopPropagation();
+            });
+        });
     </script>
 </body>
 

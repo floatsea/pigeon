@@ -2179,7 +2179,7 @@ $(function() {
             var height = this.$target.outerHeight();
             this.pickerObject.$container.css({
                 top: offset.top + height,
-                left: offset.left
+                left: offset.left - 100
             });
             $('.c-datepicker-picker').hide();
             this.pickerObject.show();

@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../css/reset.css">
     <link rel="stylesheet" href="../css/style.css">
     <script src="../js/jquery-1.10.2.min.js"></script>
+    <script src="../js/ajaxfileupload.js"></script>
     <script src="../js/public.js"></script>
 </head>
 
@@ -111,16 +112,11 @@
             </div>
         </div>
     </div>
-    <script src="../js/match_upload.js"></script>
+    <script src="../js/match_upload.js?v=0.1"></script>
     <script>
         //页面初始化
         var listData = {
-            "raceId": raceId,
-            "keyword": "",
-            "pageSize": "20",
-            "pageNum": "1",
-            "orderBy": "publishedTime",
-            "orderDesc": ""
+            "raceId": raceId
         };
         uploadObj.getListRequest(listData);
         //点击赛事 页码
@@ -134,13 +130,17 @@
         // 上传比赛成绩
         $("#match_list").on("change", ".input_upload", function() {
             var formData = new FormData();
-            formData.append("myfile", $(this).get(0).files[0]);
-            var raceitemId = "";
+            var thisId = $(this).attr("id");
+            var raceitemId = $(this).closest("tr").attr("raceitemId");
             var upData = {
                 "raceitemId": raceitemId,
                 "raceitemResult": formData
             };
-            uploadObj.upRace(upData);
+            var postUrl = location.origin+'/ueditor?action=uploadfile';
+            uploadRequest(postUrl,thisId,function(fileUrl){
+                upData.raceitemResult = fileUrl;
+                uploadObj.upRace(upData);
+            });
         });
         //点击 “下载导入模板”
         $("#down_load").on("click", function() {

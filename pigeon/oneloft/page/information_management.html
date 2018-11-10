@@ -19,10 +19,10 @@
         <div class="commodity_box info_box" id="infor_cont">
             <div>
                 <div class="query_p clearfix" style="margin-top:0; padding-top:50px; height:116px;">
-                    <span>快速检索</span>
+                    <!-- <span>快速检索</span> -->
                     <div class="query_p_show">
-                        <span>产品名称：</span>
-                        <input type="text" placeholder="输入订单编号或产品名称">
+                        <span>资讯名称：</span>
+                        <input type="text" placeholder="输入资讯名称">
                     </div>
                     <button class="query_p_btn" id="search_btn">查询</button>
                     <div class="query_p_btns clearfix">
@@ -90,12 +90,7 @@
     </div>
     <script src="../js/information_management.js"></script>
     <script>
-        $(function() { //区分公棚
-            // if (oneloftId) {
-            //     $("#input_info_btn").show();
-            // } else {
-            //     $("#input_info_btn").hide();
-            // }
+        $(function() {
             var postData = {
                 "isPublished": true, //"发布状态：发布，true；未发布，false",
                 "ownerType": "2",
@@ -195,7 +190,7 @@
             });
             //点击 "录入资讯 "
             $("#input_info_btn").on("click", function() {
-                location.href = "information_editor_business.html?oneloftId=" + oneloftId;
+                location.href = "information_editor.html?oneloftId=" + oneloftId;
             });
 
             //点击 “撤稿”

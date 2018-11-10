@@ -18,11 +18,11 @@
         </div>
         <div class="public_box">
             <div class="user_top">
-                <p class="quick_search">快速检索</p>
+                <!-- <p class="quick_search">快速检索</p> -->
                 <div class="user_top_cont clearfix">
-                    <div class="user_top_cont_l">
-                        <span>关键词：</span>
-                        <input type="text" placeholder="输入关键词" id="Keyword">
+                    <div class="user_top_cont_l" id="keyword_box">
+                        <span>商家名称：</span>
+                        <input type="text" placeholder="请输入商家名称" id="Keyword">
                         <button id="serch_btn">查询</button>
                     </div>
                     <div class="customer_disabled">
@@ -352,8 +352,15 @@
             $("#business_tit span").on("click", function() {
                 $("input[type=checkbox]").prop("checked", false);
                 var _index = $(this).index();
+                if (_index == 1) {
+                    $("#keyword_box span").html("公棚名称：");
+                    $("#keyword_box input").attr("placeholder", "请输入公棚名称");
+                } else {
+                    $("#keyword_box span").html("商家名称：");
+                    $("#keyword_box input").attr("placeholder", "请输入商家名称");
+                }
                 $("#Keyword").val("");
-                $("#serch_btn").attr("channle", _index); //咨询按钮 区分商家和公棚
+                $("#serch_btn").attr("channle", _index); //查询按钮 区分商家和公棚
                 $(".customer_disabled button").attr("channle", _index); //0 商家  1公棚
                 $(".customer_disabled button").removeClass("active");
 
@@ -373,44 +380,6 @@
                     });
                 }
             });
-
-            //点击置顶
-            // $("#setTop_btn").on("click", function() {
-            //     if ($(this).hasClass("active")) {
-            //         $(this).removeClass("active");
-            //         $("#disabled_btn").removeClass("active");
-            //         var channle = $(this).attr("channle"); //0 商家  1公棚
-            //         if (channle == 0) {
-            //             var checkBusiness = $("#business_list").find("input:checked");
-            //             var busIdArr = [];
-            //             checkBusiness.each(function(j) {
-            //                 busIdArr.push(checkBusiness.eq(j).closest("tr").attr("businessId"));
-            //                 checkBusiness.eq(j).closest("tr").find(".business_setTop").html("取消置顶");
-            //                 checkBusiness.eq(j).prop("checked", false);
-            //                 $("#sel_all").prop("checked", false);
-            //             })
-            //             var busiStr = busIdArr.join(",");
-            //             businessObj.setTop({
-            //                 "businessId": busiStr,
-            //                 "sticky": true
-            //             })
-            //         } else {
-            //             var checkLoft = $("#loft_list").find("input:checked");
-            //             var loftIdArr = [];
-            //             checkLoft.each(function(j) {
-            //                 loftIdArr.push(checkLoft.eq(j).closest("tr").attr("oneloftId"));
-            //                 checkLoft.eq(j).prop("checked", false);
-            //                 $("#loft_sel_all").prop("checked", false);
-            //             })
-            //             var loftStr = loftIdArr.join(",");
-            //             loftObj.loftSetTop({
-            //                 "oneloftId": loftStr,
-            //                 "sticky": true
-            //             })
-            //         }
-            //     }
-            // });
-
             //点击冻结按钮
             $("#disabled_btn").on("click", function() {
                 if ($(this).hasClass("active")) {

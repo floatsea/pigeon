@@ -1,7 +1,7 @@
 var oneloftId = getParameter("oneloftId") || ""; //有oneloftId：从公棚列表页进来
 /**
- *17、赛事列表接口
- *http://域名/oneloft/race/findList
+ * 17、赛事列表接口
+ * http://域名/oneloft/race/findList
  */
 var matchListObj = {
     matchListRequest: function(matchListData, _index) {
@@ -12,6 +12,7 @@ var matchListObj = {
             dataType: "json",
             contentType: "application/json",
             success: function(data) {
+                //errorToken(data.code);
                 if (data.code == "0") {
                     if (matchListData.pageNum == "1") {
                         var total = data.data.total;
@@ -27,6 +28,7 @@ var matchListObj = {
             },
             error: function() {
                 myAlert.createBox("网络不给力！");
+                var infoList = [1, 2, 3];
             }
         });
     },
@@ -53,7 +55,7 @@ var matchListObj = {
         var str = "";
         infoList.forEach(function(val) {
             str += '<tr raceId="' +
-                val.raceId + '" oneloftId="' + val.oneloftId + '">' +
+                val.raceId + '" oneloftId="' + val.oneloftId + '" >' +
                 '<td>' +
                 '<input type="checkbox">' +
                 '<label for=""></label>' +
@@ -89,14 +91,14 @@ var matchListObj = {
                 '<label for=""></label>' +
                 '</td>' +
                 '<td>' +
-                '<span>2018年第三界三关大奖赛</span>' +
+                '<span>' + val.raceTitile + '</span>' +
                 '</td>' +
-                '<td class="sign_up"><span>121</span></td>' +
+                '<td class="sign_up"><span>' + val.enrollCount + '</span></td>' +
                 '<td>' +
-                '<p>2018-06-21起</p>' +
-                '<p>2018-06-21止</p>' +
+                '<p>' + val.startedTime + '起</p>' +
+                '<p>' + val.endedTime + '止</p>' +
                 '</td>' +
-                '<td>天津宇航赛鸽公棚</td>' +
+                '<td>' + val.oneloftName + '</td>' +
                 '<td>' +
                 '<span class="editor_btn">编辑</span><br>' +
                 '<span class="match_upload">查看比赛成绩</span><br>' +
@@ -118,6 +120,7 @@ var matchListObj = {
             dataType: "json",
             contentType: "application/json",
             success: function(data) {
+                errorToken(data.code);
                 if (data.code == 0) {
                     callback && callback();
                 }
@@ -139,6 +142,7 @@ var matchListObj = {
             dataType: "json",
             contentType: "application/json",
             success: function(data) {
+                errorToken(data.code);
                 if (data.code == 0) {
                     callback && callback();
                 }

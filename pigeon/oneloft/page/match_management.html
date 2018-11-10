@@ -19,11 +19,11 @@
         </div>
         <div class="public_box">
             <div class="user_top">
-                <p class="quick_search">快速检索</p>
+                <!-- <p class="quick_search">快速检索</p> -->
                 <div class="user_top_cont clearfix">
                     <div class="user_top_cont_l">
-                        <span>关键词：</span>
-                        <input type="text" placeholder="输入产品关键词">
+                        <span>赛事名称：</span>
+                        <input type="text" placeholder="请输入赛事名称">
                         <button>查询</button>
                     </div>
                     <div class="user_top_cont_r">
@@ -82,7 +82,7 @@
                             <li>4</li>
                             <li>5</li>
                         </ul>
-                        <div>共<span id="total_num">100</span>条，每页显示<span>20</span>条</div>
+                        <div>共<span id="total_num">0</span>条，每页显示<span>20</span>条</div>
                     </div>
                 </div>
             </div>
@@ -102,10 +102,17 @@
     </div>
     <script src="../js/match_management.js"></script>
     <script>
-        //添加赛事
-        $("#add_match").on("click", function() {
-            location.href = "match_editor.html?oneloftId=" + oneloftId;
-        });
+        var oneloftId = "";
+        var oneloftName = "";
+        if (oneloftId) {
+            $("#add_match").show();
+            //添加赛事
+            $("#add_match").on("click", function() {
+                location.href = "match_editor.html?oneloftId=" + oneloftId + "&oneloftName=" + oneloftName;
+            });
+        } else {
+            $("#add_match").hide();
+        }
         //页面初始化
         var matchListData = {
             "keyword": "", //检索关键字
@@ -172,8 +179,10 @@
         // 点击 列表 “删除”
         $("#match_list").on("click", ".del_race", function() {
             var raceId = $(this).closest("tr").attr("raceId");
+            var trNum = $(this).closest("tr").index();
             $("#del_mark").attr({
-                "raceId": raceId
+                "raceId": raceId,
+                "index": trNum
             }).show(); //删除弹窗 显示
         });
         //点击 “删除” 大按钮
@@ -185,29 +194,29 @@
                     return;
                 }
                 var raceIdArr = [];
+                var trNumArr = [];
                 checkInp.each(function(i) {
                     var raceId = checkInp.eq(i).closest("tr").attr("raceId");
                     raceIdArr.push(raceId);
+                    trNumArr.push(checkInp.eq(i).closest("tr").index());
                 });
 
                 $("#del_mark").attr({
-                    "raceId": raceIdArr.join(",")
+                    "raceId": raceIdArr.join(","),
+                    "index": trNumArr.join(",")
                 }).show(); //删除弹窗 显示
-                // matchListObj.deleteRace({ //调删除接口
-                //     "raceId": raceIdArr.join(",")
-                // }, function() {
-                //     checkInp.closest("tr").remove();
-                // });
+
             }
         });
         // 点击 “删除弹窗” 确定
         $("#sure_btn").on("click", function() {
             var raceId = $("#del_mark").attr("raceId");
-            checkInp.closest("tr").remove();
+            var trIndex = $("#del_mark").attr("index").split(",");
 
             matchListObj.deleteRace({ //调删除接口
                 "raceId": raceId
             }, function() {
+                $("#match_list").find("input[type=checkbox]:checked").closest("tr").remove();
                 $("#del_mark").hide();
             });
         });
@@ -227,10 +236,11 @@
             });
         });
         // 点击 “编辑” 跳转到 “赛事编辑”页面
+        //var oneloftName = getParameter("oneloftName") || "";
         $("#match_list").on("click", ".editor_btn", function() {
             var raceId = $(this).closest("tr").attr("raceId");
             var oneloftId = $(this).closest("tr").attr("oneloftId") || oneloftId;
-            location.href = "match_editor.html?raceId=" + raceId + "&oneLoftId=" + oneloftId;
+            location.href = "match_editor.html?raceId=" + raceId + "&oneLoftId=" + oneloftId + "&oneloftName=" + oneloftName;
         });
         /*报名管理*/
         $("#match_list").on("click", ".sign_up", function() {
@@ -240,6 +250,7 @@
         /*上传比赛成绩*/
         $("#match_list").on("click", ".match_upload", function() {
             var raceId = $(this).closest("tr").attr("raceId");
+            var raceitemId = $(this).closest("tr").attr("raceitemId");
             location.href = "match_upload.html?raceId=" + raceId;
         });
     </script>

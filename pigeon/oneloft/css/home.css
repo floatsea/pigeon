@@ -18,22 +18,28 @@ body {
     zoom: 1;
 }
 
+
+/* ::-webkit-scrollbar {
+    width: 10px
+} */
+
 .home_box {
     width: 100%;
-    height: 100%;
+    min-height: 100%;
     margin: 0 auto;
 }
 
 .home_left {
     float: left;
     width: 160px;
-    height: 100%;
+    padding-bottom: 100px;
     background: #333;
     overflow-y: auto;
+    cursor: pointer;
 }
 
 .home_type {
-    width: 160px;
+    width: 140px;
     height: 100px;
     background: #333;
     padding: 20px 0 12px 30px;
@@ -55,7 +61,6 @@ body {
 
 .home_left ul li {
     width: 140px;
-    height: 46px;
     color: #f3f3f3;
     font-size: 16px;
     text-align: center;
@@ -70,9 +75,9 @@ body {
 
 .home_right {
     float: left;
-    width: -webkit-calc(100% - 140px);
-    width: -moz-calc(100% - 140px);
-    width: calc(100% - 140px);
+    width: -webkit-calc(100% - 160px);
+    width: -moz-calc(100% - 160px);
+    width: calc(100% - 160px);
 }
 
 .home_right_tit {
@@ -164,4 +169,23 @@ body {
 
 .home_content iframe {
     width: 100%;
+}
+
+.home_info_tab {
+    position: relative;
+}
+
+.infor_seconds {
+    width: 140px;
+    display: none;
+}
+
+.infor_seconds div {
+    color: #fff;
+    background: #333;
+}
+
+.infor_seconds .info_active {
+    color: #333;
+    background: #f3f3f3;
 }

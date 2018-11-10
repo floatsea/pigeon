@@ -6,8 +6,23 @@
     <title>报名管理</title>
     <link rel="stylesheet" href="../css/reset.css">
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/public.css">
     <script src="../js/jquery-1.10.2.min.js"></script>
+    <script src="../js/ajaxfileupload.js"></script>
     <script src="../js/public.js"></script>
+    <style>
+        #import_list_box {
+            position: relative;
+        }
+        
+        #import_list {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            opacity: 0;
+        }
+    </style>
 </head>
 
 <body>
@@ -24,7 +39,10 @@
                         <button>查询</button>
                     </div>
                     <div class="user_top_cont_r">
-                        <button class="active" id="import_list">导入用户清单</button>
+                        <button class="active" id="import_list_box">
+                        <input type="file" name="upfile" id="import_list">
+                        导入用户清单
+                        </button>
                         <button id="del_list_btn">删除</button>
                     </div>
                 </div>
@@ -39,12 +57,13 @@
                                         <input type="checkbox" id="sel_all">
                                         <label for=""></label>
                                     </td>
-                                    <td width="10%"> 会员名</td>
-                                    <td width="15%">参赛名</td>
-                                    <td width="20%">足环号</td>
+                                    <td> 会员名</td>
+                                    <td>参赛名</td>
+                                    <!-- <td width="20%">足环号</td>
                                     <td>羽色</td>
-                                    <td>隶属协会</td>
-                                    <td width="15%">报名日期</td>
+                                    <td>隶属协会</td> -->
+                                    <td>报名日期</td>
+                                    <td>操作</td>
                                 </tr>
                             </thead>
                             <tbody id="list_box_cont">
@@ -57,11 +76,11 @@
                                         <span>138****0000</span>
                                     </td>
                                     <td>03鸽业付洪超</td>
-                                    <td>4/2018-06-2111001</td>
+                                    <!--  <td>4/2018-06-2111001</td>
                                     <td>
                                         <p>灰色</p>
                                     </td>
-                                    <td>天津宁河</td>
+                                    <td>天津宁河</td> -->
                                     <td>
                                         <span style="color:#000">2018-09-09</span>
                                     </td>
@@ -83,6 +102,18 @@
             </div>
         </div>
     </div>
+    <!--删除 确认-->
+    <div class="del_mark" id="del_mark" style="display:none;">
+        <div class="del_cont">
+            <p>
+                是否将已选择内容彻底删除？<br/> 删除后无法恢复！
+            </p>
+            <div class="btn_box">
+                <button class="cancel_btn" id="cancel_btn">取消</button>
+                <button class="sure_btn" id="sure_btn">确定</button>
+            </div>
+        </div>
+    </div>
     <script src="../js/match_signup.js"></script>
     <script>
         //初始化
@@ -98,8 +129,29 @@
         signupObj.getListRequest(initData);
 
         //点击 “导入清单”
-        $("#import_list").on("click", function() {
-            signupObj.downLoad();
+        $("#import_list").on("change", function() {
+            var postUrl = location.origin + '/ueditor?action=uploadfile';
+            var thisId = $(this).attr("id");
+            uploadRequest(postUrl, thisId, function(fileUrl) {
+                var importData = {
+                    "raceId": raceId,
+                    "url": fileUrl
+                };
+                signupObj.addByImport(importData);
+            });
+
+        });
+
+        //点击列表删除按钮
+        $("#list_box_cont").on("click", ".del_upsign", function() {
+            var $this = $(this);
+            var enrollId = $this.closest("tr").attr("enrollId");
+            var trNum = $this.closest("tr").index();
+            // 删除确认框
+            $("#del_mark").attr({
+                "enrollId": enrollId,
+                "index": trNum
+            }).show(); //删除弹窗 显示
         });
 
         //点击 “删除”
@@ -107,19 +159,35 @@
             if ($(this).hasClass("active")) {
                 var checkInp = $("#list_box_cont").find("input[type=checkbox]:checked");
                 var arr = [];
+                var trIndexArr = [];
                 checkInp.each(function(index) {
                     arr.push(checkInp.eq(index).closest("tr").attr("enrollId"));
+                    trIndexArr.push(checkInp.eq(index).closest("tr").index());
                 });
-                var delData = {
-                    "enrollId": arr.join(",")
-                };
-                signupObj.deleteRace(delData, function() {
-                    checkInp.closest("tr").hide();
-                });
+                // 删除确认框
+                $("#del_mark").attr({
+                    "enrollId": arr.join(","),
+                    "index": trIndexArr.join(",")
+                }).show(); //删除弹窗 显示
             }
         });
 
-
+        //点击弹框 “取消”
+        $("#cancel_btn").on("click", function() {
+            $("#del_mark").hide();
+        });
+        //点击弹框 “确定”
+        $("#sure_btn").on("click", function() {
+            var enrollId = $("#del_mark").attr("enrollId");
+            var trIndex = $("#del_mark").attr("index").split(",");
+            var delData = {
+                "enrollId": enrollId
+            }
+            signupObj.deleteRace(delData, function() {
+                $("#list_box_cont").find("input[type=checkbox]:checked").closest("tr").remove();
+                $("#del_mark").hide();
+            });
+        });
         //点击赛事 页码
         $("#page_btn").delegate("li", "click", function() {
             $("#page_btn").find("li").removeClass("active");

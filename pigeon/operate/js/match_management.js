@@ -91,14 +91,14 @@ var matchListObj = {
                 '<label for=""></label>' +
                 '</td>' +
                 '<td>' +
-                '<span>2018年第三界三关大奖赛</span>' +
+                '<span>' + val.raceTitile + '</span>' +
                 '</td>' +
-                '<td class="sign_up"><span>121</span></td>' +
+                '<td class="sign_up"><span>' + val.enrollCount + '</span></td>' +
                 '<td>' +
-                '<p>2018-06-21起</p>' +
-                '<p>2018-06-21止</p>' +
+                '<p>' + val.startedTime + '起</p>' +
+                '<p>' + val.endedTime + '止</p>' +
                 '</td>' +
-                '<td>天津宇航赛鸽公棚</td>' +
+                '<td>' + val.oneloftName + '</td>' +
                 '<td>' +
                 '<span class="editor_btn">编辑</span><br>' +
                 '<span class="match_upload">查看比赛成绩</span><br>' +

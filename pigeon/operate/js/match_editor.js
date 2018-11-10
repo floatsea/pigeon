@@ -50,7 +50,7 @@ var matchEditoObj = {
                 '<span>放飞日期</span>' +
                 '<div class="J-datepicker c-datepicker">' +
                 '<i class=""></i>' +
-                '<input type="text" autocomplete="off" name="" placeholder="选择日期" class="startedTime" value="' + (val.startedTime || '') + '">' +
+                '<input readonly="readonly" type="text" autocomplete="off" name="" placeholder="选择日期" class="startedTime" value="' + (val.startedTime || '') + '">' +
                 '</div>' +
                 '</div>' +
                 '<div class="schedule_time_ff schedule_time_ff2">' +

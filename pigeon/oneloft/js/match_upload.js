@@ -1,5 +1,5 @@
 /**
- *18、赛事详情接口
+ *18、赛事详情接口 获取赛程
  * http://域名/oneloft/race/find
  */
 var raceId = getParameter("raceId") || "";
@@ -12,6 +12,7 @@ var uploadObj = {
             dataType: "json",
             contentType: "application/json",
             success: function(data) {
+                errorToken(data.code);
                 if (data.code == 0) {
                     var list = data.data.raceitems;
                     uploadObj.createList(list);
@@ -30,10 +31,10 @@ var uploadObj = {
                 statusStr = '<span style="border-bottom:1px solid #000;">已导入(45)</span>'
             } else {
                 statusStr = '<div class="match_info_btn">' +
-                    '<input type="file" class="input_upload"> 选择文件' +
+                    '<input type="file" id="upfile' + index + '" name="upfile" class="input_upload"> 选择文件' +
                     '</div>';
             }
-            str += '<tr raceId="' + raceId + '">' +
+            str += '<tr raceId="' + raceId + '" raceitemId="' + val.raceitemId + '">' +
                 '<td>' +
                 '<span>' + (index + 1) + '</span>' +
                 '</td>' +
@@ -48,7 +49,7 @@ var uploadObj = {
                 '<td>' + statusStr + '</td>' +
                 '</tr>';
         });
-        $("#match_list").html(list);
+        $("#match_list").html(str);
     },
     //获取分页的页码
     // getPageNumer: function(totalNum) {
@@ -67,8 +68,8 @@ var uploadObj = {
     //     $("#total_num").html(totalNum);
     // },
     /**
-     * 32、上传赛事成绩接口
-     * http://域名/operator/raceitem/edit
+     *9、上传赛事成绩接口
+     * http://域名/oneloft/raceitem/edit
      * 入参：{
             "raceitemId": 赛程id, ？在哪里取
             "raceitemResult": "成绩文件",
@@ -76,14 +77,15 @@ var uploadObj = {
      */
     upRace: function(upData, callback) {
         $.ajax({
-            url: location.origin + "/operator/raceitem/edit",
+            url: location.origin + "/oneloft/raceitem/edit",
             type: "post",
             data: JSON.stringify(upData),
-            //dataType: "json",
-            //processData: false,
-            contentType: false,
+            dataType: "json",
+            contentType: "application/json",
             success: function(data) {
+                errorToken(data.code);
                 if (data.code == 0) {
+                    myAlert.createBox("上传成功！");
                     callback && callback();
                 }
             },
@@ -93,7 +95,7 @@ var uploadObj = {
         });
     },
     /**
-     * 13、赛事报名导入接口 ？？
+     * 13、赛事报名导入接口
      * http://域名/oneloft/enroll/addByImport
      */
     downLoad: function(callback) {
@@ -106,6 +108,7 @@ var uploadObj = {
             //contentType: false,
             contentType: "application/json",
             success: function(data) {
+                errorToken(data.code);
                 if (data.code == 0) {
                     callback && callback();
                 }

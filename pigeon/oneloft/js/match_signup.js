@@ -1,7 +1,6 @@
 /**
  *11、赛事报名列表接口
- * http://域名/oneloft/enroll/findList
- * 缺少 字段
+ *http://域名/oneloft/enroll/findList
  */
 var raceId = getParameter("raceId") || "";
 var signupObj = {
@@ -13,14 +12,13 @@ var signupObj = {
             dataType: "json",
             contentType: "application/json",
             success: function(data) {
+                errorToken(data.code);
                 if (data.code == 0) {
-                    if (listData.pageNum == "1") {
-                        var total = data.data.total;
-                        $("#signUpNum").html("（" + total + "）"); //报名用户数量
-                        uploadObj.getPageNumer(total); //分页
-                    }
+                    var total = data.data.total;
+                    $("#signUpNum").html("（" + total + "）"); //报名用户数量
+                    signupObj.getPageNumer(total); //分页
                     var list = data.data.list;
-                    uploadObj.createList(list);
+                    signupObj.createList(list);
                 }
             },
             error: function() {
@@ -31,7 +29,7 @@ var signupObj = {
     createList: function(list) {
         str = "";
         list.forEach(function(val) {
-            str += '<tr enrollId="' + val.enrollId + '" userId="' + val.userId + '" userType="' + val.userType + '">' +
+            str += '<tr enrollId="' + val.enrollId + '" userId="' + val.userId + '" userType="' + val.userType + '" >' +
                 '<td>' +
                 '<input type="checkbox">' +
                 '<label for=""></label>' +
@@ -40,15 +38,11 @@ var signupObj = {
                 '<span>' + val.mobile + '</span>' +
                 '</td>' +
                 '<td>' + val.realName + '</td>' +
-                '<td>4/2018-06-2111001</td>' +
-                '<td>' +
-                '<p>灰色</p>' +
-                '</td>' +
-                '<td>天津宁河</td>' +
                 '<td>' +
                 '<span style="color:#000">' + val.createdTime + '</span>' +
                 '</td>' +
-                '</tr>';
+                '<td><span class="del_upsign">删除</span></td>'
+            '</tr>';
         });
         $("#list_box_cont").html(str);
     },
@@ -70,19 +64,19 @@ var signupObj = {
     },
     /**
      * 13、赛事报名导入接口
-     *http://域名/oneloft/enroll/addByImport
+     * http://域名/oneloft/enroll/addByImport
      */
-    downLoad: function(callback) {
+    addByImport: function(importData, callback) {
         $.ajax({
             url: location.origin + "/oneloft/enroll/addByImport",
             type: "post",
-            data: JSON.stringify({ "raceId": raceId }),
+            data: JSON.stringify(importData),
             dataType: "json",
-            //processData: false,
-            //contentType: false,
             contentType: "application/json",
             success: function(data) {
+                errorToken(data.code);
                 if (data.code == 0) {
+                    myAlert.createBox("导入成功！");
                     callback && callback();
                 }
             },
@@ -91,8 +85,8 @@ var signupObj = {
             }
         });
     },
-    /**12、赛事报名删除接口
-     *：http://域名/oneloft/enroll/del
+    /**12、 赛事报名删除接口 
+     *http://域名/oneloft/enroll/del
      */
     deleteRace: function(delData, callback) {
         $.ajax({
@@ -102,6 +96,7 @@ var signupObj = {
             dataType: "json",
             contentType: "application/json",
             success: function(data) {
+                errorToken(data.code);
                 if (data.code == 0) {
                     callback && callback();
                 }

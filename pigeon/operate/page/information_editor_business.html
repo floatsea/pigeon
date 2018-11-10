@@ -27,6 +27,9 @@
             <div class="input_info_tit clearfix">
                 <span>标题</span>
                 <input type="text" placeholder="" id="newsTitle">
+                <p class="warn">
+                    <i class="iconfont red icon-tixingshixin"></i>请填写资讯标题
+                </p>
             </div>
 
             <div class="input_info_cont clearfix">
@@ -60,6 +63,19 @@
                 "newsId": newsId //资讯id
             }
             inforEditor.initRequest(newsData);
+            $("#newsTitle").next().hide();
+        } else {
+            $("#newsTitle").next().show();
+        }
+        //校验信息完整度
+        function isInputText() {
+            var inputText = $("input[type=text]"); //所有输入框
+            for (var i = 0; i < inputText.length; i++) {
+                if (inputText.eq(i).val() == "") {
+                    return false;
+                }
+            }
+            return true;
         }
 
         // 返回
@@ -68,6 +84,10 @@
         });
         // 保存
         $(".save_button").on("click", function() {
+            if (!isInputText()) {
+                myAlert.createBox("信息填写不完整！");
+                return;
+            }
             if (newsId) {
                 var saveData = {
                     "newsContent": ue.getContent(), //"资讯内容",
@@ -88,6 +108,13 @@
                 inforEditor.addInfor(saveData, function() {
                     window.history.go(-1);
                 });
+            }
+        });
+        $("#newsTitle").on("keyup", function() {
+            if (!$(this).val()) {
+                $(this).closest("div").find(".warn").show();
+            } else {
+                $(this).closest("div").find(".warn").hide();
             }
         });
     </script>

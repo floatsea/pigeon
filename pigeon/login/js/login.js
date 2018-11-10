@@ -95,7 +95,7 @@ $(function() {
             success: function(data) {
                 if (data.code == 0) {
                     cb && cb();
-                    myAlert.createBox(data.msg);
+                    //myAlert.createBox(data.msg);
                 }
             },
             error: function() {
@@ -125,6 +125,7 @@ $(function() {
                 };
                 var postUrl = location.origin + "/oneloft/login";
                 loginRequest(loginData, postUrl, function() {
+                    telStr = telStr.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2');
                     location.href = location.origin + "/oneloft/home.html?mobile=" + telStr;
                 });
             }
