@@ -1,7 +1,6 @@
 $(function() {
     $("#home_list_box").find("li").on("click", function() {
         $("#home_list_box").find("li").removeClass("active");
-        $(".infor_seconds").hide();
         $("#home_list_box").find("li").each(function(index) {
             var str = $("#home_list_box").find("li").eq(index).find("img").attr("src");
             var N = str.indexOf("1");
@@ -44,9 +43,12 @@ $(function() {
                 break;
             case "信息管理":
                 $("title").html("信息管理");
-                // $(".infor_seconds div").eq(0).trigger("click");
-                //$(".infor_seconds").slideDown();
-                $(".infor_seconds").slideDown();
+                $(".infor_seconds").slideToggle();
+                // if ($(".infor_seconds").css("display") == "none") {
+                //     $(".infor_seconds").css("display", "block");
+                // } else {
+                //     $(".infor_seconds").css("display", "none");
+                // }
                 break;
             case "客服消息":
                 $("title").html("客服消息");

@@ -7,6 +7,7 @@ $(function() {
     });
     $("body").on("mouseleave", function() {
         $("#default_left").removeClass("login_left3");
+        $("#login_right_box").css("width", "100%");
     });
     // 鼠标移入左侧
     $("#default_left").on("mouseenter", function() {
@@ -25,6 +26,7 @@ $(function() {
         $("#default_left").addClass("login_left3").show(); //左边显示默认
         $("#default_right").hide();
         $("#loging_main").show();
+        $(this).css("width", "100%");
     });
     // 鼠标移出 右侧
     $("#login_right_box").on("mouseleave", function() {
@@ -32,6 +34,7 @@ $(function() {
         $("#default_left").removeClass("login_left3").show(); //左边显示默认
         $("#default_right").show();
         $("#loging_main").hide();
+        $(this).css("width", "80%");
     });
 
     // 点击 "还没有账号，免费注册"

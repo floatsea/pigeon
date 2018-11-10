@@ -28,73 +28,75 @@
             </div>
         </div>
         <!--商家-->
-        <div class="login_right" id="login_right_box">
-            <!--默认状态-->
-            <div class="default_right" style="display:block;" id="default_right">
-                <img src="image/business.png " class="logo">
-                <img src="image/con_txt.png " class="con_txt">
-            </div>
-            <!--鼠标移入-->
-            <div class="login_right_main" style="display:none" id="loging_main">
-                <img src="image/business.png " class="logo">
-                <!--登录-->
-                <div class="login_cont" style="display:block" id="login_dom">
-                    <ul class="login_tit clearfix" id="switch_login">
-                        <li class="active">卖家登录</li>
-                        <li>公棚登录</li>
-                    </ul>
-                    <ul class="login_list">
-                        <li class="clearfix" id="email_box">
-                            <span>邮箱</span>
-                            <input type="text" id="login_email" style="width:70%" />
-                        </li>
-                        <li class="clearfix" id="iphone_box" style="display:none;">
-                            <span>手机号</span>
-                            <input type="text" maxlength="11" id="login_tel" style="width:70%" value="18688899999" />
-                        </li>
-                        <li class="clearfix">
-                            <span>验证码</span>
-                            <input type="text" maxlength="6" id="login_code" />
-                            <button id="login_code_btn">获取验证码</button>
-                        </li>
-                        <li style="border:none;"></li>
-                    </ul>
-                    <button class="login_btn" id="login_btn">登录</button>
-                    <p class="desc" id="regist_text">还没有账号，免费注册</p>
+        <div class="login_right_bg">
+            <div class="login_right" id="login_right_box">
+                <!--默认状态-->
+                <div class="default_right" style="display:block;" id="default_right">
+                    <img src="image/business.png " class="logo">
+                    <img src="image/con_txt.png " class="con_txt">
                 </div>
-                <!--注册-->
-                <div class="login_cont" style="display:none" id="regist_dom">
-                    <ul class="login_tit2 clearfix" id="switch_regist">
-                        <li class="active">
-                            <h5>注册卖家账号</h5>
-                            <p>通过平台销售赛鸽</p>
-                        </li>
-                        <li>
-                            <h5>注册公棚账号</h5>
-                            <p>通过平台发布公棚赛事信息</p>
-                        </li>
-                    </ul>
-                    <ul class="login_list">
-                        <li class="clearfix" id="regist_email_box">
-                            <span>邮箱</span>
-                            <input type="text" id="regist_email" style="width:70%" />
-                        </li>
-                        <li class="clearfix" id="regist_tel" style="display:none;">
-                            <span>手机号</span>
-                            <input type="text" maxlength="11" id="regist_tel" style="width:70%" />
-                        </li>
-                        <li class="clearfix">
-                            <span>验证码</span>
-                            <input type="text" maxlength="6" id="regist_code" />
-                            <button id="regist_code_btn">获取验证码</button>
-                        </li>
-                        <li class="clearfix">
-                            <span>设置密码</span>
-                            <input type="password" id="password" style="width:70%" />
-                        </li>
-                    </ul>
-                    <button class="login_btn" id="regist_btn">注册</button>
-                    <p class="desc" id="login_text">已有账号，立即登录</p>
+                <!--鼠标移入-->
+                <div class="login_right_main" style="display:none" id="loging_main">
+                    <img src="image/business.png " class="logo">
+                    <!--登录-->
+                    <div class="login_cont" style="display:block" id="login_dom">
+                        <ul class="login_tit clearfix" id="switch_login">
+                            <li class="active">卖家登录</li>
+                            <li>公棚登录</li>
+                        </ul>
+                        <ul class="login_list">
+                            <li class="clearfix" id="email_box">
+                                <span>邮箱</span>
+                                <input type="text" id="login_email" style="width:70%" />
+                            </li>
+                            <li class="clearfix" id="iphone_box" style="display:none;">
+                                <span>手机号</span>
+                                <input type="text" maxlength="11" id="login_tel" style="width:70%" value="18688899999" />
+                            </li>
+                            <li class="clearfix">
+                                <span>验证码</span>
+                                <input type="text" maxlength="6" id="login_code" />
+                                <button id="login_code_btn">获取验证码</button>
+                            </li>
+                            <li style="border:none;"></li>
+                        </ul>
+                        <button class="login_btn" id="login_btn">登录</button>
+                        <p class="desc" id="regist_text">还没有账号，免费注册</p>
+                    </div>
+                    <!--注册-->
+                    <div class="login_cont" style="display:none" id="regist_dom">
+                        <ul class="login_tit2 clearfix" id="switch_regist">
+                            <li class="active">
+                                <h5>注册卖家账号</h5>
+                                <p>通过平台销售赛鸽</p>
+                            </li>
+                            <li>
+                                <h5>注册公棚账号</h5>
+                                <p>通过平台发布公棚赛事信息</p>
+                            </li>
+                        </ul>
+                        <ul class="login_list">
+                            <li class="clearfix" id="regist_email_box">
+                                <span>邮箱</span>
+                                <input type="text" id="regist_email" style="width:70%" />
+                            </li>
+                            <li class="clearfix" id="regist_tel" style="display:none;">
+                                <span>手机号</span>
+                                <input type="text" maxlength="11" id="regist_tel" style="width:70%" />
+                            </li>
+                            <li class="clearfix">
+                                <span>验证码</span>
+                                <input type="text" maxlength="6" id="regist_code" />
+                                <button id="regist_code_btn">获取验证码</button>
+                            </li>
+                            <li class="clearfix">
+                                <span>设置密码</span>
+                                <input type="password" id="password" style="width:70%" />
+                            </li>
+                        </ul>
+                        <button class="login_btn" id="regist_btn">注册</button>
+                        <p class="desc" id="login_text">已有账号，立即登录</p>
+                    </div>
                 </div>
             </div>
         </div>
