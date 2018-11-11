@@ -7,7 +7,6 @@ var openid = getParameter("openid") || "abc";
  * 4、接口6 赛事列表接口
  */
 var scrollFlag = true; //滚屏事件用到
-var matchListStr = ""; //赛事列表dom
 var matchListObj = {
     initMatchQuest: function(postMatchData) { //初始化调接口获取数据
         $.ajax({
@@ -40,7 +39,9 @@ var matchListObj = {
             }
         })
     },
-    createMatchList: function(list) { //创建赛事列表
+    createMatchList: function (list) { //创建赛事列表
+        $("#match_list_box").html("");
+        var matchListStr = ""; //赛事列表dom
         list.forEach(function(val) {
             var enrolledTime = val.enrolledTime.split(" ")[0]; //报名开始时间
             var startedTime = val.startedTime.split(" ")[0]; //赛事开始时间

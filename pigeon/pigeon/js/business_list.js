@@ -3,7 +3,6 @@
  */
 var scrollFlag = true; //上拉加载更多 标识， true 可以加载， false不可加载
 var openid = getParameter("openid");
-var businessListStr = "";
 var businessObj = {
     initPageQuery: function(businessData) {
         $.ajax({
@@ -38,7 +37,8 @@ var businessObj = {
             }
         })
     },
-    createBusinessList: function(list) {
+    createBusinessList: function (list) {
+        var businessListStr = "";
         list.forEach(function(val) {
             var showHide = val.pigeonCount == 0 ? "none" : "block";
             businessListStr = '<div class="breeding_pigeons">' +

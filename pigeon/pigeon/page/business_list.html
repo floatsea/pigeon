@@ -16,7 +16,9 @@
     <div class="breeding_box">
         <!--搜索栏-->
         <div class="search">
-            <input type="text" placeholder="最佳种鸽做玉" id="serch_txt">
+            <form id="searchForm" action="">
+                <input type="search" autocomplete="off" placeholder="最佳种鸽做玉" id="serch_txt">
+            </form>
             <img src="../image/search_gp.png">
         </div>
         <div class="navigation_box">
@@ -136,6 +138,18 @@
                 businessData.orderBy = _index == 0 ? "publishedTime" : "follows";
                 businessObj.initPageQuery(businessData);
             });
+
+            $('#searchForm').on('submit', function(event){
+                event.preventDefault();
+                $("#list_box").html("");
+                businessData.keyword = $("#serch_txt").val();
+                businessData.pageNum = 1;
+                businessData.orderBy = $("#list_btn .active").index() == 0 ? "publishedTime" : "follows";
+                businessObj.initPageQuery(businessData);
+                $("#serch_txt").blur();
+            });
+
+            
 
             //点击 最新发布 升序降序
             //默认升序

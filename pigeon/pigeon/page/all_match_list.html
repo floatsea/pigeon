@@ -22,7 +22,7 @@
                 <img src="../image/gp.png">
             </div>
             <div class="loft_search_r">
-                <input type="text" placeholder="唐山天翼盛翔赛鸽公棚">
+                <input class="searchWord" type="text" placeholder="唐山天翼盛翔赛鸽公棚">
                 <img src="../image/search_gp.png">
             </div>
         </div>
@@ -138,6 +138,18 @@
                         }, 1500)
                     }
                 }
+            });
+
+            $(".loft_search_r img").click(function(){
+                var keyword = $(".searchWord").val();
+                var postMatchData = {
+                    "keyword": keyword, //检索关键字
+                    "pageSize": "5", //分页参数：分页大小
+                    "pageNum": 1, //分页参数：页码
+                    "orderBy": "publishedTime",
+                    "orderDesc": "" //分页参数：升降序标记，desc为降序，不传或空字符串为升序
+                }
+                matchListObj.initMatchQuest(postMatchData); //页面初始化
             });
 
             //点击 最新发布 、人气

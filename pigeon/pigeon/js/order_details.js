@@ -28,10 +28,9 @@ var orderDetailObj = {
                         Authorization: Authorization
                     }, {
                         openid: openid
-                    }, function () {
+                    }, function (e) {
                         Authorization = localStorage.getItem("Authorization") || "";
-                        // orderDetailObj.initPageRequest();
-                        getLogin({ "orderId": orderid });
+                        getLogin({ "openId": openid }, orderDetailObj.initPageRequest);
                     })
                     // getLogin({
                     //     "openId": openid
@@ -78,4 +77,4 @@ var orderDetailObj = {
 }
 var postData = { "orderId": orderid};
 var Authorization = localStorage.getItem("Authorization")||"";
-orderDetailObj.initPageRequest(postData);
+orderDetailObj.initPageRequest();
