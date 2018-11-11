@@ -113,7 +113,7 @@ var mineObj = {
         } else {
             matchStatus = "已结束";
         }
-        var matchStr = '<li>' +
+        var matchStr = '<li onclick="goRaceDtl(\'' + obj.raceId+'\')">' +
             '<div class="focus_on_datat my_fault_list">' +
             '<span class="focus_on_ing" style="margin-right:0.2rem;">' + matchStatus + '</span>' +
             '<span>' + obj.raceTitile + '</span>' +
@@ -129,5 +129,7 @@ var mineObj = {
             '</li>';
         $("#mine_match").html(matchStr);
     }
-
+}
+function goRaceDtl(raceId) {
+    location.href = "match_details.html?openid=" + openid + "&raceid=" + raceId;
 }

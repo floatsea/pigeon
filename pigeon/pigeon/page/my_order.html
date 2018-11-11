@@ -9,7 +9,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <link rel="stylesheet" href="../css/reset.css" />
-    <link rel="stylesheet" href="../css/m_style.css" />
+    <link rel="stylesheet" href="../css/m_style.css?v=1" />
 </head>
 
 <body class="order_box">
@@ -17,6 +17,7 @@
         <div class="order_tab_box">
             <ul class="pro_type_list order_tab clearfix" id="order_tit">
                 <li class="active">待付款</li>
+                <!-- <li>待发货</li> -->
                 <li>待收货</li>
                 <li>全部</li>
             </ul>
@@ -54,6 +55,8 @@
                     </div>
                 </div> -->
             </div>
+            <!--待发货-->
+            <!-- <div id="goods_send_box" style="display:block"></div> -->
             <!--待收货-->
             <div id="goods_box" style="display:block">
                 <!-- <div class="order_del">
@@ -174,7 +177,7 @@
                         <span>支付凭据</span>
                         <div id="camera_btn">
                             <img src="../image/c_icon.png">
-                            <input type="file" accept="image/*" id="upload1" name="upfile"/>
+                            <input type="file" accept="image/*" id="upload1" name="upfile" />
                         </div>
                     </li>
                     <li class="clearfix pay_img_list" id="img_list_box">
@@ -210,12 +213,13 @@
             "left": (lineL + titLiW * tab) + "px"
         });
         if (tab == 0) postData.orderitemStatus = "0"; //待付款
-        if (tab == 1) postData.orderitemStatus = "4"; //待收货
+        // if (tab == 1) postData.orderitemStatus = "2"; //待发货
+        if (tab == 1) postData.orderitemStatus = "3"; //待收货
         if (tab == 2) postData.orderitemStatus = ""; //全部
         myOrderObj.initRequest(postData); //页面出初始化
         $("#my_order_box>div").eq(tab).show();
         //切换状态
-        $("#order_tit li").on("click", function() {
+        $("#order_tit li").on("click", function () {
             var _index = $(this).index();
             $("#pay_order_box").html(""); //待付款 清空
             $("#goods_box").html(""); //待收货 清空
@@ -223,11 +227,13 @@
             $("#order_tit li").removeClass("active");
             $(this).addClass("active");
             $(".my_order_line").css({
-                "left": +(lineL + titLiW * _index) + "px"
+                "left": (lineL + titLiW * _index) + "px"
             });
             postData.pageNum = 1;
             if (_index == 0) {
                 postData.orderitemStatus = "0"; //"待付款";
+                // } else if (_index == 1) {
+                //     postData.orderitemStatus = "2"; //"待发货";
             } else if (_index == 1) {
                 postData.orderitemStatus = "3"; //"待收货";
             } else {
@@ -238,11 +244,11 @@
             $("#my_order_box>div").eq(_index).show();
         });
         /*点击每个列表跳转到订单详情*/
-        $(".order_del").on("click", function() {
-            location.href = "order_details.html?openid=" + openid + "&orderid" + $(this).attr("orderId");
-        });
+        function goDtl(orderId) {
+            location.href = "order_details.html?openid=" + openid + "&orderid=" + orderId;
+        }
         //上拉加载更多
-        $(window).on("scroll", function() {
+        $(window).on("scroll", function () {
             var scrolT = $(document).scrollTop(); //滚动距离
             var clientH = $(window).height(); //视口高度
             var allH = $(document).height(); //整个文档高度
@@ -252,7 +258,7 @@
                     $(".load_more img").show();
                     $("#load_more_txt").html("加载中...");
                     postData.pageNum += 1; //页码
-                    setTimeout(function() {
+                    setTimeout(function () {
                         myOrderObj.initRequest(postData);
                         $(document).scrollTop(scrolT - 10);
                     }, 1500);
@@ -260,18 +266,18 @@
             }
         });
         //点击 确认支付
-        $("#pay_order_box").on("click", ".pay_sure_btn", function(ev) {
+        $("#pay_order_box").on("click", ".pay_sure_btn", function (ev) {
             ev.stopPropagation();
             $(".pay_mask").attr("orderId", $(this).closest(".order_del").attr("orderId"));
             $(".pay_mask").show();
         });
         //点击 支付弹窗关闭
-        $(".close_btn").on("click", function() {
+        $(".close_btn").on("click", function () {
             $(".pay_mask").hide();
         });
 
         //选择支付方式
-        $("#pay_type_sel").on("change", function() {
+        $("#pay_type_sel").on("change", function () {
             if ($(this).val() != 0) {
                 $("#pay_bank").hide();
             }
@@ -283,20 +289,20 @@
         // })
         //})
         //调h5 拍照方法
-        $("#upload1").on("change",function(){
+        $("#upload1").on("change", function () {
             var thisId = $(this).attr("id");
-            var postUrl = location.origin+'/ueditor?action=uploadimage';
-            uploadRequest(postUrl,thisId,function(imgUrl){
+            var postUrl = location.origin + '/ueditor?action=uploadimage';
+            uploadRequest(postUrl, thisId, function (imgUrl) {
                 var oImg = document.createElement("img");
                 oImg.src = imgUrl;
                 document.getElementById("img_list_box").appendChild(oImg);
             });
         })
         //点击 支付提交
-        $("#submit_btn").on("click", function() {
+        $("#submit_btn").on("click", function () {
             var imgs = $("#img_list_box img");
             var imageArr = [];
-            imgs.each(function(i){
+            imgs.each(function (i) {
                 imageArr.push({
                     "img": imgs.eq(i).attr("src"),
                 });
@@ -305,23 +311,23 @@
                 "orderId": $(this).closest(".pay_mask").attr("orderId"),
                 "payment": "", //"支付信息(运营/客户填写)",
                 "payway": $("#pay_type_sel").val(), //"", //支付方式: (运营 / 客户填写): 银行转账,0;微信,1;支付宝,2;,
-                "voucher":{ //缺少图片链接
+                "voucher": { //缺少图片链接
                     "images": imageArr
-                } 
+                }
             }
             reloadToken({
                 Authorization: Authorization
             }, {
-                openId: openid
-            }, function() {
-                myOrderObj.submitPay(payPostData,function(){
-                    location.reload(); //刷新页面
+                    openId: openid
+                }, function () {
+                    myOrderObj.submitPay(payPostData, function () {
+                        location.reload(); //刷新页面
+                    });
                 });
-            });
         });
 
         //点击确认收货
-        $("#goods_box").on("click", ".goods_sure_btn", function() {
+        $("#goods_box").on("click", ".goods_sure_btn", function () {
             var postGoodsData = {
                 "orderitemId": $(this).attr("orderitemId"),
             }
@@ -332,22 +338,60 @@
             reloadToken({
                 Authorization: Authorization
             }, {
-                openId: openid
-            }, function() {
-                myOrderObj.goodsSure(postGoodsData,function(){
-                    liDome.remove();
-                    pigeonLen --;
-                    listParent.find(".price_sum_num i").html(pigeonLen);
-                    if(pigeonLen<=0){
-                        listParent.remove();
-                    }
+                    openId: openid
+                }, function () {
+                    myOrderObj.goodsSure(postGoodsData, function () {
+                        liDome.remove();
+                        pigeonLen--;
+                        listParent.find(".price_sum_num i").html(pigeonLen);
+                        if (pigeonLen <= 0) {
+                            listParent.remove();
+                        }
+                    });
                 });
-            });
         });
-        function goDtl(orderId){
-            location.href = "order_details.html?orderid="+ orderId;
-        }
     </script>
 </body>
+<style>
+    .container {
+        display: flex;
+        border-top: 1px solid #f3f3f3;
+        border-bottom: 1px solid #f2f2f2;
+    }
+
+    .item {
+        color: #000;
+        padding: .2rem;
+        font-size: .6rem;
+        width: 100%;
+        position: relative;
+    }
+
+    .itemTitle {
+        line-height: 1rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+
+    .itemDesc {
+        margin-top: .2rem;
+        font-size: .4rem;
+    }
+
+    .itemStatus {
+        padding: .1rem .2rem;
+        border: 1px solid #f9454e;
+        /* float: right; */
+        border-radius: .4rem;
+        color: #f9454e;
+        bottom: 0.2rem;
+        position: absolute;
+        right: .6rem;
+        font-weight: bold;
+    }
+</style>
 
 </html>

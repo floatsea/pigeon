@@ -39,20 +39,20 @@ var orderSureObj = {
     initPageUl: function(pigeonArr) {
         var ulStr = "";
         pigeonArr.forEach(function(val, index) {
-            ulStr += '<li class="item-single clearfix" pieonNum="' + index + '">' +
-                '<div class="p_checkbox">' +
-                '<input type="checkbox" class="j_check" pigeonInfo="' + encodeURIComponent(JSON.stringify(val)) + '">' + //鸽子信息存储在checkbox内 提交时用
-                '<label for=""></label>' +
-                '</div>' +
-                '<div class="item_from">' +
-                '<img src="' + val.imgSrc + '" class="item_from_img">' +
-                '<div class="item_from_list">' +
-                '<p>' + val.pigeonName + '<i>' + val.pigeonNo + '</i></p>' +
-                '<p>' + val.pigeonPoint + '</p>' +
-                '<p class="item_from_pic">¥' + val.pigeonPrice + '元</p>' +
-                '</div>' +
-                '</div>' +
-                '</li>';
+            ulStr += '<li class="item-single clearfix" pigeonId="' + val.pigeonId + '" pieonNum="' + index + '">' +
+                        '<div class="p_checkbox">' +
+                            '<input type="checkbox" class="j_check" pigeonInfo="' + encodeURIComponent(JSON.stringify(val)) + '">' + //鸽子信息存储在checkbox内 提交时用
+                            '<label for=""></label>' +
+                        '</div>' +
+                        '<div class="item_from">' +
+                            '<img src="' + val.imgSrc + '" class="item_from_img">' +
+                            '<div class="item_from_list">' +
+                                '<p>' + val.pigeonName + '<i>' + val.pigeonNo + '</i></p>' +
+                                '<p>' + val.pigeonPoint + '</p>' +
+                                '<p class="item_from_pic">¥' + val.pigeonPrice + '元</p>' +
+                            '</div>' +
+                        '</div>' +
+                    '</li>';
         })
         return ulStr;
     },
