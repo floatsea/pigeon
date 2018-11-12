@@ -109,5 +109,27 @@ var raceObj = {
                 myAlert.createBox("服务器开小差！")
             }
         })
+    }, 
+    enrollFind: function(applyData, callback) { //立即报名
+        $.ajax({
+            url: location.origin + "/customer/enroll/find",
+            type: "post",
+            data: JSON.stringify(applyData),
+            dataType: "json",
+            contentType: "application/json",
+            headers: { Authorization: Authorization },
+            success: function (data) {
+                if (data.code == "0") {
+                    if (data.data.isEnrolled){
+                        $("#sign_btn").html("已报名");
+                        $("#sign_btn").unbind("click", fn);
+                    }
+                }
+            },
+            error: function () {
+                alert(1)
+                myAlert.createBox("服务器开小差！")
+            }
+        })
     }
 }

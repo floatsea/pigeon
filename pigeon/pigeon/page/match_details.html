@@ -145,6 +145,11 @@
                 "raceId": raceid
             });
 
+            raceObj.enrollFind({
+                "raceId": raceid,
+                "userType": 0   //参赛者类型: 客户, 0; 商家,1; 
+            });
+
             //点击 报名
             $("#sign_btn").bind("click", fn=function() {
                 $("#sign_mark").show();

@@ -244,7 +244,8 @@
             $("#my_order_box>div").eq(_index).show();
         });
         /*点击每个列表跳转到订单详情*/
-        function goDtl(orderId) {
+        function goDtl(orderId,e) {
+            console.log(e);
             location.href = "order_details.html?openid=" + openid + "&orderid=" + orderId;
         }
         //上拉加载更多
@@ -324,10 +325,23 @@
                         location.reload(); //刷新页面
                     });
                 });
+        }); 
+        $("#all_order").on("click",".on_hot_banner", function(){
+            orderId = $(this).attr("orderId");
+            location.href = "order_details.html?openid=" + openid + "&orderid=" + orderId;
         });
-
+            $("#pay_order_box").on("click", ".orderDtl", function () {
+                orderId = $(this).attr("orderId");
+                location.href = "order_details.html?openid=" + openid + "&orderid=" + orderId;
+            }); 
+        $("#goods_box").on("click",".orderDtl", function () {
+            orderId = $(this).attr("orderId");
+            location.href = "order_details.html?openid=" + openid + "&orderid=" + orderId;
+        });
         //点击确认收货
-        $("#goods_box").on("click", ".goods_sure_btn", function () {
+        $("#goods_box").on("click", ".goods_sure_btn", function (e) {
+            e.stopPropagation();
+            e.preventDefault();
             var postGoodsData = {
                 "orderitemId": $(this).attr("orderitemId"),
             }

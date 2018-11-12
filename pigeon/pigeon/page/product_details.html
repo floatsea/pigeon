@@ -135,6 +135,7 @@
             "pigeonId": pigeonid
         }
         pigeonObj.initPageQuery(_data);
+        isFollowedFn();
         /*点击事件*/
         //头部视频图片切换
         // $("#title_btn span").on("click", function() {
@@ -164,7 +165,6 @@
                 "left": (lineL + w) + "px"
             });
         });
-
 
         var pigeonsInfoArr = JSON.parse(sessionStorage.getItem("pigeonsInfoArr")) || [];
         count = pigeonsInfoArr ? pigeonObj.getPigeonNum(pigeonsInfoArr) : 0;
@@ -236,19 +236,48 @@
         $("#shop").on("click", function() {
             location.href = "business_detail_list.html?openid=" + openid + "&businessid=" + $("#parent_box").attr("businessId");
         });
+        
+        function isFollowedFn(){
+            var flowData = {
+                "followNo": pigeonid,
+                "followType": "4"
+            }
+            pigeonObj.isFollowed(flowData, function (isFollowed) {
+                if (isFollowed) {
+                    $this.find("img").attr("src", "../image/look2.png")
+                    $this.find("span").css("color", "#dc3d27");
+                } else {
+                    $this.find("img").attr("src", "../image/look.png")
+                    $this.find("span").css("color", "#000");
+                }
+            });
+        }
 
         //点击关注
         var followFlag = false;
         $("#follow_btn").on("click", function() {
             //客户:0,商家:1,工棚:2,运营:3,信鸽:4,赛事:5.
+            var $this = $(this);
+            var isFollowed = true;
+            if($this.find("img").attr("src").indexOf("look.png") > 0){
+                isFollowed = "true";
+            }else{
+                isFollowed = "false";
+            }
             var flowData = {
                 "followNo": pigeonid,
-                "followType": "4"
+                "followType": "4",
+                isFollowed: isFollowed
             }
-            var $this = $(this);
+            
             pigeonObj.setFlow(flowData, function() {
-                $this.find("img").attr("src", "../image/look2.png")
-                $this.find("span").css("color", "#dc3d27");
+                if($this.find("img").attr("src").indexOf("look.png")>0){
+                    $this.find("img").attr("src", "../image/look2.png")
+                    $this.find("span").css("color", "#dc3d27");
+                }else{
+                    $this.find("img").attr("src", "../image/look.png")
+                    $this.find("span").css("color", "#000");
+                }
             });
         });
     </script>

@@ -115,5 +115,23 @@ var pigeonObj = {
                 myAlert.createBox("服务器开小差！")
             }
         })
+    },
+    isFollowed(flowData, callback){
+        $.ajax({
+            url: location.origin + "/customer/follow/find",
+            type: "post",
+            data: JSON.stringify(flowData),
+            dataType: "json",
+            contentType: "application/json",
+            headers: { Authorization: Authorization },
+            success: function (data) {
+                if (data.code == "0") {
+                    callback && callback(data.data.isFollowed);
+                }
+            },
+            error: function () {
+                myAlert.createBox("服务器开小差！")
+            }
+        })
     }
 }

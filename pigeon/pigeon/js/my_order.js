@@ -85,17 +85,16 @@ var myOrderObj = {
                     '<p class="list_images_rn">' + imgVal.goodsDesc.pigeonName + '<span>' + imgVal.goodsDesc.pigeonNo + '</span></p>' +
                     '<p class="dove_price1"><span>&yen</span>' + imgVal.goodsPrice + '元</p>' +
                     '</div>' +
-                    '<button class="goods_sure_btn" orderitemId="' + imgVal.orderitemId + '">确认收货</button>' +
                     '</li>';
                 sumMoney += Number(imgVal.goodsPrice);
             });
             payOrderStr += '<div class="order_del" orderId="' + val.orderId + '">' +
-                '<div class="order_num clearfix" onclick="goDtl(\'' + val.orderId + '\')">' +
+                '<div class="order_num clearfix" onclick="goDtl(\'' + val.orderId + '\',event)">' +
                 '<p class="order_number">订单号：' + val.orderId + '</p>' +
                 '<p class="order_w">等待付款</p>' +
                 '</div>' +
-                '<div class="on_hot_banner" onclick="goDtl(\'' + val.orderId + '\')">' +
-                '<ul class="order_img">' + imgList + '</ul>' +
+                '<div class="orderDtl" orderId="' + val.orderId + '">' +
+                '<ul class="order_img goods_items">' + imgList + '</ul>' +
                 '</div>' +
                 '<div class="price_sum clearfix">' +
                 '<div class="price_sum_left">' +
@@ -133,11 +132,11 @@ var myOrderObj = {
             });
             if (imgList) {
                 sendOrderStr += '<div class="order_del" >' +
-                    '<div class="order_num clearfix" onclick="goDtl(\'' + val.orderId + '\')">' +
+                    '<div class="order_num clearfix" onclick="goDtl(\'' + val.orderId + '\',event)">' +
                     '<p class="order_number">订单号：' + val.orderId + '</p>' +
                     '<p class="order_w">等待收货</p>' +
                     '</div>' +
-                    '<div onclick="goDtl(\'' + val.orderId + '\')">' +
+                    '<div class="orderDtl"  orderId="' + val.orderId + '">' +
                     '<ul class="goods_items">' + imgList + '</ul>' +
                     '</div>' +
                     '<div class="price_sum clearfix">' +
@@ -162,19 +161,6 @@ var myOrderObj = {
             var orderitems = val.orderitems;
             var imgList = "";
             orderitems.forEach(function (imgVal) {
-                // imgList += '<li>' +
-                //     '<img src="' + imgVal.goodsDesc.pigeonPic + '">' +
-                //     '</li>';
-                // imgList += '<li class="list_images_n clearfix">' +
-                //     '<div class="list_images_l">' +
-                //     '<img src="' + imgVal.goodsDesc.pigeonPic + '">' +
-                //     '</div>' +
-                //     '<div class="list_images_r">' +
-                //     '<p class="list_images_rn">' + imgVal.goodsDesc.pigeonName + '<span>' + imgVal.goodsDesc.pigeonNo + '</span></p>' +
-                //     '<p class="dove_price1"><span>&yen</span>' + imgVal.goodsPrice + '元</p>' +
-                //     '</div>' +
-                //     '<button class="goods_sure_btn" orderitemId="' + imgVal.orderitemId + '">确认收货</button>' +
-                //     '</li>';
                 imgList += '<div class="container">'
                     + '<div><li><img src="' + imgVal.goodsDesc.pigeonPic + '"></li></div>'
                     + '<div class="item">'
@@ -187,11 +173,11 @@ var myOrderObj = {
             console.log(val.orderStatus)
             var orderstatus = myOrderObj.setOrderStatus(val.orderStatus);
             allOrderStr += '<div class="order_del"   orderId="' + val.orderId + '">' +
-                '<div class="order_num clearfix" onclick="goDtl(\'' + val.orderId + '\')">' +
+                '<div class="order_num clearfix" onclick="goDtl(\'' + val.orderId + '\',event)">' +
                 '<p class="order_number">订单号：' + val.orderId + '</p>' +
                 // '<p class="order_w">' + orderstatus + '</p>' +
                 '</div>' +
-                '<div class="on_hot_banner" onclick="goDtl(\'' + val.orderId + '\')">' +
+                '<div class="on_hot_banner" orderId="' + val.orderId + '">' +
                 '<ul class="order_img">' + imgList + '</ul>' +
                 '</div>' +
                 '<div class="price_sum clearfix">' +

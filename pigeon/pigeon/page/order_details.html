@@ -79,29 +79,32 @@
         </div>
         <div class="py_in" id="logistics_box">
             <h3>配送信息</h3>
-            <p class="order_time">
-                <span class="order_time_l">发货时间:</span>
-                <span class="order_time_r" id="send_date"></span>
-            </p>
-            <p class="order_time">
-                <span class="order_time_l order_time_jia">承运方:</span>
-                <span class="order_time_r" id="carrier">UPS</span>
-            </p>
-            <p class="order_time">
-                <span class="order_time_l">物流单号:</span>
-                <span class="order_time_r" id="logistics_num"></span>
-            </p>
-            <p class="order_time">
-                <span class="order_time_l">物流状态:</span>
-                <span class="order_time_r1" id="look_logistics_btn">查看</span>
-            </p>
+            <!-- <div>
+                <p class="order_time">
+                    <span class="order_time_l">发货时间:</span>
+                    <span class="order_time_r" id="send_date"></span>
+                </p>
+                <p class="order_time">
+                    <span class="order_time_l order_time_jia">承运方:</span>
+                    <span class="order_time_r" id="carrier">UPS</span>
+                </p>
+                <p class="order_time">
+                    <span class="order_time_l">物流单号:</span>
+                    <span class="order_time_r" id="logistics_num"></span>
+                </p>
+                <p class="order_time">
+                    <span class="order_time_l">物流状态:</span>
+                    <span class="order_time_r1" id="look_logistics_btn">查看</span>
+                </p>
+            </div> -->
         </div>
     </div>
     <!--支付信息-->
-    <div class="mask pay_info_mask">
-        <div class="mask_content">
-            <img src="../image/close2.png" class="close_btn">
-        </div>
+    <div class="mask pay_info_mask hide">
+        <div class="flex1"></div>
+        <img class="flex1" src=""
+         style="width: 100%;">
+        <div class="flex1"></div>
     </div>
     <!--物流信息-->
     <div class="mask logistics_info_mask">
@@ -113,16 +116,35 @@
     <script>
         //查看支付信息
         $("#look_bank_info").on("click", function() {
-            $(".pay_info_mask").show();
+            if($(".pay_info_mask img").attr("src")){    //如果有支付凭证，显示凭证，否则给提示
+                $(".pay_info_mask").show();
+            }else{
+                alert("尚无支付凭证");
+            }
         });
         $(".close_btn").on("click", function() {
             $(this).closest(".mask").hide();
         });
         //查看物流信息
-        $("#look_logistics_btn").on("click", function() {
+        $("#look_logistics_btn").on("click", function(e) {
             $(".logistics_info_mask").show();
         });
     </script>
 </body>
-
+<style>
+    .flex1{
+        -webkit-box-flex: 1;
+        flex:1
+    }
+    .box{
+        display: -webkit-box; /* Firefox 30+，Chrome 4+, Safari 3.1, iOS Safari 3.2+ */
+        display: -moz-box; /* Firefox 17- */
+        display: -webkit-flex; /* Chrome 21+, Safari 6.1+, iOS Safari 7+, Opera 15/16 */
+        display: -moz-flex; /* Firefox 18+ */
+        display: -ms-flexbox; /* IE 10 */
+        display: flex; /* Chrome 29+, Firefox 22+, IE 11+, Opera 12.1/17/18, Android 4.4+ */
+        -webkit-box-orient: vertical;
+    }
+    .hide{display: none;}
+</style>
 </html>

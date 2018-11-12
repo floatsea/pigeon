@@ -59,13 +59,12 @@
         var noticeObj = {
             initRequest: function(postData) {
                 $.ajax({
-                    url: location.origin + " ",
+                    url: location.origin + "/customer/messageitem/findList",
                     type: "post",
                     data: JSON.stringify(postData),
-                    dataType: "json ",
-                    contentType: "application/json ",
+                    dataType: "json",
+                    contentType: "application/json",
                     success: function(data) {
-                        
                         if (data.code == "0 ") {
                             var list = data.data.list;
                             createNotice(list);
@@ -78,19 +77,19 @@
             },
             createNotice: function(list) {
                 var noticeStr = " ";
-                list.forEach(function() {
+                list.forEach(function(val) {
                     noticeStr += '<div class="notice_box ">' +
                         '<div class="notice_time ">' +
                         '2018-7-23 13:45' +
                         '</div>' +
                         '<div class="notice_con ">' +
                         '<div class="notice_con_t ">' +
-                        '<h3>付款提醒</h3>' +
-                        '<p>您的订单1212121212已结下单成功</p>' +
-                        '<p>请尽快完成付款</p>' +
+                        '<h3>'+ val.messageTitle+'</h3>' +
+                        '<p>'+val.messageContent+'</p>' +
+                        '<p></p>' +
                         '</div>' +
                         '<div class="det_btn clearfix ">' +
-                        '<a href="order_details.html ">查看详情</a>' +
+                        // '<a href="order_details.html">查看详情</a>' +
                         '<img src="../image/ck.png ">' +
                         '</div>' +
                         '</div>' +

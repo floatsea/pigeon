@@ -174,5 +174,26 @@ var businessDetailObj = {
             $this.parent().find("span").removeClass("active");
             $this.addClass("active");
         }
+    },
+    findSiteConfig(){
+        $.ajax({
+            url: location.origin + "/customer/configSystem/findSiteConfig",
+            type: "post",
+            data: JSON.stringify({}),
+            dataType: "json",
+            contentType: "application/json",
+            success: function (data) {
+                if (data.code == "0") {
+                    console.log(data);
+                } else if (data.code == "401") {
+                    getLogin({
+                        "openId": openid
+                    }, businessDetailObj.findSiteConfig);
+                }
+            },
+            error: function () {
+                myAlert.createBox("服务器开小差！");
+            }
+        })
     }
 }

@@ -70,9 +70,32 @@ var orderDetailObj = {
         $("#bank_name").html(""); //支付银行
     },
     showLogistics: function(logisticsinfo) { //物流信息
-        $("#send_date").html(""); //发货时间
-        $("#carrier").html(""); //承运方
-        $("#logistics_num").html(""); //物流单号
+        var items = logisticsinfo.orderitems;
+        var str = "";  
+        for (var i = 0; i < items.length;i++){
+            str += '<div>'
+                + '<p class="order_time">'
+                + '<span class="order_time_l">发货时间: </span>'
+                + '<span class="order_time_r">' + (items[i].deliveredTime||"") + '</span>'
+                + '</p>'
+                + '<p class="order_time">'
+                + '<span class="order_time_l order_time_jia">承运方: </span>'
+                + '<span class="order_time_r">' + (items[i].carrier || "") + '</span>'
+                + '</p>'
+                + '<p class="order_time">'
+                + '<span class="order_time_l">物流单号: </span>'
+                + '<span class="order_time_r">' + (items[i].expressNo || "") + '</span>'
+                + '</p>'
+                + '<p class="order_time">'
+                + '<span class="order_time_l">物流状态:</span>'
+                + '<span class="order_time_r1" id="look_logistics_btn">查看</span>'
+                + '</p>'
+                + '</div>'
+        }
+        $("#logistics_box").append(str);
+        // $("#send_date").html(""); //发货时间
+        // $("#carrier").html(""); //承运方
+        // $("#logistics_num").html(""); //物流单号
     }
 }
 var postData = { "orderId": orderid};
