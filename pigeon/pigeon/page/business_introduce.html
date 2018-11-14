@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>商家简介</title>
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,target-densitydpi=medium-dpi">
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/introduce.css" />
+</head>
+
+<body>
+    <div class="introduce">
+        <div class="introduce_tit">
+            <div class="tit_head_img">
+                <img src="../image/data.png" id="headImg">
+            </div>
+            <div class="tit_head_txt">
+                <p id="nickName">章鱼墨水</p>
+                <p class="tit_head_num">粉丝数<i>256</i></p>
+            </div>
+        </div>
+        <div class="introduce_content">
+            <h3>简介</h3>
+            <div class="introduce_content_txt">
+                2015年11月18日，作为行业内首家由国内大型保险企业发起成立的互联网保险公司，泰康人寿的全资子公司——泰康在线财产保险股份有限公司正式在武汉挂牌成立，注册资本金人民币10亿元。此前，作为泰康人寿的官方网站，泰康在线始终是泰康人寿互联网业务的主要平台。<br> 2000年8月22日，泰康在线作为泰康人寿的官方网站正式开通，开始经营互联网保险业务，经过十多年的探索和积累，逐渐成长为行业领先的互联网保险品牌，率先实现了全程网上投保，诞生了公司第一批电子保单、电子批单，成功处理了公司首个网上保险理赔案、开发了全新的网上DIY保险⋯⋯实现了真正意义上的网上保险。
+                <br> 未来，成为独立子公司的泰康在线财产保险股份有限公司将秉承泰康人寿“专业化、规范化、国际化”的企业理念，依托泰康人寿的强大资源优势，发挥自身成熟的互联网保险运营优势，继续充当互联网保险“排头兵”的角色，致力于为人们提供实惠便捷的网上保险产品和服务。
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="../js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="../js/public.js"></script>
+    <script type="text/javascript" src="../js/weixin_init.js"></script>
+    <script>
+        var openid = getParameter("openid"); //openid
+        var Authorization = localStorage.getItem("Authorization") || "";
+        //var WX_USERINFO = getParameter("WX_USERINFO"); //用户信息
+        // var custumerInfo = JSON.parse(sessionStorage.getItem("custumerInfo"));
+        // $("#nickName").html(custumerInfo.nickName); //昵称
+        // $("#headImg").html(custumerInfo.profilePhoto); //头像
+        // $("#name").val(custumerInfo.realName);
+        // $("#cardid").val(custumerInfo.idCard);
+        // $("#birthday").val(getDateToAge(custumerInfo.idCard));
+        // $("#city").val(custumerInfo.address);
+        // $("#mobile").val(custumerInfo.mobile);
+        $("#nickName").html(getLocVal("shopName") || "");
+        $(".introduce_content_txt").html(getLocVal("shopDesc") || "");
+    </script>
+</body>
+
+</html>

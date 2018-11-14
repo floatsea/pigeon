@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>我的订单</title>
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,target-densitydpi=medium-dpi">
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/m_style.css?v=1" />
+</head>
+
+<body class="order_box">
+    <div class="my_order">
+        <div class="order_tab_box">
+            <ul class="pro_type_list order_tab clearfix" id="order_tit">
+                <li class="active">待付款</li>
+                <!-- <li>待发货</li> -->
+                <li>待收货</li>
+                <li>全部</li>
+            </ul>
+            <i class="my_order_line"></i>
+        </div>
+        <section class="my_order_box" id="my_order_box">
+            <!--待付款-->
+            <div id="pay_order_box">
+                <!-- <div class="order_del">
+                    <div class="order_num clearfix">
+                        <p class="order_number">订单号：123456789009876</p>
+                        <p class="order_w">等待付款</p>
+                    </div>
+                    <div class="on_hot_banner">
+                        <ul class="order_img">
+                            <li>
+                                <img src="../image/in_hot_bird.png">
+                            </li>
+                            <li>
+                                <img src="../image/in_hot_bird.png">
+                            </li>
+                            <li>
+                                <img src="../image/in_hot_bird.png">
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="price_sum clearfix">
+                        <div class="price_sum_left">
+                            <p class="price_sum_num">共5件商品,</p>
+                            <p class="price_sum_mon">待付款</p>
+                        </div>
+                        <div class="price_sum_right">
+                            <button>确认付款</button>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+            <!--待发货-->
+            <!-- <div id="goods_send_box" style="display:block"></div> -->
+            <!--待收货-->
+            <div id="goods_box" style="display:block">
+                <!-- <div class="order_del">
+                    <div class="order_num clearfix">
+                        <p class="order_number">订单号：123456789009876</p>
+                        <p class="order_w">等待收货</p>
+                    </div>
+                    <div>
+                        <ul class="goods_items">
+                            <li class="list_images_n clearfix">
+                                <div class="list_images_l">
+                                    <img src="../image/list_img.png">
+                                </div>
+                                <div class="list_images_r">
+                                    <p class="list_images_rn">白明星<span>DV0176-18-27</span></p>
+                                    <p class="dove_price1"><span>&yen</span>39999.00</p>
+                                </div>
+                                <button>确认收货</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="price_sum clearfix">
+                        <div class="price_sum_right">
+                            <p class="price_sum_num">共5件商品</p>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+            <!--全部-->
+            <div id="all_order" style="display:none">
+                <!-- <div class="order_del">
+                    <div class="order_num clearfix">
+                        <p class="order_number">订单号：123456789009876</p>
+                        <p class="order_w">等待付款</p>
+                    </div>
+                    <div class="on_hot_banner">
+                        <ul class="order_img">
+                            <li>
+                                <img src="../image/in_hot_bird.png">
+                            </li>
+                            <li>
+                                <img src="../image/in_hot_bird.png">
+                            </li>
+                            <li>
+                                <img src="../image/in_hot_bird.png">
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="price_sum clearfix">
+                        <div class="price_sum_left">
+                            <p class="price_sum_num">共5件商品,</p>
+                            <p class="price_sum_mon">待付款</p>
+                        </div>
+                        <div class="price_sum_right">
+                            <button>确认付款</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="order_del">
+                    <div class="order_num clearfix">
+                        <p class="order_number">订单号：123456789009876</p>
+                        <p class="order_w">等待发货</p>
+                    </div>
+                    <div class="on_hot_banner">
+                        <ul class="order_img">
+                            <li>
+                                <img src="../image/in_hot_bird.png">
+                            </li>
+                            <li>
+                                <img src="../image/in_hot_bird.png">
+                            </li>
+                            <li>
+                                <img src="../image/in_hot_bird.png">
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="price_sum clearfix">
+                        <div class="price_sum_right">
+                            <p class="price_sum_num">共5件商品</p>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </section>
+        <!--上拉加载更多-->
+        <div class="load_more">
+            <img src="../image/load.gif" alt="" style="display:none;">
+            <span id="load_more_txt">上拉加载更多</span>
+        </div>
+        <!--确认付款-->
+        <div class="pay_mask">
+            <div class="pay_box">
+                <img src="../image/close2.png" class="close_btn">
+                <h3>确认支付</h3>
+                <p>
+                    当您完成线下付款后，请补充支付凭据，以便平台核验后通知卖家发货!
+                </p>
+                <ul>
+                    <li class="clearfix">
+                        <span>支付方式</span>
+                        <div>
+                            <select id="pay_type_sel">
+                                <option value="0">银行转账</option>
+                                <option value="1">微信</option>
+                                <option value="2">支付宝</option>
+                            </select>
+                        </div>
+                    </li>
+                    <li class="clearfix" id="pay_bank">
+                        <span>支付银行</span>
+                        <div>
+                            <select>
+                                <option>招商银行</option>
+                            </select>
+                        </div>
+                    </li>
+                    <li class="clearfix">
+                        <span>支付凭据</span>
+                        <div id="camera_btn">
+                            <img src="../image/c_icon.png">
+                            <input type="file" accept="image/*" id="upload1" name="upfile" />
+                        </div>
+                    </li>
+                    <li class="clearfix pay_img_list" id="img_list_box">
+                    </li>
+                </ul>
+                <button id="submit_btn">提交</button>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="../js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="../js/public.js"></script>
+    <script type="text/javascript" src="../js/weixin_init.js"></script>
+    <script src="../js/ajaxfileupload.js"></script>
+    <script src="../js/my_order.js"></script>
+    <script>
+        var postData = {
+            "customerId": openid,
+            "orderitemStatus": "", //订单项状态：,提交: 0,取消: 1,付款: 2,确认收款: 3,发货: 4,确认收货: 5 
+            "keyword": "",
+            "pageSize": "3",
+            "pageNum": "1",
+            "orderBy": "",
+            "orderDesc": ""
+        }
+        var tab = getParameter("tab");
+        var openid = getParameter("openid");
+        var titLiW = $("#order_tit li").eq(0).width();
+        var lineW = $(".my_order_line").width();
+        var lineL = (titLiW - lineW - 8) / 2;
+        $("#order_tit li").removeClass("active");
+        $("#order_tit li").eq(tab).addClass("active")
+        $(".my_order_line").css({
+            "left": (lineL + titLiW * tab) + "px"
+        });
+        if (tab == 0) postData.orderitemStatus = "0"; //待付款
+        // if (tab == 1) postData.orderitemStatus = "2"; //待发货
+        if (tab == 1) postData.orderitemStatus = "3"; //待收货
+        if (tab == 2) postData.orderitemStatus = ""; //全部
+        myOrderObj.initRequest(postData); //页面出初始化
+        $("#my_order_box>div").eq(tab).show();
+        //切换状态
+        $("#order_tit li").on("click", function () {
+            var _index = $(this).index();
+            $("#pay_order_box").html(""); //待付款 清空
+            $("#goods_box").html(""); //待收货 清空
+            $("#all_order").html(""); //全部 清空
+            $("#order_tit li").removeClass("active");
+            $(this).addClass("active");
+            $(".my_order_line").css({
+                "left": (lineL + titLiW * _index) + "px"
+            });
+            postData.pageNum = 1;
+            if (_index == 0) {
+                postData.orderitemStatus = "0"; //"待付款";
+                // } else if (_index == 1) {
+                //     postData.orderitemStatus = "2"; //"待发货";
+            } else if (_index == 1) {
+                postData.orderitemStatus = "3"; //"待收货";
+            } else {
+                postData.orderitemStatus = ""; //"全部";
+            }
+            myOrderObj.initRequest(postData);
+            $("#my_order_box>div").hide();
+            $("#my_order_box>div").eq(_index).show();
+        });
+        /*点击每个列表跳转到订单详情*/
+        function goDtl(orderId,e) {
+            console.log(e);
+            location.href = "order_details.html?openid=" + openid + "&orderid=" + orderId;
+        }
+        //上拉加载更多
+        $(window).on("scroll", function () {
+            var scrolT = $(document).scrollTop(); //滚动距离
+            var clientH = $(window).height(); //视口高度
+            var allH = $(document).height(); //整个文档高度
+            if (allH - clientH <= scrolT && scrolT > 20) {
+                if (scrollFlag) {
+                    scrollFlag = false;
+                    $(".load_more img").show();
+                    $("#load_more_txt").html("加载中...");
+                    postData.pageNum += 1; //页码
+                    setTimeout(function () {
+                        myOrderObj.initRequest(postData);
+                        $(document).scrollTop(scrolT - 10);
+                    }, 1500);
+                }
+            }
+        });
+        //点击 确认支付
+        $("#pay_order_box").on("click", ".pay_sure_btn", function (ev) {
+            ev.stopPropagation();
+            $(".pay_mask").attr("orderId", $(this).closest(".order_del").attr("orderId"));
+            $(".pay_mask").show();
+        });
+        //点击 支付弹窗关闭
+        $(".close_btn").on("click", function () {
+            $(".pay_mask").hide();
+        });
+
+        //选择支付方式
+        $("#pay_type_sel").on("change", function () {
+            if ($(this).val() != 0) {
+                $("#pay_bank").hide();
+            }
+        });
+        //点击 拍照 // 调用微信方法
+        //$("#camera_btn").on("click", function() {
+        // tkWX.chooseimg(function(msg) {
+        //     alert(msg)
+        // })
+        //})
+        //调h5 拍照方法
+        $("#upload1").on("change", function () {
+            var thisId = $(this).attr("id");
+            var postUrl = location.origin + '/ueditor?action=uploadimage';
+            uploadRequest(postUrl, thisId, function (imgUrl) {
+                var oImg = document.createElement("img");
+                oImg.src = imgUrl;
+                document.getElementById("img_list_box").appendChild(oImg);
+            });
+        })
+        //点击 支付提交
+        $("#submit_btn").on("click", function () {
+            var imgs = $("#img_list_box img");
+            var imageArr = [];
+            imgs.each(function (i) {
+                imageArr.push({
+                    "img": imgs.eq(i).attr("src"),
+                });
+            });
+            var payPostData = {
+                "orderId": $(this).closest(".pay_mask").attr("orderId"),
+                "payment": "", //"支付信息(运营/客户填写)",
+                "payway": $("#pay_type_sel").val(), //"", //支付方式: (运营 / 客户填写): 银行转账,0;微信,1;支付宝,2;,
+                "voucher": { //缺少图片链接
+                    "images": imageArr
+                }
+            }
+            reloadToken({
+                Authorization: Authorization
+            }, {
+                    openId: openid
+                }, function () {
+                    myOrderObj.submitPay(payPostData, function () {
+                        location.reload(); //刷新页面
+                    });
+                });
+        }); 
+        $("#all_order").on("click",".on_hot_banner", function(){
+            orderId = $(this).attr("orderId");
+            location.href = "order_details.html?openid=" + openid + "&orderid=" + orderId;
+        });
+            $("#pay_order_box").on("click", ".orderDtl", function () {
+                orderId = $(this).attr("orderId");
+                location.href = "order_details.html?openid=" + openid + "&orderid=" + orderId;
+            }); 
+        $("#goods_box").on("click",".orderDtl", function () {
+            orderId = $(this).attr("orderId");
+            location.href = "order_details.html?openid=" + openid + "&orderid=" + orderId;
+        });
+        //点击确认收货
+        $("#goods_box").on("click", ".goods_sure_btn", function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            var postGoodsData = {
+                "orderitemId": $(this).attr("orderitemId"),
+            }
+            var liDome = $(this).closest("li");
+            var listParent = $(this).closest(".order_del");
+            var pigeonLen = listParent.find(".price_sum_num i").html();
+            pigeonLen = Number(pigeonLen);
+            reloadToken({
+                Authorization: Authorization
+            }, {
+                    openId: openid
+                }, function () {
+                    myOrderObj.goodsSure(postGoodsData, function () {
+                        liDome.remove();
+                        pigeonLen--;
+                        listParent.find(".price_sum_num i").html(pigeonLen);
+                        if (pigeonLen <= 0) {
+                            listParent.remove();
+                        }
+                    });
+                });
+        });
+    </script>
+</body>
+<style>
+    .container {
+        display: flex;
+        border-top: 1px solid #f3f3f3;
+        border-bottom: 1px solid #f2f2f2;
+    }
+
+    .item {
+        color: #000;
+        padding: .2rem;
+        font-size: .6rem;
+        width: 100%;
+        position: relative;
+    }
+
+    .itemTitle {
+        line-height: 1rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+
+    .itemDesc {
+        margin-top: .2rem;
+        font-size: .4rem;
+    }
+
+    .itemStatus {
+        padding: .1rem .2rem;
+        border: 1px solid #f9454e;
+        /* float: right; */
+        border-radius: .4rem;
+        color: #f9454e;
+        bottom: 0.2rem;
+        position: absolute;
+        right: .6rem;
+        font-weight: bold;
+    }
+</style>
+
+</html>
