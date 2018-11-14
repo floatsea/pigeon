@@ -359,7 +359,7 @@ body {
 }
 
 
-/*已付款*/
+/*å·²ä»˜æ¬¾*/
 
 .payment_order_time {
     width: 11%;
@@ -414,7 +414,7 @@ body {
 }
 
 
-/*待发货*/
+/*å¾…å‘è´§*/
 
 .pro_det2 ol li.payment_order_price,
 .pro_det2 ul div.payment_order_price {
@@ -426,7 +426,7 @@ body {
 }
 
 
-/*已完成*/
+/*å·²å®Œæˆ*/
 
 .pro_det3 ol li.payment_order_price,
 .pro_det3 ul div.payment_order_price {
@@ -455,10 +455,10 @@ body {
 }
 
 
-/*编辑产品*/
+/*ç¼–è¾‘äº§å“*/
 
 
-/*所有查询小按钮的公用样式*/
+/*æ‰€æœ‰æŸ¥è¯¢å°æŒ‰é’®çš„å…¬ç”¨æ ·å¼*/
 
 .all_btn {
     width: 72px;
@@ -532,7 +532,7 @@ body {
 }
 
 
-/*首页*/
+/*é¦–é¡µ*/
 
 .index_box_child {
     width: 97.7%;
@@ -634,7 +634,7 @@ body {
 }
 
 
-/* input_information.html 录入资讯 */
+/* input_information.html å½•å…¥èµ„è®¯ */
 
 .input_info_tit {
     width: 100%;
@@ -801,8 +801,46 @@ body {
     margin-right: 20px;
 }
 
+.pro_editor_gender {
+    float: left;
+}
 
-/* 富文本插件 */
+.pro_editor_gender label {
+    float: left;
+    font-size: 14px;
+    margin-right: 20px;
+    line-height: 30px;
+    position: relative;
+}
+
+.pro_editor_gender label i {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: url(../image/check.png) no-repeat;
+    background-size: 100% 100%;
+    left: 0;
+    top: 50%;
+    margin-top: -6px;
+}
+
+.pro_editor_gender label input {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    left: 0;
+    top: 50%;
+    z-index: 1;
+    opacity: 0;
+}
+
+.pro_editor_gender label input:checked+i {
+    background: url(../image/checked.png) no-repeat;
+    background-size: 100% 100%;
+}
+
+
+/* å¯Œæ–‡æœ¬æ’ä»¶ */
 
 .editor_box {
     position: relative;
@@ -811,7 +849,7 @@ body {
 }
 
 
-/* order_detail.html 订单详情*/
+/* order_detail.html è®¢å•è¯¦æƒ…*/
 
 .order_detail_box dl {
     border: 1px solid #ddd;
@@ -971,10 +1009,10 @@ body {
 }
 
 
-/* 运营端 */
+/* è¿è¥ç«¯ */
 
 
-/* 商家基本信息  business_information.html*/
+/* å•†å®¶åŸºæœ¬ä¿¡æ¯  business_information.html*/
 
 .business_info_tit span:nth-child(2) {
     text-align: left;
@@ -983,7 +1021,7 @@ body {
 }
 
 
-/* 商品管理 */
+/* å•†å“ç®¡ç† */
 
 .quick_search {
     font-size: 16px;
@@ -997,7 +1035,7 @@ body {
 }
 
 
-/* product_editor.html编辑商品 */
+/* product_editor.htmlç¼–è¾‘å•†å“ */
 
 .product_info input[type=radio] {
     width: 14px;
@@ -1013,7 +1051,7 @@ body {
     position: relative;
 }
 
-.product_info label {
+.product_info>label {
     float: left;
     margin-right: 60px;
     font-size: 14px;
@@ -1021,7 +1059,7 @@ body {
     position: relative;
 }
 
-.product_info label i {
+.product_info>label i {
     position: absolute;
     width: 14px;
     height: 14px;
@@ -1031,7 +1069,7 @@ body {
     margin-top: -7px;
 }
 
-.product_info label input {
+.product_info>label input {
     position: absolute;
     width: 14px;
     height: 14px;
@@ -1041,7 +1079,7 @@ body {
     opacity: 0;
 }
 
-.product_info label input:checked+i {
+.product_info>label input:checked+i {
     background: url(../image/checked.png) no-repeat;
 }
 
@@ -1092,8 +1130,14 @@ body {
     z-index: 100;
 }
 
+.pl_article_btn .active {
+    background: #448af8;
+    color: #fff;
+    border: none;
+}
 
-/* 视频放大*/
+
+/* è§†é¢‘æ”¾å¤§*/
 
 .video_box {
     width: 100%;
@@ -1146,7 +1190,7 @@ body {
 }
 
 
-/* 放大缩略图 */
+/* æ”¾å¤§ç¼©ç•¥å›¾ */
 
 .pay_big_img_box {
     position: fixed;
@@ -1176,6 +1220,112 @@ body {
     top: 50%;
     -webkit-transform: translate(0, -50%);
     transform: translate(0, -50%)
+}
+
+.pl_article_btn {
+    /* margin-left: 50px; */
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+.pl_article_btn h4 {
+    float: left;
+    width: 13%;
+    text-align: right;
+    line-height: 30px;
+    font-size: 14px;
+    margin-right: 10px;
+}
+
+.pl_article_btn div,
+.pl_article_btn ul {
+    float: left;
+    margin-left: 10px;
+}
+
+.pl_article_btn ul li {
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 30px;
+    margin-left: 10px;
+    border: 1px solid #eee;
+    background: #fff;
+    border-radius: 24px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.pl_article_btn div .active {
+    background: #448af8;
+    color: #fff;
+    border: none;
+}
+
+.platform_set_pigeon {
+    width: 300px;
+    border: 1px solid #eee;
+    padding: 20px;
+    background: #fff;
+    margin: 0 0 30px 15%;
+    border-radius: 4px;
+}
+
+.platform_set_pigeon dd {
+    font-size: 16px;
+    line-height: 30px;
+}
+
+.platform_set_pigeon dd label {
+    position: relative;
+}
+
+.platform_set_pigeon dd i {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    background: url(../image/check.png) no-repeat;
+    background-size: 100% 100%;
+    left: 0;
+    top: 2px;
+}
+
+.platform_set_pigeon dd input {
+    opacity: 0;
+}
+
+.platform_set_pigeon dd input:checked+i {
+    background: url(../image/checked.png) no-repeat;
+}
+
+.platform_set_pigeon button {
+    width: 120px;
+    height: 32px;
+    outline: none;
+    border-radius: 4px;
+}
+
+.platform_set_pigeon_btn {
+    position: absolute;
+    width: 100%;
+    height: 70px;
+    line-height: 70px;
+    bottom: 0;
+    left: 0;
+    text-align: center;
+}
+
+.platform_set_pigeon .cancel_btn {
+    border: 1px solid #ccc;
+    margin-right: 20px;
+    color: #666;
+    background: #fff;
+}
+
+.platform_set_pigeon .sure_btn {
+    border: 1px solid #f40;
+    color: #fff;
+    background: #f40;
 }
 
 @font-face {

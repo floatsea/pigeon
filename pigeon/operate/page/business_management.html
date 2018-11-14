@@ -225,8 +225,10 @@
                     console.log(sticky)
                     if (sticky) {
                         _this.html("取消置顶");
+                        businessObj.getBusinessList(businessData); //刷新数据
                     } else {
                         _this.html("置顶");
+                        businessObj.getBusinessList(businessData); //刷新数据
                     }
                 })
             });
@@ -342,8 +344,10 @@
                 }, function() {
                     if (sticky) {
                         $this.html("取消置顶");
+                        loftObj.getLoftList(loftData);
                     } else {
                         $this.html("置顶");
+                        loftObj.getLoftList(loftData);
                     }
                 })
             });
@@ -373,11 +377,7 @@
                     businessObj.getBusinessList(businessData)
                 } else {
                     loftData.pageNum = 1;
-                    loftObj.getLoftList(loftData, function() {
-                        $("#loft_list").html(loftListStr);
-                        $("#loft_page_btn ul").html(loftPageLiStr);
-                        $("#loft_sum_num").html(loftTotalNum);
-                    });
+                    loftObj.getLoftList(loftData);
                 }
             });
             //点击冻结按钮

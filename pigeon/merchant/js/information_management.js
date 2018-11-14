@@ -1,4 +1,4 @@
-var businessId = getParameter("businessId") || "";
+//var businessId = getParameter("businessId") || "";
 /**
  *6、资讯列表接口
  * http://域名/business/news/findList
@@ -12,6 +12,7 @@ var inforObj = {
             dataType: "json",
             contentType: "application/json",
             success: function(data) {
+                //errorToken(data.code);
                 if (data.code == "0") {
                     if (postData.pageNum == "1") {
                         var total = data.data.total;
@@ -77,8 +78,13 @@ var inforObj = {
             dataType: "json",
             contentType: "application/json",
             success: function(data) {
+                //errorToken(data.code);
                 if (data.code == "0") {
-                    myAlert.createBox("撤稿成功！");
+                    if (cancelData.isPublished) {
+                        myAlert.createBox("发布成功！");
+                    } else {
+                        myAlert.createBox("撤稿成功！");
+                    }
                     cb && cb();
                 }
             },
@@ -100,6 +106,7 @@ var inforObj = {
             dataType: "json",
             contentType: "application/json",
             success: function(data) {
+                //errorToken(data.code);
                 if (data.code == "0") {
                     myAlert.createBox("删除成功！");
                     cb && cb();

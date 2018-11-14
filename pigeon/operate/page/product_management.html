@@ -251,8 +251,10 @@
             productObj.setTop(setTopData, function() {
                 if (setTopData.sticky) {
                     $this.html("取消置顶");
+                    productObj.proListRequst(proListData)
                 } else {
                     $this.html("置顶");
+                    productObj.proListRequst(proListData)
                 }
             })
         });

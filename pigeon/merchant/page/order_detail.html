@@ -7,12 +7,12 @@
     <link rel="stylesheet" href="../css/reset.css">
     <link rel="stylesheet" href="../css/m_style.css">
     <script src="../js/jquery-1.10.2.min.js"></script>
-    <script src="../js/product.js"></script>
+    <script src="../js/public.js"></script>
 </head>
 
 <body>
     <div>
-        <div class="commod_tit" id="order_tit">
+        <div class="commod_tit" id="">
             <span>订单详情</span>
         </div>
         <div class="commodity_box order_detail_box">
@@ -21,66 +21,110 @@
                     <div class="order_detail_tab clearfix">
                         <div class="clearfix">
                             <span>订单编号</span>
-                            <span>2018479474907594</span>
+                            <span id="orderId">2018479474907594</span>
                         </div>
                         <div class="clearfix">
                             <span>下单时间</span>
-                            <span>2018-06-10</span>
+                            <span id="createdTime">2018-06-10</span>
                         </div>
                     </div>
                     <div class="order_detail_tab order_grey clearfix">
                         <div>
                             <span>买　　家</span>
-                            <span>135****3333</span>
+                            <span id="buyer">135****3333</span>
                         </div>
                         <div>
                             <span>商　　家</span>
-                            <span>鸽子小铺</span>
+                            <span id="business">鸽子小铺</span>
                         </div>
                     </div>
                 </dt>
                 <dd>
                     <div class="order_all_price">
                         <span>订单总价</span>
-                        <span>¥5555</span>
+                        <span id="sum_price">¥5555</span>
                     </div>
-                    <div class="order_all_cont clearfix">
-                        <div>
-                            <img src="../image/cp.png" alt="">
-                        </div>
-                        <div>
-                            <p>
-                                长距离赛手长距离赛手长距离赛手长距离赛手长距 长距离赛手 BE17-4244533
-                            </p>
-                            <p>
-                                <span>¥5555</span>
-                                <i>X<b>3</b></i>
-                            </p>
-                        </div>
-                    </div>
-                </dd>
-                <dd class="order_detail_pay_date clearfix">
-                    <span>支付时间</span>
-                    <span>2018-06-21 10:00</span>
-                </dd>
-                <dd class="order_pay_voucher">
-                    <p>支付凭证</p>
-                    <ul class="clearfix">
+                    <ul id="small_order_list">
                         <li>
-                            <img src="../image/cp.png" alt="">
-                        </li>
-                        <li>
-                            <img src="../image/cp.png" alt="">
-                        </li>
-                        <li>
-                            <img src="../image/cp.png" alt="">
-                        </li>
-                        <li>
-                            <img src="../image/cp.png" alt="">
+                            <div class="order_all_cont clearfix">
+                                <div>
+                                    <img src="../image/cp.png" alt="">
+                                </div>
+                                <div>
+                                    <p>
+                                        长距离赛手长距离赛手长距离赛手长距离赛手长距 长距离赛手 BE17-4244533
+                                    </p>
+                                    <p>
+                                        <span>¥5555</span>
+                                        <!--  <i>X<b>3</b></i> -->
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="send_goods_date">
+                                <div class="order_detail_tab order_grey clearfix" style="border-top:1px solid #ddd;">
+                                    <div>
+                                        <span>发货时间</span>
+                                        <span>2018-06-10</span>
+                                    </div>
+                                    <div>
+                                        <span>物流单号</span>
+                                        <span>2018535436465476575</span>
+                                    </div>
+                                </div>
+                                <div class="order_detail_tab clearfix">
+                                    <div>
+                                        <span>承&nbsp运&nbsp商</span>
+                                        <span>ULR</span>
+                                    </div>
+                                    <div>
+                                        <span>收&nbsp货&nbsp人</span>
+                                        <span>王某某</span>
+                                    </div>
+                                </div>
+                                <div class="order_detail_tab order_grey clearfix">
+                                    <div>
+                                        <span>收货地址</span>
+                                        <span>中国北京-昌平区</span>
+                                    </div>
+                                    <div>
+                                        <span>物流状态</span>
+                                        <span>配送中</span>
+                                    </div>
+                                </div>
+                            </div>
                         </li>
                     </ul>
                 </dd>
-                <dd>
+                <dd id="pay_date" style="margin-top:20px;">
+                    <div class="order_detail_pay_date clearfix">
+                        <div class="clearfix">
+                            <span>支付时间</span>
+                            <span id="paidTime">2018-06-21 10:00</span>
+                        </div>
+                        <div class="clearfix">
+                            <span>支付方式</span>
+                            <span id="payType">银行卡转账</span>
+                        </div>
+                    </div>
+                    <div class="order_pay_voucher">
+                        <p>支付凭证</p>
+                        <ul class="clearfix" id="payImgList">
+                            <li>
+                                <img src="../image/cp.png" alt="">
+                            </li>
+                            <li>
+                                <img src="../image/cp.png" alt="">
+                            </li>
+                            <li>
+                                <img src="../image/cp.png" alt="">
+                            </li>
+                            <li>
+                                <img src="../image/cp.png" alt="">
+                            </li>
+                        </ul>
+                    </div>
+                </dd>
+                <!-- <dd id="send_goods_date">
                     <div class="order_detail_tab order_grey clearfix" style="border-top:1px solid #ddd;">
                         <div>
                             <span>发货时间</span>
@@ -111,17 +155,39 @@
                             <span>配送中</span>
                         </div>
                     </div>
-                </dd>
+                </dd> -->
             </dl>
-            <div class="order_detail_return">
-                <button>返回</button>
+            <div class="editor_button" style="padding-top:20px">
+                <button id="return_btn">返回</button>
+            </div>
+        </div>
+        <!--缩略图放大-->
+        <div class="pay_big_img_box" style="display:none">
+            <div>
+                <img src="../image/cp.png" />
             </div>
         </div>
     </div>
+    <script src="../js/order_detail.js"></script>
     <script>
-        $(".order_detail_return button").on("click", function() {
+        // 页面初始化
+        orderDetailObj.initPageRequest();
+        //点击返回键
+        $("#return_btn").on("click", function() {
             window.history.go(-1)
-        })
+        });
+        //点击支付凭证 缩略图 查看 原图
+        $("#payImgList").on("click", "img", function() {
+            var imgSrc = $(this).attr("src");
+            $(".pay_big_img_box img").attr("src", imgSrc);
+            $(".pay_big_img_box").show();
+        });
+        $(".pay_big_img_box").on("click", function() {
+            $(this).hide();
+        });
+        $(".pay_big_img_box img").on("click", function(ev) {
+            ev.stopPropagation();
+        });
     </script>
 </body>
 

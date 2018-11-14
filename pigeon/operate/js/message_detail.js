@@ -1,4 +1,4 @@
-var messageId = getParameter("messageId")||"";
+var messageId = getParameter("messageId") || "";
 
 var msgDetailObj = {
     /**
@@ -27,16 +27,16 @@ var msgDetailObj = {
     },
     //赋值
     createInfo: function(data) {
-        $("#msg_tit").prop("readonly",true).html(data.messageTitle); //消息标题
-        $("#msg_detail").prop("readonly",true).html(data.messageContent);
+        $("#msg_tit").prop("readonly", true).html(data.messageTitle); //消息标题
+        $("#msg_detail").prop("readonly", true).html(data.messageContent);
     },
     /**
      * 消息 “保存” 接口
-     * 
+     * 没有接口
      */
     saveMsg: function(saveData) {
         $.ajax({
-            url: location.origin + "/operator/news/edit",
+            url: location.origin + "",
             type: "post",
             data: JSON.stringify(saveData),
             dataType: "json",
@@ -52,11 +52,11 @@ var msgDetailObj = {
             }
         });
     },
-     /**
+    /**
      * 新增 “消息” 接口
-     *
+     *没有接口
      */
-    addMsg: function() {
+    addMsg: function(saveData) {
         $.ajax({
             url: location.origin + "",
             type: "post",

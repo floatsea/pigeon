@@ -631,6 +631,12 @@ function domMove(direction, $this) {
         another.after(me);
     }
 }
+//置顶
+function setTop($this, parentsDom) {
+    var parent = $this.parent();
+    var parents = $this.parents(parentsDom);
+    parents.prepend(parent);
+}
 // 判断token是否失效
 function errorToken(code) {
     if (code == "401") {

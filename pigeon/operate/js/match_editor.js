@@ -136,8 +136,7 @@ var matchEditoObj = {
         })
     },
     //校验所有输入框
-    isInputText: function() {
-        var inputText = $("input[type=text]"); //所有输入框
+    isInputText: function(inputText) {
         for (var i = 0; i < inputText.length; i++) {
             if (inputText.eq(i).val() == "") {
                 return false;
@@ -156,8 +155,8 @@ var matchEditoObj = {
         return false;
     },
     //校验页面信息是否填写完整
-    isAllInfo: function() {
-        if (!matchEditoObj.isInputText() || !matchEditoObj.isInputFile()) {
+    isAllInfo: function(inputText) {
+        if (!matchEditoObj.isInputText(inputText) || !matchEditoObj.isInputFile()) {
             return false;
         } else {
             return true;

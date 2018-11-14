@@ -5,7 +5,7 @@ myLoad.blackLoading = function() {
             var loadingStr = "";
             loadingStr += '<div class="loading">';
             loadingStr += '<div>';
-            loadingStr += '<img src="../image/load.gif" alt="" style="width:30%;">';
+            loadingStr += '<img src="../image/load.gif">';
             loadingStr += '</div>';
             loadingStr += '</div>';
             $('body').append(loadingStr);
@@ -20,20 +20,14 @@ myLoad.removeLoading = function() {
 var myAlert = {};
 
 myAlert.createBox = function(htmlStr) {
-        if ($(".alert_box").length == 0) {
-            var alert_box_str = '<div class="alert_mask"><div class="alert_box">' + htmlStr + '</div></div>';
-            $('body').append(alert_box_str);
-            setTimeout(function() {
-                $(".alert_mask").remove();
-            }, 2000);
-        }
-    }
-    /*$(window).on("click",function () {
-        if($(".alert_mask").length>0){
+    if ($(".alert_box").length == 0) {
+        var alert_box_str = '<div class="alert_mask"><div class="alert_box">' + htmlStr + '</div></div>';
+        $('body').append(alert_box_str);
+        setTimeout(function() {
             $(".alert_mask").remove();
-        }
-    });*/
-    /*姓名校验*/
+        }, 2000);
+    }
+}
 var checkFn = {};
 checkFn.applicantName = function(val, el) {
         var value = removeSpace(val);
@@ -514,6 +508,49 @@ function isCheckName(controlObj, el) {
         }
     }
 }
+// 上传文件 返回路径
+function uploadRequest(postUrl, id, callback) {
+    var file = $("#" + id).get(0).files[0];
+    var fileSize = (file.size / 1024) / 1024;
+    var fileType = file.type;
+    //图片
+    if (postUrl.indexOf("uploadimage") > -1) {
+        if (!/image\/\w+/.test(file.type)) {
+            myAlert.createBox("文件必须为图片！");
+            return false;
+        }
+        if (fileSize > 3) {
+            myAlert.createBox("图片不能大于3MB！");
+            return;
+        }
+    }
+    //视频
+    if (postUrl.indexOf("uploadvideo") > -1) {
+        if (fileSize > 10) {
+            myAlert.createBox("视频大小不能超过10M");
+            return;
+        }
+        if (fileType.indexOf("mp4") < 0) {
+            myAlert.createBox("请选择mp4格式的视频");
+            return;
+        }
+    }
+    $.ajaxFileUpload({
+        url: postUrl, //用于文件上传的服务器端请求地址
+        //url: '/ueditor?action=uploadvideo', //视频上传
+        secureuri: false, //是否需要安全协议，一般设置为false
+        fileElementId: id, //文件上传域的ID
+        dataType: 'json', //返回值类型 一般设置为json
+        success: function(data, status) { //服务器成功响应处理函数
+            //alert(JSON.stringify(data));
+            callback && callback(data.url);
+        },
+        error: function(data, status, e) { //服务器响应失败处理函数
+            alert(e);
+        }
+    });
+
+}
 // 图片上传功能
 function readFile(input1, imgDom, cb) {
     var file = input1.files[0];
@@ -535,27 +572,16 @@ function readFile(input1, imgDom, cb) {
         //document.getElementById("upImg").src= "data:image/*;base64,"+a;
     }
 }
+
 // 视频上传功能
-function upVideo(input1, imgDom, videoBox, cb) {
+function upVideo(input1, imgDom, videoBox, videoURL, cb) {
     var files = input1.files,
         video = videoBox.find('video'),
-        videoURL = null,
+        videoURL2 = null,
         windowURL = window.URL || window.webkitURL;
+    videoURL2 = windowURL.createObjectURL(files[0]);
     if (files && files[0]) {
-        console.log(files[0])
-        var fileSize = files[0].size;
-        var size = fileSize / 1024 / 1024;
-        var fileType = files[0].type;
-        if (size > 10) {
-            myAlert.createBox("视频大小不能超过10M");
-            return;
-        }
-        if (fileType.indexOf("mp4") < 0) {
-            myAlert.createBox("请选择mp4格式的视频");
-            return;
-        }
-        videoURL = windowURL.createObjectURL(files[0]);
-        videoBox.html('<video src="' + videoURL + '" controls="controls"></video>');
+        videoBox.html('<video src="' + videoURL + '" controls="controls"></video><video style="display:none" src="' + videoURL2 + '" controls="controls"></video>');
         setTimeout(function() {
             createIMG(imgDom, videoBox, 'video', 0.25, cb);
         }, 500);
@@ -563,13 +589,13 @@ function upVideo(input1, imgDom, videoBox, cb) {
 }
 // 画缩略图
 function createIMG(imgDom, videoBox, mediaTyle, scale, cb) {
-    var video = videoBox.find(mediaTyle)[0],
+    var video = videoBox.find(mediaTyle)[1],
         canvas = document.createElement("canvas"),
         canvasFill = canvas.getContext('2d');
     canvas.width = video.videoWidth * scale;
     canvas.height = video.videoHeight * scale;
     canvasFill.drawImage(video, 0, 0, canvas.width, canvas.height); 
-    var imgSrc = canvas.toDataURL("image/jpeg");
+    var imgSrc = canvas.toDataURL("image/png");
     imgDom.src = imgSrc;
     cb && cb();
 } 
@@ -591,4 +617,23 @@ function stripScript(s) {
         }
     }
     return true;
+}
+
+//dom元素上下移动
+function domMove(direction, $this) {
+    var me = $this;
+    var another = null;
+    if (direction == 'up') {
+        another = me.prev();
+        another.before(me);
+    } else if (direction == 'down') {
+        another = me.next();
+        another.after(me);
+    }
+}
+// 判断token是否失效
+function errorToken(code) {
+    if (code == "401") {
+        top.location.href = location.origin + "/login/operate_login.html";
+    }
 }

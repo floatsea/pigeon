@@ -30,6 +30,9 @@ var businessInfoObj = {
         $("#loginTime").html(businessObj.loginTime); //最后登录时间
         $("#shopName").val(businessObj.shopName || businessObj.shopNameEn); //店铺名称
         $("#shopDesc").val(businessObj.shopIntro || businessObj.shopIntroEn); //特色描述
+        setTimeout(function() { //商家简介
+            UE.getEditor('editor').execCommand('insertHtml', businessObj.shopDesc || "");
+        }, 1000);
         businessInfoObj.createImg(businessObj.shopShow); //图片展示
     },
     createImg: function(shopShow) {

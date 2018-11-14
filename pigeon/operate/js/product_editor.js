@@ -18,6 +18,7 @@ var proEditorObj = {
             dataType: "json",
             contentType: "application/json",
             success: function(data) {
+                alert(JSON.stringify(data))
                 errorToken(data.code);
                 if (data.code == "0") {
                     var editorInfo = data.data
@@ -31,6 +32,7 @@ var proEditorObj = {
     },
     //渲染鸽子详情数据
     createEditor: function(editorInfo) {
+        editorInfo.pigeonTags = typeof(editorInfo.pigeonTags) == "string" ? JSON.parse(editorInfo.pigeonTags) : editorInfo.pigeonTags;
         $("#businesName").val(editorInfo.shopName); //商家名称
         $("#pigeonName").val(editorInfo.pigeonName); //商品名称
         $("#pigeonNo").val(editorInfo.pigeonNo); //环号
@@ -40,12 +42,31 @@ var proEditorObj = {
         $("#pigeonBlood").val(editorInfo.pigeonBlood); //血统
         $("#pigeonPoint").val(editorInfo.pigeonPoint); //卖点
         $("#pigeonPrice").val(editorInfo.pigeonPrice); //价格
-        $("#pigeonTab").val(editorInfo.pigeonTags);
+        $("#pigeon_tab").val(editorInfo.pigeonTags.tag);
         proEditorObj.createImgList(editorInfo.pigeonShow); //橱窗列表
+        proEditorObj.showSelect(editorInfo.pigeonTags);
         var desc = editorInfo.pigeonDesc;
         setTimeout(function() {
             UE.getEditor('editor').execCommand('insertHtml', desc)
         }, 1000);
+    },
+    showSelect: function(obj) {
+        var filters = obj.filter;
+        var ancestry = filters.bloodline; //血统
+        var distance = filters.distance; //距离
+        var features = filters.feature; //特征
+        proEditorObj.findInArr($(".j_ancestry dd"), ancestry);
+        proEditorObj.findInArr($(".j_distance dd"), distance);
+        proEditorObj.findInArr($(".j_features dd"), features);
+    },
+    findInArr: function(targetDomArr, arr) {
+        for (var i = 0; i < arr.length; i++) {
+            for (var j = 0; j < targetDomArr.length; j++) {
+                if (arr[i] == targetDomArr.eq(j).find("b").text()) {
+                    targetDomArr.eq(j).find("input").prop("checked", true);
+                }
+            }
+        }
     },
     //橱窗展示图片渲染
     createImgList: function(pigeonShow) {

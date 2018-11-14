@@ -19,10 +19,10 @@
         <div class="commodity_box info_box" id="infor_cont">
             <div>
                 <div class="query_p clearfix" style="margin-top:0; padding-top:50px; height:116px;">
-                    <span>快速检索</span>
+                    <!-- <span>快速检索</span> -->
                     <div class="query_p_show">
-                        <span>产品名称：</span>
-                        <input type="text" placeholder="输入订单编号或产品名称">
+                        <span>资讯名称：</span>
+                        <input type="text" placeholder="请输入资讯名称">
                     </div>
                     <button class="query_p_btn" id="search_btn">查询</button>
                     <div class="query_p_btns clearfix">
@@ -45,7 +45,7 @@
                         </li>
                         <li class="info_create_date" id="newsDate">发布日期</li>
                         <li class="info_create_date">编辑</li>
-                        <li class="info_create_date">商家</li>
+                        <!-- <li class="info_create_date">商家</li> -->
                         <li class="info_last">操作</li>
                     </ol>
                     <div>
@@ -104,6 +104,9 @@
             inforObj.newsRequstList(postData); //页面初始化
             //切换"已发布"和"待发布"
             $("#info_tit>span").on('click', function() {
+                $("#info_check_all").prop("checked", false);
+                $("#check_cancel_btn").removeClass("active"); //撤稿
+                $("#check_del_btn").removeClass("active"); //删除
                 var _index = $(this).index();
                 $("#info_tit>span").removeClass('active');
                 $(this).addClass("active");
@@ -160,7 +163,7 @@
             //点击每个列表中的 “编辑”
             $("#news_list_box").on("click", ".enditor_btn", function() {
                 var newsId = $(this).closest("li").attr("newsId");
-                location.href = "information_editor_business.html?businessId=" + businessId + "&newsId=" + newsId;
+                location.href = "information_editor.html?newsId=" + newsId;
             });
             //点击每个列表中的 “撤稿”
             $("#news_list_box").on("click", ".cancel_btn", function() {
@@ -172,11 +175,7 @@
                     "isPublished": isPublished //"发布状态：发布，true；撤回，false"
                 }
                 inforObj.cancelRequest(cancelData, function() {
-                    if (cancelData.isPublished) {
-                        $this.html("撤稿");
-                    } else {
-                        $this.html("发布");
-                    }
+                    $("#info_tit .active").trigger("click");
                 });
             });
             //点击每个列表中的 “删除”
@@ -188,11 +187,12 @@
                 }
                 inforObj.delRequest(delData, function() {
                     $this.closest("li").remove();
+                    $("#info_tit .active").trigger("click");
                 });
             });
             //点击 "录入资讯 "
             $("#input_info_btn").on("click", function() {
-                location.href = "information_editor_business.html?businessId=" + businessId;
+                location.href = "information_editor.html";
             });
 
             //点击 “撤稿”
@@ -210,11 +210,7 @@
                         "isPublished": isPublished //"发布状态：发布，true；撤回，false"
                     }
                     inforObj.cancelRequest(cancelData, function() {
-                        if (cancelData.isPublished) {
-                            checkInp.closest("li").find(".cancel_btn").html("撤稿");
-                        } else {
-                            checkInp.closest("li").find(".cancel_btn").html("发布");
-                        }
+                        $("#info_tit .active").trigger("click");
                     });
                 }
             });
@@ -231,13 +227,7 @@
                         "newsId": newsIdStr //"用户id：支持多个，逗号,分隔"
                     }
                     inforObj.delRequest(delData, function() {
-                        checkInp.closest("li").remove();
-                        $("#check_cancel_btn").removeClass("active"); //撤稿
-                        $("#check_del_btn").removeClass("active"); //删除
-                        $("#info_check_all").prop("checked", false);
-                        //注意
-                        postData.pageNum = "1";
-                        inforObj.newsRequstList(postData); //重新渲染数据
+                        $("#info_tit .active").trigger("click");
                     });
                 }
             });

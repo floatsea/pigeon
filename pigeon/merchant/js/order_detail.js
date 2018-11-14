@@ -72,7 +72,6 @@ var orderDetailObj = {
     },
     createLogistics: function(logis) { //物流信息
         var expressStatus = logis.expressStatus == 0 ? "配送中" : '已签收';
-        var expressVoucher = logis.expressVoucher; //物流凭证
         return '<div class="send_goods_date">' +
             '<div class="order_detail_tab order_grey clearfix" style="border-top:1px solid #ddd;">' +
             '<div>' +
@@ -104,26 +103,7 @@ var orderDetailObj = {
             '<span>' + expressStatus + '</span>' +
             '</div>' +
             '</div>' +
-            '</div>' +
-            '<div class="order_pay_voucher">' +
-            '<p>物流凭证</p>' +
-            '<ul class="clearfix expressVoucherList">' + orderDetailObj.createExpressVoucher(expressVoucher.images) +
-            '</ul>' +
             '</div>';
-    },
-    //物流凭证
-    createExpressVoucher: function(images) {
-        var imgStr = "";
-        if (images.length > 0) {
-            for (var i = 0; i < images.length; i++) {
-                imgStr += '<li>' +
-                    '<img src="' + images[i].img + '" alt="' + images[i].alt + '">' +
-                    '</li>';
-            }
-        } else {
-            imgStr = "未上传物流凭证！";
-        }
-        return imgStr;
     },
     //支付方式
     createPayInfo: function(obj) {

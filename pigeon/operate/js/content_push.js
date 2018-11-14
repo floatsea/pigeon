@@ -252,7 +252,7 @@ var contentObj = {
                 '<div class="content_file_box">' +
                 '<div class="content_file">' +
                 '<img src="' + val.img + '" alt="" class="loadImg">' +
-                '<input type="file" class="upImg" name="upfile" id="upImg' + box + '' + index + '">' +
+                '<input type="file" accept="image/*" class="upImg" name="upfile" id="upImg' + box + '' + index + '">' +
                 '</div>' +
                 '<i class="j_del_img"></i>' +
                 '</div>' +

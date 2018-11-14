@@ -38,5 +38,12 @@ $(function() {
                 $("#pageContent").attr("src", "page/information_management.html");
                 break;
         }
-    })
+    });
+    var bodyHeight = document.documentElement.clientHeight;
+    var pageContent = document.getElementById("pageContent");
+    var homeLeft = document.getElementById("homeLeft");
+    pageContent.style.height = bodyHeight + "px";
+    homeLeft.style.height = bodyHeight + "px";
+    var email = getParameter("email");
+    $("#email").html(email);
 })

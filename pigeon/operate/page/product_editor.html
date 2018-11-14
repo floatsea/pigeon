@@ -41,7 +41,7 @@
             </div>
             <div class="input_info_tit clearfix">
                 <span>标签</span>
-                <input type="text" placeholder="请输入标签" id="pigeonTab">
+                <input type="text" placeholder="请输入标签" id="pigeon_tab">
                 <p class="warn">
                     <i class="iconfont red icon-tixingshixin"></i>请填写标签
                 </p>
@@ -55,16 +55,18 @@
             </div>
             <div class="input_info_tit clearfix " id="pigeonGender">
                 <span>性别</span>
-                <label for="F">
-                    <input type="radio" id="F" name="sex" checked>
-                    <i></i>
-                    雌
-                </label>
-                <label for="M">
-                    <input type="radio" id="M" name="sex">
-                    <i></i>
-                    雄
-                </label>
+                <div class="pro_editor_gender clearfix">
+                    <label for="F">
+                        <input type="radio" id="F" name="sex" checked>
+                        <i></i>
+                        雌
+                    </label>
+                    <label for="M">
+                        <input type="radio" id="M" name="sex">
+                        <i></i>
+                        雄
+                    </label>
+                </div>
             </div>
             <div class="input_info_tit clearfix">
                 <span>羽色</span>
@@ -155,6 +157,90 @@
                 <span>详细描述</span>
                 <div class="editor_box" style="float:left; width:70%">
                     <script id="editor" type="text/plain" style="width:100%; height:300px"></script>
+                </div>
+            </div>
+            <!--筛选条件-->
+            <div>
+                <div class="pl_article_btn clearfix">
+                    <h4>筛选条件管理</h4>
+                    <ul id="select_box">
+                        <li class="active">
+                            <span>血统</span>
+                        </li>
+                        <li>
+                            <span>距离</span>
+                        </li>
+                        <li>
+                            <span>特征</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="platform_set_pigeon">
+                    <dl class="j_ancestry">
+                        <dt></dt>
+                        <dd>
+                            <label for="xt0">
+                            <input type="checkbox" id="xt0"/>
+                            <i></i>
+                            <b>白雪公主</b>
+                        </label>
+                        </dd>
+                        <dd>
+                            <label for="xt1">
+                            <input type="checkbox" id="xt1"/>
+                            <i></i>
+                            <b>白雪公主</b>
+                        </label>
+                        </dd>
+                    </dl>
+                    <dl style="display:none;" class="j_distance">
+                        <dt></dt>
+                        <dd>
+                            <label for="jl0">
+                            <input type="radio" id="jl0"/>
+                            <i></i>
+                            <b>短</b>
+                        </label>
+                        </dd>
+                        <dd>
+                            <label for="jl1">
+                                <input type="radio" id="jl1"/>
+                                <i></i>
+                                <b>中</b>
+                            </label>
+                        </dd>
+                        <dd>
+                            <label for="jl2">
+                            <input type="radio" id="jl2"/>
+                            <i></i>
+                            <b>长</b>
+                        </label>
+                        </dd>
+                    </dl>
+                    <dl style="display:none;" class="j_features">
+                        <dt></dt>
+                        <dd>
+                            <label for="tz0">
+                            <input type="radio" id="tz0"/>
+                            <i></i>
+                            <b>适合雨天</b>
+                        </label>
+                        </dd>
+                        <dd>
+                            <label for="tz1">
+                            <input type="radio" id="tz1"/>
+                            <i></i>
+                            <b>适合晴天</b>
+                        </label>
+                        </dd>
+                        <dd>
+                            <label for="tz2">
+                            <input type="radio" id="tz2"/>
+                            <i></i>
+                            <b>耐热</b>
+                        </label>
+                        </dd>
+                    </dl>
                 </div>
             </div>
             <div class="editor_button">
@@ -267,6 +353,18 @@
             $("#video").on("click", function() {
                 $(this).hide();
             });
+
+            //获取筛选条件
+            function getSelect(domArr) {
+                var arr = [];
+                domArr.each(function(i) {
+                    if (domArr.eq(i).find("input").prop("checked")) {
+                        arr.push(domArr.eq(i).find("b").text());
+                    }
+                });
+                return arr;
+            }
+
             //点击 “保存”
             $("#save_btn").on("click", function() {
                 if (!proEditorObj.isAllInfo()) {
@@ -313,7 +411,14 @@
                         "images": imgArr,
                         "videos": videoArr
                     },
-                    "pigeonTags": $("#pigeonTab").val(),
+                    "pigeonTags": {
+                        "tag": $("#pigeon_tab").val(),
+                        "filter": { //筛选
+                            "bloodline": getSelect($(".j_ancestry dd")),
+                            "distance": getSelect($(".j_distance dd")),
+                            "feature": getSelect($(".j_features dd"))
+                        }
+                    },
                     "stickyTime": "" //置顶时间: 毫秒值
                 };
                 if (!pigeonId) { //添加
@@ -346,7 +451,15 @@
                 } else {
                     $(this).closest("div").find(".warn").hide();
                 }
-            })
+            });
+            //选择条件筛选
+            $("#select_box li").on("click", function() {
+                $("#select_box li").removeClass("active");
+                var _index = $(this).index();
+                $(this).addClass("active");
+                $(".platform_set_pigeon dl").hide();
+                $(".platform_set_pigeon dl").eq(_index).show();
+            });
         })
     </script>
 </body>

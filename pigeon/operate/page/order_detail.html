@@ -92,6 +92,12 @@
                                     </div>
                                 </div>
                             </div>
+                            <!--物流凭证-->
+                            <div class="order_pay_voucher">
+                                <p>物流凭证</p>
+                                <ul class="clearfix">
+                                </ul>
+                            </div>
                         </li>
                     </ul>
                 </dd>
@@ -187,6 +193,13 @@
         });
         $(".pay_big_img_box img").on("click", function(ev) {
             ev.stopPropagation();
+        });
+
+        //点击查看物流凭证 原图
+        $("#small_order_list").on("click", ".expressVoucherList img", function() {
+            var imgSrc = $(this).attr("src");
+            $(".pay_big_img_box img").attr("src", imgSrc);
+            $(".pay_big_img_box").show();
         });
     </script>
 </body>

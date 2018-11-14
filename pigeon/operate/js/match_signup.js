@@ -1,5 +1,5 @@
 /**
- *34、赛事报名列表接口（没有赛事列表，此接口在哪里用）
+ *34、赛事报名列表接口
  * http://域名/operator/enroll/find
  * 缺少 字段
  */
@@ -43,7 +43,7 @@ var signupObj = {
                 '<span style="color:#000">' + val.createdTime + '</span>' +
                 '</td>' +
                 '<td><span class="del_upsign">删除</span></td>'
-                '</tr>';
+            '</tr>';
         });
         $("#list_box_cont").html(str);
     },
@@ -67,7 +67,7 @@ var signupObj = {
      * 36、赛事报名导入接口
      * http://域名/operator/enroll/addByImport
      */
-    addByImport: function(importData,callback) {
+    addByImport: function(importData, callback) {
         $.ajax({
             url: location.origin + "/operator/enroll/addByImport",
             type: "post",

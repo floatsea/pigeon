@@ -83,48 +83,46 @@
     </div>
     <script src="../js/message_detail.js"></script>
     <script src="../js/date.js "></script>
-<script>
-$(function() {
-    if(messageId){ //编辑
-        msgDetailObj.initRequest();
-    }
-    //十分秒年月日单个
-    $('.J-datepicker').datePicker({
-        hasShortcut: true,
-        min: '2018-01-01 04:00:00',
-        max: '',
-        shortcutOptions: [{
-            name: '今天',
-            day: '0'
-        }, {
-            name: '昨天',
-            day: '-1',
-            time: '00:00:00'
-        }, {
-            name: '一周前',
-            day: '-7'
-        }],
-        hide: function() {
-            console.info(this)
-        }
-    });
-    //点击返回
-    $("#return_btn").on("click", function() {
-        window.history.go(-1);
-    });
-    //点击 “保存”
-    $("#save_btn").on("click",function(){
-        var saveData = {
-
-        }
-        if(messageId){
-            msgDetailObj.saveMsg(saveData);
-        }else{
-            msgDetailObj.addMsg(saveData);
-        }
-    });
-})
-</script>
+    <script>
+        $(function() {
+            if (messageId) { //编辑
+                msgDetailObj.initRequest();
+            }
+            //十分秒年月日单个
+            $('.J-datepicker').datePicker({
+                hasShortcut: true,
+                min: '2018-01-01 04:00:00',
+                max: '',
+                shortcutOptions: [{
+                    name: '今天',
+                    day: '0'
+                }, {
+                    name: '昨天',
+                    day: '-1',
+                    time: '00:00:00'
+                }, {
+                    name: '一周前',
+                    day: '-7'
+                }],
+                hide: function() {
+                    console.info(this)
+                }
+            });
+            //点击返回
+            $("#return_btn").on("click", function() {
+                window.history.go(-1);
+            });
+            //点击 “保存”
+            $("#save_btn").on("click", function() {
+                var saveData = {}
+                if (messageId) {
+                    msgDetailObj.saveMsg(saveData);
+                } else {
+                    msgDetailObj.addMsg(saveData);
+                }
+            });
+        })
+    </script>
 </body>
 
 </html>

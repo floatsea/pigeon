@@ -90,7 +90,7 @@ var userListObj = {
             contentType: "application/json",
             success: function(data) {
                 errorToken(data.code);
-                myAlert.createBox(data.msg);
+                myAlert.createBox("操作成功");
                 callback && callback();
             },
             error: function() {

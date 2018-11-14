@@ -1,6 +1,6 @@
 /**
- * 41、消息列表接口
- * http://域名/operator/message/find
+ * 40、消息列表接口
+ * http://域名/operator/message/findList
  */
 var msgListObj = {
     msgListRequest: function(msgData) {
@@ -11,6 +11,7 @@ var msgListObj = {
             dataType: "json",
             contentType: "application/json",
             success: function(data) {
+                alert(JSON.stringify(data));
                 errorToken(data.code);
                 if (data.code == "0") {
                     var total = data.data.total;
@@ -27,7 +28,7 @@ var msgListObj = {
     createMsgList: function(list) {
         var str = ""
         list.forEach(function(val) {
-            str += '<tr messageId="'+val.messageId+'">' +
+            str += '<tr messageId="' + val.messageId + '">' +
                 '<td>' +
                 '<span>' + val.messageTitle + '</span>' +
                 '</td>' +

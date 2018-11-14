@@ -39,6 +39,7 @@ body {
     float: left;
     line-height: 48px;
     margin: 0 25px;
+    cursor: pointer;
 }
 
 .public_tit span.active {

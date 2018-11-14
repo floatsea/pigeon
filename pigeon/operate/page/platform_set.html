@@ -37,7 +37,8 @@
             <div class="pl_article_btn clearfix" style="margin-left:70px;">
                 <h4>排序设置</h4>
                 <div id="sortSet">
-                    <button class="active" id="pigeon_btn">产品</button>
+                    <button id="pigeon_btn" class="active">商品</button>
+                    <button id="business_btn">商家</button>
                     <button id="race_btn">赛事</button>
                     <button id="oneloft_btn">公棚</button>
                 </div>
@@ -49,14 +50,14 @@
                         <span>最新发布</span>
                         <div>
                             <label>
-                                <input type="radio" name="follow" orderby="createdTime">
+                                <input type="radio" name="follow1" orderby="createdTime">
                                 <i></i>
-                                创建日期
+                                <b>创建日期</b>
                             </label>
                             <label>
-                                <input type="radio" name="follow" orderby="updatedTime">
+                                <input type="radio" name="follow1" orderby="updatedTime">
                                 <i></i>
-                                最后修改日期
+                                <b>最后修改日期</b>
                             </label>
                         </div>
                     </div>
@@ -64,19 +65,19 @@
                         <span>人气</span>
                         <div>
                             <label>
-                                <input type="radio" name="follow" orderby="views">
+                                <input type="radio" name="follow11" orderby="views">
                                 <i></i>
-                                浏览量
+                                <b>浏览量</b>
                             </label>
                             <label>
-                                <input type="radio"  name="follow" orderby="sales">
+                                <input type="radio"  name="follow11" orderby="sales">
                                 <i></i>
-                                销量
+                                <b>销量</b>
                             </label>
-                            <label>
-                                <input type="radio"  name="follow" orderby="follows">
+                            <label valuename="views">
+                                <input type="radio"  name="follow11" orderby="follows">
                                 <i></i>
-                                收藏量
+                                <b>收藏量</b>
                             </label>
                         </div>
                     </div>
@@ -88,12 +89,12 @@
                             <label>
                                 <input type="radio" name="follow2" orderby="createdTime">
                                 <i></i>
-                                创建日期
+                                <b>创建日期</b>
                             </label>
                             <label>
                                 <input type="radio" name="follow2" orderby="updatedTime">
                                 <i></i>
-                                最后修改日期
+                                <b>最后修改日期</b>
                             </label>
                         </div>
                     </div>
@@ -101,19 +102,19 @@
                         <span>人气</span>
                         <div>
                             <label>
-                                <input type="radio" name="follow2" orderby="views">
+                                <input type="radio" name="follow22" orderby="views">
                                 <i></i>
-                                浏览量
+                                <b>浏览量</b>
                             </label>
                             <label>
-                                <input type="radio"  name="follow2" orderby="sales">
+                                <input type="radio"  name="follow22" orderby="sales">
                                 <i></i>
-                                销量
+                                <b>销量</b>
                             </label>
                             <label>
-                                <input type="radio"  name="follow2" orderby="follows">
+                                <input type="radio"  name="follow22" orderby="follows">
                                 <i></i>
-                                收藏量
+                                <b>收藏量</b>
                             </label>
                         </div>
                     </div>
@@ -125,12 +126,12 @@
                             <label>
                                 <input type="radio" name="follow3" orderby="createdTime">
                                 <i></i>
-                                创建日期
+                                <b>创建日期</b>
                             </label>
                             <label>
                                 <input type="radio" name="follow3" orderby="updatedTime">
                                 <i></i>
-                                最后修改日期
+                                <b>最后修改日期</b>
                             </label>
                         </div>
                     </div>
@@ -138,107 +139,144 @@
                         <span>人气</span>
                         <div>
                             <label>
-                                <input type="radio" name="follow3" orderby="views">
+                                <input type="radio" name="follow33" orderby="views">
                                 <i></i>
-                                浏览量
+                                <b>浏览量</b>
                             </label>
                             <label>
-                                <input type="radio"  name="follow3" orderby="sales">
+                                <input type="radio"  name="follow33" orderby="sales">
                                 <i></i>
-                                销量
+                                <b>销量</b>
                             </label>
                             <label>
-                                <input type="radio"  name="follow3" orderby="follows">
+                                <input type="radio"  name="follow33" orderby="follows">
                                 <i></i>
-                                收藏量
+                                <b>收藏量</b>
+                            </label>
+                        </div>
+                    </div>
+                </li>
+                <li style="display:none;">
+                    <div class="pl_article_fb plat_radio_box clearfix">
+                        <span>最新发布</span>
+                        <div>
+                            <label>
+                                <input type="radio" name="follow4" orderby="createdTime">
+                                <i></i>
+                                <b>创建日期</b>
+                            </label>
+                            <label>
+                                <input type="radio" name="follow4" orderby="updatedTime">
+                                <i></i>
+                                <b>最后修改日期</b>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="pl_article_fb plat_radio_box clearfix">
+                        <span>人气</span>
+                        <div>
+                            <label>
+                                <input type="radio" name="follow44" orderby="views">
+                                <i></i>
+                                <b>浏览量</b>
+                            </label>
+                            <label>
+                                <input type="radio"  name="follow44" orderby="sales">
+                                <i></i>
+                                <b>销量</b>
+                            </label>
+                            <label>
+                                <input type="radio"  name="follow44" orderby="follows">
+                                <i></i>
+                                <b>收藏量</b>
                             </label>
                         </div>
                     </div>
                 </li>
             </ul>
-
-            <div class="pl_article_btn clearfix">
-                <h4>筛选条件管理</h4>
-                <ul id="select_box">
-                    <li class="active">
-                        <span>血统</span>
-                    </li>
-                    <li>
-                        <span>距离</span>
-                    </li>
-                    <li>
-                        <span>特征</span>
-                    </li>
-                </ul>
-            </div>
-            <div class="platform_set_pigeon">
-                <dl class="j_ancestry">
-                    <dt></dt>
-                    <dd>
-                        <label for="xt0">
-                            <input type="checkbox" id="xt0"/>
-                            <i></i>
-                            <b>白雪公主</b>
-                        </label>
-                    </dd>
-                    <dd>
-                        <label for="xt1">
-                            <input type="checkbox" id="xt1"/>
-                            <i></i>
-                            <b>白雪公主</b>
-                        </label>
-                    </dd>
-                </dl>
-                <dl style="display:none;" class="j_distance">
-                    <dt></dt>
-                    <dd>
-                        <label for="jl0">
+            <div id="filter_box">
+                <div class="pl_article_btn clearfix">
+                    <h4>筛选条件管理</h4>
+                    <ul id="select_box">
+                        <li class="active">
+                            <span type="bloodline">血统</span>
+                        </li>
+                        <li>
+                            <span type="distance">距离</span>
+                        </li>
+                        <li>
+                            <span type="features">特征</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="platform_set_pigeon">
+                    <dl class="j_ancestry">
+                        <dt></dt>
+                        <dd>
+                            <label for="xt0">
+                                <input type="checkbox" id="xt0"/>
+                                <i></i>
+                                <b>白雪公主</b>
+                            </label>
+                        </dd>
+                        <dd>
+                            <label for="xt1">
+                                <input type="checkbox" id="xt1"/>
+                                <i></i>
+                                <b>白雪</b>
+                            </label>
+                        </dd>
+                    </dl>
+                    <dl style="display:none;" class="j_distance">
+                        <dt></dt>
+                        <dd>
+                            <label for="jl0">
                             <input type="radio" id="jl0"/>
                             <i></i>
                             <b>短</b>
                         </label>
-                    </dd>
-                    <dd>
-                        <label for="jl1">
+                        </dd>
+                        <dd>
+                            <label for="jl1">
                                 <input type="radio" id="jl1"/>
                                 <i></i>
                                 <b>中</b>
                             </label>
-                    </dd>
-                    <dd>
-                        <label for="jl2">
+                        </dd>
+                        <dd>
+                            <label for="jl2">
                             <input type="radio" id="jl2"/>
                             <i></i>
                             <b>长</b>
                         </label>
-                    </dd>
-                </dl>
-                <dl style="display:none;" class="j_features">
-                    <dt></dt>
-                    <dd>
-                        <label for="tz0">
+                        </dd>
+                    </dl>
+                    <dl style="display:none;" class="j_features">
+                        <dt></dt>
+                        <dd>
+                            <label for="tz0">
                             <input type="radio" id="tz0"/>
                             <i></i>
                             <b>适合雨天</b>
                         </label>
-                    </dd>
-                    <dd>
-                        <label for="tz1">
+                        </dd>
+                        <dd>
+                            <label for="tz1">
                             <input type="radio" id="tz1"/>
                             <i></i>
                             <b>适合晴天</b>
                         </label>
-                    </dd>
-                    <dd>
-                        <label for="tz2">
+                        </dd>
+                        <dd>
+                            <label for="tz2">
                             <input type="radio" id="tz2"/>
                             <i></i>
                             <b>耐热</b>
                         </label>
-                    </dd>
-                </dl>
+                        </dd>
+                    </dl>
+                </div>
             </div>
-
             <div class="editor_button" style="margin-top:50px">
                 <button id="save_btn">保存</button>
             </div>

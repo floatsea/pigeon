@@ -20,7 +20,7 @@
 </head>
 
 <body>
-    <div>
+    <div id="match_editor_box">
         <div class="commod_tit" id="order_tit">
             <span>编辑赛事信息</span>
         </div>
@@ -38,9 +38,9 @@
                     <span>起止日期</span>
                     <div class="J-datepicker-range c-data-product">
                         <i></i>
-                        <input placeholder="开始日期" name="" class="" value="" id="matchStartedTime" readonly="readonly">
+                        <input placeholder="开始日期" name="" class="" id="matchStartedTime" readonly="readonly">
                         <span class="">-</span>
-                        <input placeholder="结束日期" name="" class="" value="" id="matchEndedTime" readonly="readonly">
+                        <input placeholder="结束日期" name="" class="" id="matchEndedTime" readonly="readonly">
                     </div>
                 </li>
                 <li>
@@ -59,7 +59,7 @@
                         <span>报名截止日期</span>
                         <div class="J-datepicker c-datepicker">
                             <i class=""></i>
-                            <input type="text" autocomplete="off" name="" placeholder="选择日期" class="" value="" id="enrolledTime" readonly="readonly">
+                            <input type="text" autocomplete="off" name="" placeholder="选择日期" class="" id="enrolledTime" readonly="readonly">
                         </div>
                     </div>
                 </div>
@@ -71,7 +71,7 @@
                             <span>放飞日期</span>
                             <div class="J-datepicker c-datepicker">
                                 <i class=""></i>
-                                <input type="text" autocomplete="off" name="" placeholder="选择日期" class="" value="" class="startedTime" readonly="readonly">
+                                <input type="text" autocomplete="off" name="" placeholder="选择日期" class="" class="startedTime" readonly="readonly">
                             </div>
                         </div>
                         <div class="schedule_time_ff schedule_time_ff2">
@@ -323,22 +323,22 @@
                 var len = $("#race_item_box li").length;
                 var str = '<li class="schedule_time clearfix">' +
                     '<span>赛程' + (len + 1) + '</span>' +
-                    '<input type="text" placeholder="赛程名称 " class="schedule_time_name raceitemTitile" value="">' +
+                    '<input type="text" placeholder="赛程名称 " class="schedule_time_name raceitemTitile">' +
                     '<div class="schedule_time_ff">' +
                     '<span>放飞日期</span>' +
                     '<div class="J-datepicker c-datepicker">' +
                     '<i class=""></i>' +
-                    '<input class="startedTime"  type="text" autocomplete="off" name="" placeholder="选择日期" value="">' +
+                    '<input class="startedTime"  type="text" autocomplete="off" name="" placeholder="选择日期">' +
                     '</div>' +
                     '</div>' +
                     '<div class="schedule_time_ff schedule_time_ff2">' +
                     '<span>放飞地点</span>' +
                     '<i class="address"></i>' +
-                    '<input type="text" value="" class="startedPlace">' +
+                    '<input type="text" class="startedPlace">' +
                     '</div>' +
                     '<div class="schedule_time_ff schedule_time_ff2">' +
                     '<span>空距</span>' +
-                    '<input type="text" placeholder="" value="" class="distance">' +
+                    '<input type="text" placeholder="" class="distance">' +
                     '</div>'
                 '</li>';
                 $("#race_item_box").append(str);
@@ -352,7 +352,8 @@
              *点击 “保存”
              */
             $("#save_btn").on("click", function() {
-                if (!matchEditoObj.isAllInfo()) {
+                var inputText = $("#match_editor_box input[type=text]"); //所有输入框
+                if (!matchEditoObj.isAllInfo(inputText)) {
                     myAlert.createBox("信息填写不完整，请重新录入！");
                     return;
                 }

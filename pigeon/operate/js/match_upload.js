@@ -31,10 +31,10 @@ var uploadObj = {
                 statusStr = '<span style="border-bottom:1px solid #000;">已导入(45)</span>'
             } else {
                 statusStr = '<div class="match_info_btn">' +
-                    '<input type="file" id="upfile'+index+'" name="upfile" class="input_upload"> 选择文件' +
+                    '<input type="file" id="upfile' + index + '" name="upfile" class="input_upload" accept=".xls,.doc,.txt,.pdf"> 选择文件' +
                     '</div>';
             }
-            str += '<tr raceId="' + raceId + '" raceitemId="'+val.raceitemId+'">' +
+            str += '<tr raceId="' + raceId + '" raceitemId="' + val.raceitemId + '">' +
                 '<td>' +
                 '<span>' + (index + 1) + '</span>' +
                 '</td>' +
@@ -70,17 +70,13 @@ var uploadObj = {
     /**
      * 32、上传赛事成绩接口
      * http://域名/operator/raceitem/edit
-     * 入参：{
-            "raceitemId": 赛程id, ？在哪里取
-            "raceitemResult": "成绩文件",
-            }
      */
     upRace: function(upData, callback) {
         $.ajax({
             url: location.origin + "/operator/raceitem/edit",
             type: "post",
             data: JSON.stringify(upData),
-            dataType:"json",
+            dataType: "json",
             contentType: "application/json",
             success: function(data) {
                 errorToken(data.code);
@@ -98,7 +94,7 @@ var uploadObj = {
      * 36、赛事报名导入接口
      * http://域名/operator/enroll/addByImport
      */
-    downLoad: function(callback) {
+    downLoad: function() {
         $.ajax({
             url: location.origin + "/operator/enroll/addByImport",
             type: "post",
@@ -110,7 +106,7 @@ var uploadObj = {
             success: function(data) {
                 errorToken(data.code);
                 if (data.code == 0) {
-                    callback && callback();
+                    myAlert.createBox("下载成功！");
                 }
             },
             error: function() {
