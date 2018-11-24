@@ -126,7 +126,7 @@ var pigeonObj = {
             headers: { Authorization: Authorization },
             success: function (data) {
                 if (data.code == "0") {
-                    callback && callback(data.data.isFollowed);
+                    callback && callback(data.data.isfollowed);
                 }
             },
             error: function () {

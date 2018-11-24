@@ -63,7 +63,7 @@ var businessDetailObj = {
             //资讯
         var msgStr = "";
         obj.newses.forEach(function(val, index) {
-            msgStr += '<div><img src="../image/sjdt.png" alt="">' +
+            msgStr += '<div>' +
                 '<p>' + val.newsTitle + '</p>' +
                 '<i>2018-03-17</i></div>';
         });
@@ -98,6 +98,9 @@ var businessDetailObj = {
             contentType: "application/json",
             success: function(data) {
                 //
+                if (pigeonPostData.pageNum==1){
+                    $("#list_view_box").html("");
+                }
                 if (data.code == "0") {
                     var list = data.data.list;
                     scrollFlag = data.data.hasNextPage;
@@ -125,7 +128,8 @@ var businessDetailObj = {
     },
     //创建鸽子列表
     createPigeonList: function(questPigeonList) {
-        var shopName = $("#banner_tit h5").attr("shopName");
+        // var shopName = $("#banner_tit h5").attr("shopName");
+        var pigeonStr = "";
         questPigeonList.forEach(function(val) {
             pigeonStr += '<li class="list_images_n clearfix" pigeonId="' + val.pigeonId + '">' +
                 '<div class="list_images_l">' +
@@ -139,7 +143,7 @@ var businessDetailObj = {
                 '<p class="dove_price1"><span>&yen</span>' + (val.pigeonPrice || val.pigeonPriceUsd) + '元</p>' +
                 '<div class="seller1">' +
                 '<img src="../image/dinw.jpg" />' +
-                '<p>卖家：' + shopName + '</p>' +
+                '<p>卖家：' + val.shopName + '</p>' +
                 '</div>' +
                 '</div>' +
                 '</li> ';
@@ -148,7 +152,8 @@ var businessDetailObj = {
     },
     //橱窗视图
     createPigeonView: function(list) {
-        var shopName = $("#banner_tit h5").attr("shopName"); //商家名称
+        // var shopName = $("#banner_tit h5").attr("shopName"); //商家名称
+        var pigeonStr = "";
         list.forEach(function(val) {
             pigeonStr += '<li pigeonId="' + val.pigeonId + '">' +
                 '<div class="dove_pic">' +
@@ -160,7 +165,7 @@ var businessDetailObj = {
                 '<p class="dove_price"><span>&yen</span>' + (val.pigeonPrice || val.pigeonPriceUsd) + '元</p>' +
                 '<div class="seller">' +
                 '<img src="../image/dinw.jpg" />' +
-                '<p>卖家：' + shopName + '</p>' +
+                '<p>卖家：' + val.shopName + '</p>' +
                 '</div>' +
                 '</li>';
         })

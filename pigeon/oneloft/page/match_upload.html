@@ -21,9 +21,9 @@
                     <div class="user_top_cont_l">
                         <span>2018第三届三关大奖赛的赛程</span>
                     </div>
-                    <div class="user_top_cont_r">
-                        <button id="down_load">下载导入模板</button>
-                    </div>
+                    <!-- <div class="user_top_cont_r">
+                        <button class="active" id="down_load">下载导入模板</button>
+                    </div> -->
                 </div>
             </div>
             <div id="list_box">
@@ -136,8 +136,8 @@
                 "raceitemId": raceitemId,
                 "raceitemResult": formData
             };
-            var postUrl = location.origin+'/ueditor?action=uploadfile';
-            uploadRequest(postUrl,thisId,function(fileUrl){
+            var postUrl = location.origin + '/ueditor?action=uploadfile';
+            uploadRequest(postUrl, thisId, function(fileUrl) {
                 upData.raceitemResult = fileUrl;
                 uploadObj.upRace(upData);
             });

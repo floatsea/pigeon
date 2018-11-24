@@ -81,8 +81,9 @@
                             <input type="text" class="startedPlace">
                         </div>
                         <div class="schedule_time_ff schedule_time_ff2">
-                            <span>空距</span>
+                            <span class="fly_space">空距</span>
                             <input type="text" placeholder=" " class="distance">
+                            <b>km</b>
                         </div>
                     </li>
                 </ul>
@@ -175,6 +176,11 @@
             } else {
                 $("#oneloftName").attr("readonly", "");
                 $("#oneloftName").val(oneloftName)
+            }
+            if (tab == 0) { //进行中
+                $("#save_btn").show();
+            } else { // 已结束
+                $("#save_btn").hide();
             }
             /**
              *日期控件
@@ -337,8 +343,8 @@
                     '<input type="text" class="startedPlace">' +
                     '</div>' +
                     '<div class="schedule_time_ff schedule_time_ff2">' +
-                    '<span>空距</span>' +
-                    '<input type="text" placeholder="" class="distance">' +
+                    '<span class="fly_space">空距</span>' +
+                    '<input type="text" placeholder="" class="distance"> <b>km</b>' +
                     '</div>'
                 '</li>';
                 $("#race_item_box").append(str);
@@ -411,7 +417,9 @@
                     "raceitems": raceArr
                 };
                 if (!raceId) { //添加
-                    matchEditoObj.addMatch(saveData);
+                    matchEditoObj.addMatch(saveData, function() {
+                        window.history.go(-1);
+                    });
                 } else { //编辑 保存
                     matchEditoObj.saveMatch(saveData, function() {
                         window.history.go(-1);

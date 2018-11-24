@@ -634,6 +634,6 @@ function domMove(direction, $this) {
 // 判断token是否失效
 function errorToken(code) {
     if (code == "401") {
-        top.location.href = location.origin + "/login/operate_login.html";
+        top.location.href = location.origin + "/login/login.html";
     }
 }

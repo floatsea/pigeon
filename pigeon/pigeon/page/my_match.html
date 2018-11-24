@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>赛事</title>
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,target-densitydpi=medium-dpi">
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/m_style.css" />
+
+</head>
+
+<body>
+    <div class="dove_event_box">
+        <!--搜索栏-->
+        <!--标题-->
+        <div class="follow_tit">
+            <ul>
+                <li class="active">进行中</li>
+                <li>已结束</li>
+            </ul>
+            <i class="follow_line"></i>
+        </div>
+        <!--赛事详情-->
+        <div id="list_box">
+            <ul class="dove_event_con" style="margin-top:1rem" id="my_match_gaming">
+                <!-- <li class="clearfix">
+                    <div class="dove_event_conl">
+                        <p class="clearfix dove_event_t">
+                            <span class="dove_event_in">7月</span>
+                            <span class="dove_event_day">12</span>
+                        </p>
+                        <p class="dove_event_time clearfix">
+                            <span class="dove_event_timel">止</span>
+                            <span class="dove_event_timer">2017-07-22</span>
+                        </p>
+
+                    </div>
+                    <div class="dove_event_conr">
+                        <p class="dove_event_n">西安为期公棚第十三届“西部之巅”赛鸽峰会</p>
+                        <p class="dove_event_b">报名中</p>
+                        <p class="dove_event_g">唐山公棚盛意赛鸽公棚</p>
+                        <p class="dove_event_g">报名日期:2018-07-12</p>
+                        <img src="../image/s_round.png" alt="" class="dove_event_conr1">
+                    </div>
+                </li> -->
+            </ul>
+            <ul class="dove_event_con" style="margin-top:1rem; display:none" id="my_match_over">
+                <!-- <li class="clearfix">
+                    <div class="dove_event_conl">
+                        <p class="clearfix dove_event_t">
+                            <span class="dove_event_in">9月</span>
+                            <span class="dove_event_day">12</span>
+                        </p>
+                        <p class="dove_event_time clearfix">
+                            <span class="dove_event_timel">止</span>
+                            <span class="dove_event_timer">2017-07-22</span>
+                        </p>
+
+                    </div>
+                    <div class="dove_event_conr">
+                        <p class="dove_event_n">西安为期公棚第十三届“西部之巅”赛鸽峰会</p>
+                        <p class="dove_event_b">报名中</p>
+                        <p class="dove_event_g">唐山公棚盛意赛鸽公棚</p>
+                        <p class="dove_event_g">报名日期:2018-07-12</p>
+                        <img src="../image/s_round.png" alt="" class="dove_event_conr1">
+                    </div>
+                </li> -->
+            </ul>
+        </div>
+        <!--上拉加载更多-->
+        <div class="load_more">
+            <img src="../image/load.gif" alt="" style="display:none;">
+            <span id="load_more_txt">上拉加载更多</span>
+        </div>
+    </div>
+    <script type="text/javascript" src="../js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="../js/public.js"></script>
+    <script type="text/javascript" src="../js/weixin_init.js"></script>
+    <script src="../js/my_match.js"></script>
+    <script>
+        var lineW = $(".follow_line").width();
+        var liW = $(".follow_tit li").eq(0).width();
+        var l = (liW - lineW - 6) / 2
+
+        $(".follow_line").css({
+            "left": l + "px"
+        });
+
+        var postData = {
+            "keyword": "检索关键字",
+            "pageSize": "10",
+            "pageNum": "1",
+            "orderBy": "publishedTime",
+            "orderDesc": ""
+        };
+        //重新渲染数据
+        reloadToken({
+            "Authorization": Authorization
+        }, {
+            "openid": openid
+        }, function() {
+            Authorization = localStorage.getItem("Authorization") || "";
+            myMatchObj.initQuest(postData, 0);
+        });
+
+        //切换Tab
+        $(".follow_tit li").on("click", function() {
+            $(".follow_tit li").removeClass("active");
+            $(this).addClass("active");
+            var _index = $(this).index();
+            $(".follow_line").css({
+                "left": (l + liW * _index) + "px"
+            });
+            $("#list_box ul").html("");
+            postData.pageNum = 1;
+            //重新渲染数据
+            reloadToken({
+                "Authorization": Authorization
+            }, {
+                "openid": openid
+            }, function() {
+                myMatchObj.initQuest(postData, 0);
+            });
+
+            $("#list_box ul").hide();
+            $("#list_box ul").eq(_index).show();
+        })
+
+        //上拉加载更多
+        $(window).on("scroll", function() {
+            var scrolT = $(document).scrollTop(); //滚动距离
+            var clientH = $(window).height(); //视口高度
+            var allH = $(document).height(); //整个文档高度
+            if (allH - clientH <= scrolT && scrolT > 20) {
+                if (scrollFlag) {
+                    scrollFlag = false;
+                    $(".load_more img").show();
+                    $("#load_more_txt").html("加载中...");
+                    followData.pageNum += 1; //页码
+                    setTimeout(function() {
+                        //重新渲染数据
+                        reloadToken({
+                            "Authorization": Authorization
+                        }, {
+                            "openid": openid
+                        }, function() {
+                            myMatchObj.initQuest(postData, 0);
+                        });
+                        $(document).scrollTop(scrolT - 10);
+                    }, 1500);
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

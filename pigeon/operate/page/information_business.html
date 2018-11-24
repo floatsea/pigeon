@@ -6,6 +6,7 @@
     <title>商家信息管理</title>
     <link rel="stylesheet" href="../css/reset.css">
     <link rel="stylesheet" href="../css/m_style.css">
+    <link rel="stylesheet" href="../css/public.css">
     <script src="../js/jquery-1.10.2.min.js"></script>
     <script src="../js/public.js"></script>
 </head>
@@ -86,7 +87,18 @@
                     </div>
                 </div>
             </div>
-
+        </div>
+    </div>
+    <!--删除 确认-->
+    <div class="del_mark" id="del_mark" style="display:none;">
+        <div class="del_cont">
+            <p>
+                是否将已选择内容彻底删除？<br/> 删除后无法恢复！
+            </p>
+            <div class="btn_box">
+                <button class="cancel_btn" id="cancel_btn">取消</button>
+                <button class="sure_btn" id="sure_btn">确定</button>
+            </div>
         </div>
     </div>
     <script src="../js/information_management.js"></script>
@@ -187,13 +199,12 @@
             $("#news_list_box").on("click", ".delete_btn", function() {
                 var $this = $(this);
                 var newsId = $this.closest("li").attr("newsId");
-                var delData = {
-                    "newsId": newsId //"用户id：支持多个，逗号,分隔"
-                }
-                inforObj.delRequest(delData, function() {
-                    $this.closest("li").remove();
-                    $("#info_tit .active").trigger("click");
-                });
+                var trNum = $this.closest("li").index();
+                //删除弹窗 显示
+                $("#del_mark").attr({
+                    "newsId": newsId,
+                    "index": trNum
+                }).show();
             });
             //点击 "录入资讯 "
             $("#input_info_btn").on("click", function() {
@@ -224,17 +235,38 @@
                 if ($(this).hasClass("active")) {
                     var checkInp = $("#news_list_box").find("input[type=checkbox]:checked");
                     var newsIdArr = [];
+                    var trNumArr = [];
                     checkInp.each(function(index) {
                         newsIdArr.push(checkInp.eq(index).closest("li").attr("newsId"));
+                        trNumArr.push(checkInp.eq(index).closest("li").index())
                     });
-                    var newsIdStr = newsIdArr.join(",");
-                    var delData = {
-                        "newsId": newsIdStr //"用户id：支持多个，逗号,分隔"
-                    }
-                    inforObj.delRequest(delData, function() {
-                        $("#info_tit .active").trigger("click");
-                    });
+                    $("#del_mark").attr({
+                        "newsId": newsIdArr.join(","),
+                        "index": trNumArr.join(",")
+                    }).show();
                 }
+            });
+            // 点击 “删除弹窗” 确定
+            $("#sure_btn").on("click", function() {
+                var newsId = $("#del_mark").attr("newsId");
+                var trIndex = $("#del_mark").attr("index").split(",");
+                inforObj.delRequest({ //调删除接口
+                    "newsId": newsId
+                }, function() {
+                    trIndex.forEach(function(val, index) {
+                        if (index != 0) {
+                            val -= index;
+                        }
+                        $("#news_list_box").find("li").eq(val).remove();
+                    });
+                    $("#total_num").html($("#news_list_box li").length);
+                    $("#info_tit .active").trigger("click");
+                    $("#del_mark").hide();
+                });
+            });
+            // 点击 “删除弹窗” 取消  
+            $("#cancel_btn").on("click", function() {
+                $("#del_mark").hide();
             });
         })
     </script>

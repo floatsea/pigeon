@@ -23,7 +23,7 @@ var userListObj = {
                 callback && callback();
             },
             error: function() {
-                myAlert.createBox("网络不给力！");
+                myAlert.createBox("网络不给力");
                 pageLiStr = userListObj.getPageNumer(totalNum); //页码
                 userListStr = userListObj.initList(list); //列表
                 callback && callback();

@@ -118,7 +118,7 @@ $(function() {
                 }
             },
             error: function() {
-                myAlert.createBox("网络不给力！");
+                myAlert.createBox("网络不给力");
             }
         });
     }
@@ -140,7 +140,7 @@ $(function() {
                 }
             },
             error: function() {
-                myAlert.createBox("网络不给力！");
+                myAlert.createBox("网络不给力");
             }
         })
     }

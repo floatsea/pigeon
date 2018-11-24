@@ -3,169 +3,759 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>已付款</title>
+    <title>订单管理</title>
     <link rel="stylesheet" href="../css/reset.css">
-    <link rel="stylesheet" href="../css/m_style.css">
+    <link rel="stylesheet" href="../css/style.css">
     <script src="../js/jquery-1.10.2.min.js"></script>
-    <script src="../js/product.js"></script>
+    <script src="../js/ajaxfileupload.js"></script>
+    <script src="../js/public.js"></script>
+</head>
 
-    <body>
-        <div>
-            <div class="commod_tit" id="order_tit">
-                <span class="active">已付款</span>
-                <span>待发货</span>
-                <span>已完成</span>
-            </div>
-            <div class="commodity_box">
-                <div class="query_p marginTop0 clearfix">
-                    <div class="query_p_show">
-                        <span>产品名称：</span>
-                        <input type="text" placeholder="输入订单编号或产品名称">
+<body>
+    <div>
+        <div class="public_tit" id="order_tit">
+            <span class="active">待付款</span>
+            <span>待确认</span>
+            <span>待发货</span>
+            <span>待收货</span>
+            <span>已完成</span>
+            <span>已取消</span>
+            <span>全部</span>
+        </div>
+        <div class="public_box" id="list_cont">
+            <!--待付款-->
+            <div>
+                <div class="user_top">
+                    <!-- <p class="quick_search">快速检索</p> -->
+                    <div class="user_top_cont clearfix">
+                        <div class="user_top_cont_l">
+                            <span>订单编号：</span>
+                            <input type="text" placeholder="输入订单编号">
+                            <button>查询</button>
+                        </div>
+                        <div class="user_top_cont_r">
+                            <button id="cancel_btn">取消订单</button>
+                        </div>
                     </div>
-                    <button class="query_p_btn">查询</button>
                 </div>
-                <div id="list_cont">
-                    <!--已付款-->
-                    <div class="pro_det">
-                        <ol class="clearfix">
-                            <li class="pro_det_one send_goods_list clearfix">订单信息</li>
-                            <li class="payment_order_price">订单总价</li>
-                            <li class="payment_order_price">下单日期</li>
-                            <li class="payment_order_price">买家</li>
-                            <li class="payment_det_last">操作</li>
-                        </ol>
-                        <ul class="clearfix">
-                            <li class="clearfix">
-                                <div class="comm_list_l comm_list_l_payment clearfix">
-                                    <div class="comm_list_img">
-                                        <img src="../image/cp.png">
+                <div class="user_cont pro_mana_cont">
+                    <table>
+                        <thead>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" id="order_sel_all">
+                                    <label for=""></label>
+                                </td>
+                                <td> 订单信息</td>
+                                <td>订单总价</td>
+                                <td>下单日期</td>
+                                <td>买家</td>
+                                <td>商家</td>
+                                <td>操作</td>
+                            </tr>
+                        </thead>
+                        <tbody class="order_tbody" id="order_pay_box">
+                            <!--                             <tr orderId="33333">
+                                <td>
+                                    <input type="checkbox">
+                                    <label for=""></label>
+                                </td>
+                                <td>
+                                    <div>
+                                        <div>
+                                            <img src="../image/cp.png" alt="">
+                                        </div>
+                                        <span style="display:inline-block;width:160px;white-space:nowrap; overflow:hidden; text-overflow:ellipsis">风雪的魅力风雪的魅力风雪的魅力风雪的魅力风雪的魅力</span>
                                     </div>
-                                    <div class="comm_list_txt">
-                                        <p>长距离赛手长距离赛手长距离赛手长距离赛手长距离赛手 BE17-12345</p>
-                                        <p class="comm_list_money">¥1888.00</p>
-                                    </div>
-                                </div>
-                                <div class="payment_order_price lineHeight80">¥1888.00</div>
-                                <div class="payment_order_price lineHeight80">
-                                    2018-06-21 18:34
-                                </div>
-                                <div class="payment_order_price lineHeight80">
-                                    136****6666
-                                </div>
-                                <div class="payment_det_last lineHeight80">
-                                    <span class="order_detail_btn">订单详情</span> | <span>提醒买家付款</span>
-                                </div>
-                            </li>
-                            <li class="pro_det_one clearfix">
-                                <div class="comm_list_l comm_list_l_payment clearfix">
-                                    <div class="comm_list_img">
-                                        <img src="../image/cp.png">
-                                    </div>
-                                    <div class="comm_list_txt">
-                                        <p>长距离赛手长距离赛手长距离赛手长距离赛手长距离赛手 BE17-12345</p>
-                                        <p class="comm_list_money">¥1888.00</p>
-                                    </div>
-                                </div>
-                                <div class="payment_order_price lineHeight80">¥1888.00</div>
-                                <div class="payment_order_price lineHeight80">
-                                    2018-06-21 18:34
-                                </div>
-                                <div class="payment_order_price lineHeight80">
-                                    136****6666
-                                </div>
-                                <div class="payment_det_last lineHeight80">
-                                    <span class="order_detail_btn">订单详情</span> | <span>提醒买家付款</span>
-                                </div>
-                            </li>
-                        </ul>
+                                </td>
+                                <td>¥5454</td>
+                                <td>2016-06-21 18:34</td>
+                                <td>gdgdfeder</td>
+                                <td>鸽子小铺</td>
+                                <td>
+                                    <span class="order_detail">订单详情</span>
+                                    <span>发送付款提醒</span>
+                                    <span>确认收款</span>
+                                    <span> 取消订单</span>
+                                </td>
+                            </tr> -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="public_footer clearfix">
+                    <ul class="clearfix" id="pay_page_btn">
+                        <!-- <li class="active">1</li>
+                        <li>2</li>
+                        <li>3</li>
+                        <li>4</li>
+                        <li>5</li> -->
+                    </ul>
+                    <div>共<span id="pay_total_num">0</span>条，每页显示<span>20</span>条</div>
+                </div>
+            </div>
+            <!--待确认-->
+            <div style="display:none">
+                <div class="user_top">
+                    <!-- <p class="quick_search">快速检索</p> -->
+                    <div class="user_top_cont clearfix">
+                        <div class="user_top_cont_l">
+                            <span>订单编号：</span>
+                            <input type="text" placeholder="输入订单编号">
+                            <button>查询</button>
+                        </div>
+                        <!-- <div class="user_top_cont_r">
+                            <button id="cancel_btn">取消订单</button>
+                        </div> -->
                     </div>
-                    <!--待发货-->
-                    <div class="pro_det pro_det2" style="display:none;">
-                        <ol class="clearfix ">
-                            <li class="pro_det_one comm_list_l_payment clearfix">订单信息</li>
-                            <li class="payment_order_price">订单总价</li>
-                            <li class="payment_order_price">下单日期</li>
-                            <li class="payment_order_price">付款日期</li>
-                            <li class="payment_order_price">买家</li>
-                            <li class="payment_det_last">操作</li>
-                        </ol>
-                        <ul class="clearfix">
-                            <li class="pro_det_one clearfix">
-                                <div class="comm_list_l comm_list_l_payment clearfix">
-                                    <div class="comm_list_img">
-                                        <img src="../image/cp.png">
+                </div>
+                <div class="user_cont pro_mana_cont">
+                    <table>
+                        <thead>
+                            <tr>
+                                <td> 订单信息</td>
+                                <td>订单总价</td>
+                                <td>下单日期</td>
+                                <td>买家</td>
+                                <td>商家</td>
+                                <td>操作</td>
+                            </tr>
+                        </thead>
+                        <tbody class="order_tbody" id="order_sure_box">
+                            <!-- <tr orderId="33333">
+                                <td>
+                                    <div>
+                                        <div>
+                                            <img src="../image/cp.png" alt="">
+                                        </div>
+                                        <span style="display:inline-block;width:160px;white-space:nowrap; overflow:hidden; text-overflow:ellipsis">风雪的魅力风雪的魅力风雪的魅力风雪的魅力风雪的魅力</span>
                                     </div>
-                                    <div class="comm_list_txt">
-                                        <p>长距离赛手长距离赛手长距离赛手长距离赛手长距离赛手 BE17-12345</p>
-                                        <p class="comm_list_money">¥1888.00</p>
-                                    </div>
-                                </div>
-                                <div class="payment_order_price lineHeight80">¥1888.00</div>
-                                <div class="payment_order_price lineHeight80">
-                                    2018-06-21 18:34
-                                </div>
-                                <div class="payment_order_price lineHeight80">
-                                    2018-06-21 18:34
-                                </div>
-                                <div class="payment_order_price lineHeight80">
-                                    136****6666
-                                </div>
-                                <div class="payment_det_last lineHeight80">
-                                    <span class="order_detail_btn">订单详情</span> | <span>确认发货</span>
-                                </div>
-                            </li>
-                        </ul>
+                                </td>
+                                <td>¥5454</td>
+                                <td>2016-06-21 18:34</td>
+                                <td>gdgdfeder</td>
+                                <td>鸽子小铺</td>
+                                <td>
+                                    <span class="order_detail">订单详情</span>
+                                    <span>确认收款</span>
+                                    <span> 取消订单</span>
+                                </td>
+                            </tr> -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="public_footer clearfix">
+                    <ul class="clearfix" id="pay_page_btn2">
+                        <!-- <li class="active">1</li>
+                        <li>2</li>
+                        <li>3</li>
+                        <li>4</li>
+                        <li>5</li> -->
+                    </ul>
+                    <div>共<span id="pay_total_num2">0</span>条，每页显示<span>20</span>条</div>
+                </div>
+            </div>
+            <!--待发货-->
+            <div style="display:none">
+                <div class="user_top">
+                    <!-- <p class="quick_search">快速检索</p> -->
+                    <div class="user_top_cont clearfix">
+                        <div class="user_top_cont_l">
+                            <span>订单编号：</span>
+                            <input type="text" placeholder="输入订单编号">
+                            <button>查询</button>
+                        </div>
+                        <div class="user_top_cont_r">
+                        </div>
                     </div>
-                    <!--已完成-->
-                    <div class="pro_det pro_det3" style="display:none;">
-                        <ol class="clearfix ">
-                            <li class="pro_det_one send_goods_l_payment clearfix">订单信息</li>
-                            <li class="payment_order_price">订单总价</li>
-                            <li class="payment_order_price">下单日期</li>
-                            <li class="payment_order_price">付款日期</li>
-                            <li class="payment_order_price">发货日期</li>
-                            <li class="payment_order_price">买家</li>
-                            <li class="payment_det_last send_goods_last">操作</li>
-                        </ol>
-                        <ul class="clearfix">
-                            <li class="pro_det_one clearfix">
-                                <div class="comm_list_l send_goods_l_payment clearfix">
-                                    <div class="comm_list_img comm_list_img2">
-                                        <img src="../image/cp.png">
+                </div>
+                <div class="user_cont pro_mana_cont">
+                    <table>
+                        <thead>
+                            <tr>
+                                <td style="text-align:left;"> 订单信息</td>
+                                <td>订单总价</td>
+                                <td>下单/付款日期</td>
+                                <td>买家</td>
+                                <td>商家</td>
+                                <td>操作</td>
+                            </tr>
+                        </thead>
+                        <tbody id="order_list_goods">
+                            <!-- <tr>
+                                <td>
+                                    <div>
+                                        <div>
+                                            <img src="../image/cp.png" alt="">
+                                        </div>
+                                        <span style="display:inline-block;width:160px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">风雪的魅力风雪的魅力风雪的魅力风雪的魅力风雪的魅力</span>
                                     </div>
-                                    <div class="comm_list_txt">
-                                        <p>长距离赛手长距离赛手长距离赛手长距离赛手长距离赛手 BE17-12345</p>
-                                        <p class="comm_list_money">¥1888.00</p>
-                                    </div>
-                                </div>
-                                <div class="payment_order_price lineHeight80">¥1888.00</div>
-                                <div class="payment_order_price lineHeight80">
-                                    2018-06-21 18:34
-                                </div>
-                                <div class="payment_order_price lineHeight80">
-                                    2018-06-21 18:34
-                                </div>
-                                <div class="payment_order_price lineHeight80">
-                                    2018-06-21 18:34
-                                </div>
-                                <div class="payment_order_price lineHeight80">
-                                    136****6666
-                                </div>
-                                <div class="payment_det_last lineHeight80">
-                                    <span>订单详情</span>
-                                </div>
-                            </li>
-                        </ul>
+                                </td>
+                                <td>¥5454</td>
+                                <td>2016-06-21 18:34</td>
+                                <td>gdgdfeder</td>
+                                <td>鸽子小铺</td>
+                                <td>
+                                    <span class="order_detail">订单详情</span>|
+                                    <span>提醒卖家发货</span>
+                                </td>
+                            </tr> -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="public_footer clearfix">
+                    <ul class="clearfix" id="goods_page_btn">
+                        <!-- <li class="active">1</li>
+                        <li>2</li>
+                        <li>3</li>
+                        <li>4</li>
+                        <li>5</li> -->
+                    </ul>
+                    <div>共<span id="goods_total_num">0</span>条，每页显示<span>20</span>条</div>
+                </div>
+            </div>
+            <!--待收货-->
+            <div style="display:none">
+                <div class="user_top">
+                    <!-- <p class="quick_search">快速检索</p> -->
+                    <div class="user_top_cont clearfix">
+                        <div class="user_top_cont_l">
+                            <span>订单编号：</span>
+                            <input type="text" placeholder="输入订单编号">
+                            <button>查询</button>
+                        </div>
+                        <div class="user_top_cont_r">
+                        </div>
                     </div>
+                </div>
+                <div class="user_cont pro_mana_cont">
+                    <table>
+                        <thead>
+                            <tr>
+                                <td style="text-align:left;"> 订单信息</td>
+                                <td>订单总价</td>
+                                <td>下单/付款日期</td>
+                                <td>买家</td>
+                                <td>商家</td>
+                                <td>操作</td>
+                            </tr>
+                        </thead>
+                        <tbody id="order_list_collect">
+                            <!-- <tr>
+                                <td>
+                                    <div>
+                                        <div>
+                                            <img src="../image/cp.png" alt="">
+                                        </div>
+                                        <span style="display:inline-block;width:160px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">风雪的魅力风雪的魅力风雪的魅力风雪的魅力风雪的魅力</span>
+                                    </div>
+                                </td>
+                                <td>¥5454</td>
+                                <td>2016-06-21 18:34</td>
+                                <td>gdgdfeder</td>
+                                <td>鸽子小铺</td>
+                                <td>
+                                    <span class="order_detail">订单详情</span>|
+                                    <span>确认收货</span>
+                                </td>
+                            </tr> -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="public_footer clearfix">
+                    <ul class="clearfix" id="collect_page_btn">
+                        <!-- <li class="active">1</li>
+                        <li>2</li>
+                        <li>3</li>
+                        <li>4</li>
+                        <li>5</li> -->
+                    </ul>
+                    <div>共<span id="collect_total_num">100</span>条，每页显示<span>20</span>条</div>
+                </div>
+            </div>
+            <!--已完成-->
+            <div style="display:none">
+                <div class="user_top">
+                    <!-- <p class="quick_search">快速检索</p> -->
+                    <div class="user_top_cont clearfix">
+                        <div class="user_top_cont_l">
+                            <span>订单编号：</span>
+                            <input type="text" placeholder="输入订单编号">
+                            <button>查询</button>
+                        </div>
+                        <div class="user_top_cont_r">
+                        </div>
+                    </div>
+                </div>
+                <div class="user_cont pro_mana_cont">
+                    <table>
+                        <thead>
+                            <tr>
+                                <td style="text-align:left;"> 订单信息</td>
+                                <td>订单总价</td>
+                                <td>下单/付款/发货日期</td>
+                                <td>买家</td>
+                                <td>商家</td>
+                                <td>操作</td>
+                            </tr>
+                        </thead>
+                        <tbody id="order_list_finish">
+                            <!-- <tr>
+                                <td>
+                                    <div>
+                                        <div>
+                                            <img src="../image/cp.png" alt="">
+                                        </div>
+                                        <span style="display:inline-block;width:160px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">风雪的魅力风雪的魅力风雪的魅力风雪的魅力风雪的魅力</span>
+                                    </div>
+                                </td>
+                                <td>¥5454</td>
+                                <td>2016-06-21 18:34</td>
+                                <td>gdgdfeder</td>
+                                <td>鸽子小铺</td>
+                                <td>
+                                    <span class="order_detail">订单详情</span>|
+                                    <span>确认收款</span>
+                                </td>
+                            </tr> -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="public_footer clearfix">
+                    <ul class="clearfix" id="finish_page_btn">
+                        <!-- <li class="active">1</li>
+                        <li>2</li>
+                        <li>3</li>
+                        <li>4</li>
+                        <li>5</li> -->
+                    </ul>
+                    <div>共<span id="finish_total_num">100</span>条，每页显示<span>20</span>条</div>
+                </div>
+            </div>
+            <!--已取消-->
+            <div style="display:none">
+                <div class="user_top">
+                    <!-- <p class="quick_search">快速检索</p> -->
+                    <div class="user_top_cont clearfix">
+                        <div class="user_top_cont_l">
+                            <span>订单编号：</span>
+                            <input type="text" placeholder="输入订单编号">
+                            <button>查询</button>
+                        </div>
+                        <div class="user_top_cont_r">
+                        </div>
+                    </div>
+                </div>
+                <div class="user_cont pro_mana_cont">
+                    <table>
+                        <thead>
+                            <tr>
+                                <td style="text-align:left;"> 订单信息</td>
+                                <td>订单总价</td>
+                                <td>下单/取消日期</td>
+                                <td>买家</td>
+                                <td>商家</td>
+                                <td>操作</td>
+                            </tr>
+                        </thead>
+                        <tbody id="order_list_cancel">
+                            <!-- <tr>
+                                <td>
+                                    <div>
+                                        <div>
+                                            <img src="../image/cp.png" alt="">
+                                        </div>
+                                        <span style="display:inline-block;width:160px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">风雪的魅力风雪的魅力风雪的魅力风雪的魅力风雪的魅力</span>
+                                    </div>
+                                </td>
+                                <td>¥5454</td>
+                                <td>2016-06-21 18:34</td>
+                                <td>gdgdfeder</td>
+                                <td>鸽子小铺</td>
+                                <td>
+                                    <span class="order_detail">订单详情</span>|
+                                </td>
+                            </tr> -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="public_footer clearfix">
+                    <ul class="clearfix" id="cancel_page_btn">
+                        <!-- <li class="active">1</li>
+                        <li>2</li>
+                        <li>3</li>
+                        <li>4</li>
+                        <li>5</li> -->
+                    </ul>
+                    <div>共<span id="cancel_total_num">100</span>条，每页显示<span>20</span>条</div>
+                </div>
+            </div>
+            <!--全部-->
+            <div style="display:none">
+                <div class="user_top">
+                    <!-- <p class="quick_search">快速检索</p> -->
+                    <div class="user_top_cont clearfix">
+                        <div class="user_top_cont_l">
+                            <span>订单编号：</span>
+                            <input type="text" placeholder="输入订单编号">
+                            <button>查询</button>
+                        </div>
+                        <div class="user_top_cont_r">
+                        </div>
+                    </div>
+                </div>
+                <div class="user_cont pro_mana_cont">
+                    <table>
+                        <thead>
+                            <tr>
+                                <td style="text-align:left;"> 订单信息</td>
+                                <td>订单总价</td>
+                                <td>下单/付款/发货日期</td>
+                                <td>买家</td>
+                                <td>商家</td>
+                                <td>操作</td>
+                            </tr>
+                        </thead>
+                        <tbody id="order_list_all">
+                            <!-- <tr>
+                                <td>
+                                    <div>
+                                        <div>
+                                            <img src="../image/cp.png" alt="">
+                                        </div>
+                                        <span style="display:inline-block;width:160px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">风雪的魅力风雪的魅力风雪的魅力风雪的魅力风雪的魅力</span>
+                                    </div>
+                                </td>
+                                <td>¥5454</td>
+                                <td>2016-06-21 18:34</td>
+                                <td>gdgdfeder</td>
+                                <td>鸽子小铺</td>
+                                <td>
+                                    <span class="order_detail">订单详情</span>|
+                                </td>
+                            </tr> -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="public_footer clearfix">
+                    <ul class="clearfix" id="all_page_btn">
+                        <!-- <li class="active">1</li>
+                        <li>2</li>
+                        <li>3</li>
+                        <li>4</li>
+                        <li>5</li> -->
+                    </ul>
+                    <div>共<span id="all_total_num">100</span>条，每页显示<span>20</span>条</div>
                 </div>
             </div>
         </div>
-        <script src="../js/order_management.js"></script>
-        <script>
-            $(".order_detail_btn").on("click", function() {
-                window.location.href = "order_detail.html";
-            })
-        </script>
-    </body>
+    </div>
+    <div class="send_goods_mark">
+        <div class="send_goods_mark_cont">
+            <h5>请补充发货信息</h5>
+            <div class="clearfix">
+                <span>承运商</span>
+                <input type="text" value="" placeholder="请输入承运商" id="carrier" />
+            </div>
+            <div class="clearfix">
+                <span>物流单号</span>
+                <input type="text" value="" placeholder="请输入物流编号" id="logistics" />
+            </div>
+            <div class="clearfix">
+                <span>物流凭证</span>
+                <input type="file" value="" name="upfile" accept="image/*" id="logistics_img" />
+                <em>选择文件</em>
+            </div>
+            <ul class="pay_img_box clearfix">
+                <!-- <li>
+                    <div><img src="../image/tit.png" /></div>
+                    <i></i>
+                </li> -->
+            </ul>
+            <div class="send_goods_btn_box">
+                <button class="cancel_btn" id="send_doods_cancel">取消</button>
+                <button class="sure_btn" id="send_goods_srue">确认发货</button>
+            </div>
+        </div>
+    </div>
+    <!--缩略图放大-->
+    <div class="pay_big_img_box" style="display:none">
+        <div>
+            <img src="../image/cp.png" />
+        </div>
+    </div>
+    <script src="../js/order_management.js?v=1"></script>
+    <script>
+        //页面初始化 请求入参
+        var postData = {
+            "orderitemStatus": 0,
+            "keyword": "", //检索关键字
+            "pageSize": "20",
+            "pageNum": "1",
+            "orderBy": "",
+            "orderDesc": ""
+        };
+        if (businessId) {
+            postData.businessId = businessId; //商家id
+        }
+        orderListObj.initRequest(postData); //页面初始化
+
+        //顶部“订单状态”切换状态
+        $("#order_tit span").on("click", function() {
+            $("#order_tit span").removeClass("active");
+            $("#order_sel_all").prop("checked", false);
+            $(this).addClass("active");
+            var _index = $(this).index();
+            postData.orderitemStatus = orderListObj.getOrderitemStatus(_index); //获取订单状态 
+            postData.pageNum = "1";
+            orderListObj.initRequest(postData);
+            $("#list_cont>div").hide();
+            $("#list_cont>div").eq(_index).show();
+
+        });
+        //点击编辑产品
+        $(".order_detail").on("click", function() {
+            location.href = "order_detail.html";
+        });
+
+        // "待付款"  “全选”
+        $("#order_sel_all").on("change", function() {
+            var selAllFlag = $(this).prop("checked");
+            if (selAllFlag) {
+                $("#order_pay_box").find("input[type=checkbox]").prop("checked", true);
+                var len = $("#order_pay_box").find("input[type=checkbox]:checked").length;
+                if (len > 0) {
+                    $("#cancel_btn").addClass("active");
+                }
+            } else {
+                $("#order_pay_box").find("input[type=checkbox]").prop("checked", false);
+                $("#cancel_btn").removeClass("active");
+            }
+        });
+        // 待付款  "checkbox"
+        $("#order_pay_box").on("change", "input[type=checkbox]", function() {
+            $("#cancel_btn").addClass("active");
+            if ($("#order_pay_box").find("input:checked").length == $("#order_pay_box").find("input[type=checkbox]").length) {
+                $("#order_sel_all").prop("checked", true);
+            } else {
+                $("#order_sel_all").prop("checked", false);
+            }
+        });
+        //待付款 点击每个页码
+        $("#pay_page_btn").delegate("li", "click", function() {
+            var _this = $(this);
+            postData.keyword = $("#keyword").val(); //关键字
+            postData.pageNum = $(this).html(); //页码
+            orderListObj.clickPageBtn(postData, "pay_page_btn", _this)
+        });
+        //待发货 点击每个页码
+        $("#goods_page_btn").delegate("li", "click", function() {
+            var _this = $(this);
+            postData.keyword = $("#keyword").val(); //关键字
+            postData.pageNum = $(this).html(); //页码
+            orderListObj.clickPageBtn(postData, "goods_page_btn", _this)
+        });
+        //已完成 点击每个页码
+        $("#finish_page_btn").delegate("li", "click", function() {
+            var _this = $(this);
+            postData.keyword = $("#keyword").val(); //关键字
+            postData.pageNum = $(this).html(); //页码
+            orderListObj.clickPageBtn(postData, "finish_page_btn", _this)
+        });
+        //点击 “订单详情” 待付款、待确认、待发货、待收货、已完成、已取消、全部
+        $("#list_cont").on("click", ".order_detail", function() {
+            var orderId = $(this).closest("tr").attr("orderId");
+            var shopName = $(this).closest("tr").find(".shopName").html();
+            location.href = "order_detail.html?orderId=" + orderId + "&shopName=" + encodeURI(shopName);
+        });
+        //待发货
+        $("#order_list_goods").on("click", ".order_detail", function() {
+            var orderId = $(this).closest("tr").attr("orderId");
+            location.href = "order_detail.html?orderType=1&orderId=" + orderId;
+        });
+        //待收货
+        $("#order_list_collect").on("click", ".order_detail", function() {
+            var orderId = $(this).closest("tr").attr("orderId");
+            location.href = "order_detail.html?orderType=2&orderId=" + orderId;
+        });
+        // 点击 “待付款” 的 “发送付款提醒”
+        // $("#order_pay_box").on("click", ".send_pay_btn", function() {
+        //     var $this = $(this);
+        //     var orderId = $this.closest("tr").attr("orderId");
+        //     orderListObj.sendPayMsg({
+        //         "orderId": orderId
+        //     }, function() {
+
+        //     });
+        // });
+        // 点击 “待付款” 的 “确认收款”
+        // $("#order_pay_box, #order_sure_box").on("click", ".collect_money_btn", function() {
+        //     var $this = $(this);
+        //     if ($this.html() == "确认收款") {
+        //         var orderId = $this.closest("tr").attr("orderId");
+        //         orderListObj.collectMoneyMsg({
+        //             "orderId": orderId
+        //         }, function() {
+        //             $this.html("已收款");
+        //             $("#order_tit span").eq(0).trigger("click");
+        //         });
+        //     }
+        // });
+        // 点击 “待发货” 的 “提醒卖家发货”
+        // $("#order_list_goods").on("click", ".send_goods_btn", function() {
+        //     var $this = $(this);
+        //     var orderId = $this.closest("tr").attr("orderId");
+        //     orderListObj.sendGoodsMsg({
+        //         "orderId": orderId
+        //     }, function() {
+
+        //     });
+        // });
+        // 点击 “待发货” 的 “确认发货” 
+        $("#order_list_goods").on("click", ".sendSure_goods_btn", function() {
+            var $this = $(this);
+            var orderitemId = $this.closest("tr").attr("orderitemId");
+            $(".send_goods_mark").attr("orderitemId", orderitemId).show();
+        });
+        // 上传物流凭证
+        $("#logistics_img").on("change", function() {
+            var $this = $(this);
+            var thisId = $(this).attr("id");
+            var postUrl = location.origin + '/ueditor?action=uploadimage';
+            uploadRequest(postUrl, thisId, function(imgUrl) {
+                var liStr = '<li>' +
+                    '<div><img src="' + imgUrl + '" /></div>' +
+                    '<i></i>' +
+                    '</li>';
+                $(".pay_img_box").append(liStr);
+            });
+        });
+        // 删除物流凭证
+        $(".pay_img_box").on("click", "i", function() {
+            $(this).closest("li").remove();
+        });
+        // 确认发货弹窗  “确认”
+        $("#send_goods_srue").on("click", function() {
+            var orderitemId = $(".send_goods_mark").attr("orderitemId");
+            var carrierStr = $("#carrier").val(); //承运商
+            var logisticsStr = $("#logistics").val(); //物流单号
+            var liList = $(".pay_img_box li");
+            if (carrierStr == "") {
+                myAlert.createBox("请输入承运商");
+                return;
+            } else {
+                if (!stripScript(carrierStr)) {
+                    myAlert.createBox("承运商格式有误，请重新输入！");
+                    return;
+                }
+            }
+            if (!logisticsStr) {
+                myAlert.createBox("请输入物流单号");
+                return;
+            } else {
+                var reg = /^[a-zA-Z0-9]$/;
+                if (reg.test(carrierStr)) {
+                    myAlert.createBox("物流单号格式有误，请重新输入！");
+                    return;
+                }
+            }
+            if (liList.length == 0) {
+                myAlert.createBox("请上传物流凭证！");
+                return;
+            }
+            var imgArr = [];
+            $(".pay_img_box li").each(function(i) {
+                imgArr.push({
+                    "img": $(".pay_img_box li").eq(i).find("img").attr("src"),
+                    "alt": "物流凭证",
+                    "isCover": "N",
+                    "url": "",
+                    "desc": "物流凭证"
+                });
+            });
+            orderListObj.sendSureGoodsMsg({
+                "orderitemId": orderitemId,
+                "carrier": carrierStr, //承运快递
+                "expressNo": logisticsStr, //运单号码
+                "expressVoucher": {
+                    "images": imgArr
+                }
+            }, function() {
+                $(".send_goods_mark").hide();
+                $("#order_tit span").eq(2).trigger("click");
+            });
+        });
+        $("#send_doods_cancel").on("click", function() {
+            $(".send_goods_mark").hide();
+        });
+        // 点击 “待收货” 的 “确认收货”
+        // $("#order_list_collect").on("click", ".collect_goods_btn", function() {
+        //     var $this = $(this);
+        //     var orderitemId = $this.closest("tr").attr("orderitemId");
+        //     orderListObj.collectGoods({
+        //         "orderitemId": orderitemId
+        //     }, function() {
+        //         $("#order_tit span").eq(3).trigger("click");
+        //     });
+        // });
+        // 点击 “完成” 的 “确认打款”
+        // $("#order_list_finish").on("click", ".sure_money_btn", function() {
+        //     var $this = $(this);
+        //     if ($(this).html() == "确认打款") {
+        //         var orderitemId = $this.closest("tr").attr("orderitemId");
+        //         orderListObj.sureMoney({
+        //             "orderitemId": orderitemId
+        //         }, function() {
+        //             $("#order_tit span").eq(4).trigger("click");;
+        //         });
+        //     }
+
+        // });
+        // 点击 “待付款” 的 “取消订单”
+        // $("#order_pay_box").on("click", ".cancel_order_btn", function() {
+        //     var $this = $(this);
+        //     if ($this.html() == "取消订单") {
+        //         var orderId = $this.closest("tr").attr("orderId");
+        //         orderListObj.cancelOrder({
+        //             "orderId": orderId
+        //         }, function() {
+        //             $("#order_tit span").eq(0).trigger("click");
+        //         });
+        //     }
+        // });
+        // 点击 “取消” 大按钮
+        // $("#cancel_btn").on("click", function() {
+        //     if ($(this).hasClass("active")) {
+        //         var checkOrder = $("#order_pay_box").find("input[type=checkbox]:checked");
+        //         if (checkOrder.length == 0) {
+        //             myAlert.createBox("还没有选择要取消的订单");
+        //             return;
+        //         }
+        //         var orderIdArr = [];
+        //         checkOrder.each(function(_index) {
+        //             orderIdArr.push(checkOrder.eq(_index).closest("tr").attr("orderId"));
+        //         })
+        //         orderListObj.cancelOrder({ //调接口
+        //             "orderId": orderIdArr.join(",")
+        //         }, function() {
+        //             checkOrder.closest("tr").find(".cancel_order_btn").html("已取消");
+        //             $("#order_tit span").eq(0).trigger("click");
+        //         });
+        //     }
+        // });
+
+        //上传物流凭证 点击放大
+        $(".pay_img_box").on("click", "img", function() {
+            var imgSrc = $(this).attr("src");
+            $(".pay_big_img_box img").attr("src", imgSrc);
+            $(".pay_big_img_box").show();
+        });
+        $(".pay_big_img_box").on("click", function() {
+            $(this).hide();
+        });
+        $(".pay_big_img_box img").on("click", function(ev) {
+            ev.stopPropagation();
+        });
+    </script>
+</body>
 
 </html>

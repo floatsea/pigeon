@@ -6,13 +6,13 @@
 var inforObj = {
     newsRequstList: function(postData) {
         $.ajax({
-            url: location.origin + "/operator/news/findList",
+            url: location.origin + "/business/news/findList",
             type: "post",
             data: JSON.stringify(postData),
             dataType: "json",
             contentType: "application/json",
             success: function(data) {
-                //errorToken(data.code);
+                errorToken(data.code);
                 if (data.code == "0") {
                     if (postData.pageNum == "1") {
                         var total = data.data.total;
@@ -23,7 +23,7 @@ var inforObj = {
                 }
             },
             error: function() {
-                myAlert.createBox("网络不给力！");
+                myAlert.createBox("网络不给力");
             }
         });
     },
@@ -42,7 +42,7 @@ var inforObj = {
                 '</div>' +
                 '<div class="info_create_date ">' + newsDate + '</div>' +
                 '<div class="info_create_date">' + val.userName + '</div>' +
-                '<div class="info_create_date ">' + val.ownerName + '</div>' +
+                // '<div class="info_create_date ">' + val.ownerName + '</div>' +
                 '<div class="info_last ">' +
                 '<span class="enditor_btn">编辑</span> | <span class="cancel_btn">' + cancelTxt + '</span> | <span class="delete_btn">删除</span>' +
                 '</div>' +
@@ -89,7 +89,7 @@ var inforObj = {
                 }
             },
             error: function() {
-                myAlert.createBox("网络不给力！");
+                myAlert.createBox("网络不给力");
             }
         });
     },
@@ -113,7 +113,7 @@ var inforObj = {
                 }
             },
             error: function() {
-                myAlert.createBox("网络不给力！");
+                myAlert.createBox("网络不给力");
             }
         });
     }

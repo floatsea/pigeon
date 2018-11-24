@@ -12,6 +12,7 @@ var productObj = {
             dataType: "json",
             contentType: "application/json",
             success: function(data) {
+                errorToken(data.code);
                 if (data.code == "0") {
                     if (proListData.pageNum == "1") {
                         var total = data.data.total;
@@ -22,15 +23,35 @@ var productObj = {
                 }
             },
             error: function() {
-                myAlert.createBox("网络不给力！");
+                myAlert.createBox("网络不给力");
             }
         });
     },
     createInfoList: function(infoLists) {
         var listStr = "";
         infoLists.forEach(function(val) {
-            var pigeonStatus = val.pigeonStatus == 0 ? "上架" : "上架";
+            var pigeonStatus = "";
+            switch (val.pigeonStatus + "") {
+                case "0":
+                    pigeonStatus = "上架";
+                    break;
+                case "1":
+                    pigeonStatus = "下架";
+                    break;
+            }
             var stickyTime = val.stickyTime == 0 ? "置顶" : "取消置顶";
+            var imgSrc = "";
+            if (val.pigeonShow.images.length > 0) {
+                val.pigeonShow.images.forEach(function(imgObj) {
+                    if (imgObj.isCover && imgObj.isCover == "Y") {
+                        imgSrc = imgObj.img;
+                    } else {
+                        if (!imgSrc && imgObj.img) {
+                            imgSrc = imgObj.img;
+                        }
+                    }
+                })
+            }
             listStr += '<tr businessId="' + val.businessId + '" pigeonId="' + val.pigeonId + '">' +
                 ' <td>' +
                 '<input type="checkbox" pigeonId="1">' +
@@ -39,14 +60,14 @@ var productObj = {
                 '<td>' +
                 '<div>' +
                 '<div>' +
-                '<img src="' + val.pigeonShow.images[0].img + '" alt="">' +
+                '<img src="' + imgSrc + '" alt="">' +
                 '</div>' +
                 '<span>' + val.pigeonName + '</span>' +
                 '</div>' +
                 '</td>' +
                 '<td>' + val.pigeonPrice + '</td>' +
                 '<td>' + val.createdTime + '</td>' +
-                '<td>' + val.shopName + '</td>' +
+                // '<td>' + val.shopName + '</td>' +
                 '<td>' +
                 '<span class="editor_btn">编辑</span>|<span class="frame_btn">' + pigeonStatus + '</span>|' +
                 '<span class="del_btn">删除</span>|<span class="setTop_btn">' + stickyTime + '</span>' +
@@ -84,12 +105,18 @@ var productObj = {
             contentType: "application/json",
             success: function(data) {
                 if (data.code == "0") {
-                    myAlert.createBox(data.msg);
+                    if (frameData.pigeonStatus == 0) {
+                        myAlert.createBox("下架成功");
+                    } else {
+                        myAlert.createBox("上架成功");
+                    }
                     callback && callback();
+                } else {
+                    myAlert.createBox(data.msg);
                 }
             },
             error: function() {
-                myAlert.createBox("网络不给力！");
+                myAlert.createBox("网络不给力");
                 callback && callback();
             }
         });
@@ -106,21 +133,18 @@ var productObj = {
             dataType: "json",
             contentType: "application/json",
             success: function(data) {
+                errorToken(data.code);
                 if (data.code == "0") {
-                    myAlert.createBox(data.msg);
+                    myAlert.createBox("删除成功");
                     callback && callback();
                 }
             },
             error: function() {
-                myAlert.createBox("网络不给力！");
+                myAlert.createBox("网络不给力");
                 callback && callback();
             }
         });
     },
-    /**
-     * 置顶 文档上没有接口
-     * /business/pigeon/editSticky
-     */
     setTop: function(setTopData, callback) { //置顶
         $.ajax({
             url: location.origin + "/business/pigeon/editSticky",
@@ -129,13 +153,18 @@ var productObj = {
             dataType: "json",
             contentType: "application/json",
             success: function(data) {
+                errorToken(data.code);
                 if (data.code == "0") {
-                    myAlert.createBox(data.msg);
+                    if (setTopData.sticky) {
+                        myAlert.createBox("置顶成功");
+                    } else {
+                        myAlert.createBox("取消置顶");
+                    }
                     callback && callback();
                 }
             },
             error: function() {
-                myAlert.createBox("网络不给力！");
+                myAlert.createBox("网络不给力");
                 callback && callback();
             }
         });

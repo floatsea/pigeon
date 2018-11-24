@@ -24,7 +24,7 @@ var productObj = {
                 }
             },
             error: function() {
-                myAlert.createBox("网络不给力！");
+                myAlert.createBox("网络不给力");
             }
         });
     },
@@ -32,16 +32,16 @@ var productObj = {
         var listStr = "";
         infoLists.forEach(function(val) {
             var pigeonStatus = "";
-            switch(val.pigeonStatus+""){
+            switch (val.pigeonStatus + "") {
                 case "0":
                     pigeonStatus = "上架";
-                break;
+                    break;
                 case "1":
                     pigeonStatus = "下架";
-                break;
+                    break;
                 case "1":
                     pigeonStatus = "";
-                break;
+                    break;
 
             }
             var stickyTime = val.stickyTime == 0 ? "置顶" : "取消置顶";
@@ -118,7 +118,7 @@ var productObj = {
                 }
             },
             error: function() {
-                myAlert.createBox("网络不给力！");
+                myAlert.createBox("网络不给力");
                 callback && callback();
             }
         });
@@ -138,7 +138,7 @@ var productObj = {
                 }
             },
             error: function() {
-                myAlert.createBox("网络不给力！");
+                myAlert.createBox("网络不给力");
                 callback && callback();
             }
         });
@@ -162,7 +162,7 @@ var productObj = {
                 }
             },
             error: function() {
-                myAlert.createBox("网络不给力！");
+                myAlert.createBox("网络不给力");
                 callback && callback();
             }
         });

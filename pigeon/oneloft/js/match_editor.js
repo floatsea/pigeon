@@ -1,6 +1,7 @@
 var oneloftId = getParameter("oneloftId") || ""; //有oneloftId：公棚 “添加赛事”
 var raceId = getParameter("raceId") || ""; //编辑
 var oneloftName = decodeURI(getParameter("oneloftName") || "");
+var tab = getParameter("tab") || "";
 /**
  * 18、赛事详情接口
  * http://域名/oneloft/race/find
@@ -20,7 +21,7 @@ var matchEditoObj = {
                 }
             },
             error: function() {
-                myAlert.createBox("网络不给力！");
+                myAlert.createBox("网络不给力");
             }
         })
     },
@@ -59,8 +60,8 @@ var matchEditoObj = {
                 '<input type="text" value="' + val.startedPlace + '" class="startedPlace">' +
                 '</div>' +
                 '<div class="schedule_time_ff schedule_time_ff2">' +
-                '<span>空距</span>' +
-                '<input type="text" placeholder="" value="' + val.distance + '" class="distance">' +
+                '<span class="fly_space">空距</span>' +
+                '<input type="text" placeholder="" value="' + val.distance + '" class="distance"> <b>km</b>' +
                 '</div>'
             '</li>';
         });
@@ -94,7 +95,7 @@ var matchEditoObj = {
      *7、新增赛事接口
      * http://域名/oneloft/race/add
      */
-    addMatch: function(saveData) {
+    addMatch: function(saveData, callback) {
         $.ajax({
             url: location.origin + "/oneloft/race/add",
             type: "post",
@@ -104,11 +105,12 @@ var matchEditoObj = {
             success: function(data) {
                 errorToken(data.code);
                 if (data.code == 0) {
-                    myAlert.createBox(data.msg);
+                    myAlert.createBox("保存成功！");
+                    callback && callback();
                 }
             },
             error: function() {
-                myAlert.createBox("网络不给力！");
+                myAlert.createBox("网络不给力");
             }
         })
     },
@@ -131,13 +133,12 @@ var matchEditoObj = {
                 }
             },
             error: function() {
-                myAlert.createBox("网络不给力！");
+                myAlert.createBox("网络不给力");
             }
         })
     },
     //校验所有输入框
-    isInputText: function() {
-        var inputText = $("input[type=text]"); //所有输入框
+    isInputText: function(inputText) {
         for (var i = 0; i < inputText.length; i++) {
             if (inputText.eq(i).val() == "") {
                 return false;
@@ -146,18 +147,18 @@ var matchEditoObj = {
         return true;
     },
     //校验图片选择
-    isInputFile: function() {
+    isInputFile: function(inputText) {
         var inputCheck = $("#raceShow li").find("img");
         for (var i = 0; i < inputCheck.length; i++) {
-            if (inputCheck.eq(i).attr("src")) {
+            if (i != 0 && inputCheck.eq(i).attr("src")) {
                 return true;
             }
         }
         return false;
     },
     //校验页面信息是否填写完整
-    isAllInfo: function() {
-        if (!matchEditoObj.isInputText() || !matchEditoObj.isInputFile()) {
+    isAllInfo: function(inputText) {
+        if (!matchEditoObj.isInputText(inputText) || !matchEditoObj.isInputFile()) {
             return false;
         } else {
             return true;

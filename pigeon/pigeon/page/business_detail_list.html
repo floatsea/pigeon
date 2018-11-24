@@ -19,7 +19,9 @@
         <section class="info_banner release_banner">
             <!--搜索栏-->
             <div class="search">
-                <input type="text" placeholder="最佳种鸽做玉">
+                <form id="searchForm" action="">
+                    <input type="search" autocomplete="off" placeholder="最佳种鸽做玉" id="serch_txt">
+                </form>
                 <img src="../image/search_gp.png">
             </div>
             <div class="device">
@@ -40,11 +42,15 @@
         </section>
         <!--商家动态-->
         <section class="dynamics_box">
-            <div id="msg_box">
-                <!-- <img src="../image/sjdt.png" alt="">
-            <p>参加巴塞罗那有奖竞猜活动，赢取“新新新新…</p>
-            <i>2018-03-17</i> -->
+            <div style="height:100%;">
+                <img src="../image/sjdt.png" alt="">
             </div>
+            <div id="msg_box" class="msg_box">
+                <!-- <img src="../image/sjdt.png" alt="">
+                        <p>参加巴塞罗那有奖竞猜活动，赢取“新新新新…</p>
+                        <i>2018-03-17</i> -->
+            </div>
+            
         </section>
         <section class="navigation_box2 clearfix">
             <ul class="navigation2 clearfix" id="nav_box">
@@ -124,9 +130,11 @@
         </footer>
     </div>
     <!--筛选弹窗-->
-    <div class="SX_mark clearfix">
-        <div class="SX_left"></div>
-        <div class="SX_box">
+    <div class="bg"></div>
+    <div class="SX_mark clearfix" style="background: rgba(0,0,0,0);width:84%;    z-index: 12;">
+        <!-- <div class="SX_left"></div> -->
+
+        <div class="SX_box" style="width:100%;">
             <ul>
                 <li>
                     <h5>按血统</h5>
@@ -159,6 +167,7 @@
             </div>
         </div>
     </div>
+    
     <script type="text/javascript" src="../js/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="../js/public.js"></script>
     <script type="text/javascript" src="../js/weixin_init.js"></script>
@@ -207,6 +216,25 @@
                 businessDetailObj.getPigeonData(pigeonPostData, "list");
             });
 
+            $('#searchForm').on('submit', function (event) {
+                event.preventDefault();
+                $("#list_box").html("");
+                var keyword = $("#serch_txt").val();
+                var orderBy = $("#nav_box .active").index() == 0 ? "publishedTime" : "follows";
+                var flag = orderBy=="publishedTime"?newUpFlag:followUpFlag;
+                var pigeonPostData = { //请求鸽子列表入参
+                    "businessId": businessid,
+                    "pigeonTags": "", //标签，多个标签逗号分隔
+                    "keyword": keyword, //
+                    "pageSize": "5", //分页参数：分页大小
+                    "pageNum": 1, //分页参数：页码
+                    "orderBy": orderBy, //分页参数：排序标记，以此字段排序   createdTime添加时间，publishedTime添加时间，updatedTime修改时间，views浏览量，sales销量，follows关注量.
+                    "orderDesc": flag ? "" : "desc" //分页参数：升降序标记，desc为降序，不传或空字符串为升序
+                }
+                businessDetailObj.getPigeonData(pigeonPostData, "list"); //鸽子列表初始化
+                $("#serch_txt").blur();
+            });
+
             //点击 最新发布 升序降序
             //默认升序
             var newUpFlag = true;
@@ -219,8 +247,8 @@
                 //调接口
                 pigeonStr = ""; //默认清空，重新渲染列表数据
                 $("#list_view_box").html("");
-                businessDetailObj.orderDesc = newUpFlag ? "" : "desc";
-                businessDetailObj.orderBy = "publishedTime";
+                pigeonPostData.orderDesc = newUpFlag ? "" : "desc";
+                pigeonPostData.orderBy = "publishedTime";
                 pigeonPostData.pageNum = 1;
                 businessDetailObj.getPigeonData(pigeonPostData, "list");
             });
@@ -235,8 +263,8 @@
                 //调接口
                 pigeonStr = ""; //默认清空，重新渲染列表数据
                 $("#list_view_box").html("");
-                businessDetailObj.orderDesc = followUpFlag ? "" : "desc";
-                businessDetailObj.orderBy = "follows"; //关注量
+                pigeonPostData.orderDesc = followUpFlag ? "" : "desc";
+                pigeonPostData.orderBy = "follows"; //关注量
                 pigeonPostData.pageNum = 1;
                 businessDetailObj.getPigeonData(pigeonPostData, "list");
             });
@@ -261,7 +289,8 @@
             });
             //点击筛选 显示
             $(".shaixuan_btn").on("click", function() {
-                $(".SX_mark").css("left", "0");
+                $(".SX_mark").css("transform", "translateX(-100%)");
+                $(".bg").show();
             });
             //点击每一个鸽子标签
             $(".ancestry span").on("click", function() { //血统
@@ -279,7 +308,8 @@
             });
             //点击筛选弹窗确定
             $("#SX_sure_btn").on("click", function() {
-                $(".SX_mark").css("left", "100%");
+                $(".SX_mark").css("transform", "translateX(0%)");
+                $(".bg").hide();
                 var tagArr = new Array();
                 $(".pigeon_tag .active").each(function(i) {
                     var tagStr = $(".pigeon_tag .active").eq(i).html();
@@ -294,9 +324,9 @@
                 businessDetailObj.getPigeonData(pigeonPostData, "list");
             });
             //点击筛选左侧边栏
-            $(".SX_left").on("click", function() {
-                $(".SX_mark").css("left", "100%");
-            });
+            // $(".SX_left").on("click", function() {
+            //     $(".bg").show();
+            // });
 
             //点击橱窗视图图标
             $("#release_btn").on("click", function() {
@@ -322,8 +352,23 @@
             $("#business_introduce").on("click", function() {
                 location.href = "business_introduce.html?openid=" + openid + "&businessid=" + businessid;
             });
+            $(".bg").on("click",function(){
+                $(".SX_mark").css("transform", "translateX(0%)");
+                $(".bg").hide();
+            });
         })
     </script>
 </body>
-
+<style>
+    .bg{
+        background:rgba(0,0,0,0.3);
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        display: none;
+        z-index: 11;
+    }
+</style>
 </html>

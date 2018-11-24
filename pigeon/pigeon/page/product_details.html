@@ -24,8 +24,10 @@
             <div class="swiper-container">
                 <ul class="swiper-wrapper" id="banner_img">
                     <li class="video_box swiper-slide">
+                        <img src="../image/pro_banner.png" alt="">
                         <video controls="controls" src="" id="myVideo"></video>
                     </li>
+                    
                     <!-- <li class="swiper-slide">
                         <img src="../image/pro_banner.png" alt="">
                     </li>
@@ -243,6 +245,7 @@
                 "followType": "4"
             }
             pigeonObj.isFollowed(flowData, function (isFollowed) {
+                var $this = $("#follow_btn");
                 if (isFollowed) {
                     $this.find("img").attr("src", "../image/look2.png")
                     $this.find("span").css("color", "#dc3d27");
@@ -260,9 +263,9 @@
             var $this = $(this);
             var isFollowed = true;
             if($this.find("img").attr("src").indexOf("look.png") > 0){
-                isFollowed = "true";
+                isFollowed = true;
             }else{
-                isFollowed = "false";
+                isFollowed = false;
             }
             var flowData = {
                 "followNo": pigeonid,

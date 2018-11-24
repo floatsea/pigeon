@@ -45,7 +45,7 @@
                                     <td width="30%"> 赛事名称</td>
                                     <td>已报名</td>
                                     <td>起止日期</td>
-                                    <td>公棚</td>
+                                    <!-- <td>公棚</td> -->
                                     <td width="15%">操作</td>
                                 </tr>
                             </thead>
@@ -104,15 +104,10 @@
     <script>
         var oneloftId = "";
         var oneloftName = "";
-        if (oneloftId) {
-            $("#add_match").show();
-            //添加赛事
-            $("#add_match").on("click", function() {
-                location.href = "match_editor.html?oneloftId=" + oneloftId + "&oneloftName=" + oneloftName;
-            });
-        } else {
-            $("#add_match").hide();
-        }
+        //添加赛事
+        $("#add_match").on("click", function() {
+            location.href = "match_editor.html?oneloftId=" + oneloftId + "&oneloftName=" + oneloftName + "&tab=0";
+        });
         //页面初始化
         var matchListData = {
             "keyword": "", //检索关键字
@@ -212,11 +207,12 @@
         $("#sure_btn").on("click", function() {
             var raceId = $("#del_mark").attr("raceId");
             var trIndex = $("#del_mark").attr("index").split(",");
-
             matchListObj.deleteRace({ //调删除接口
                 "raceId": raceId
             }, function() {
-                $("#match_list").find("input[type=checkbox]:checked").closest("tr").remove();
+                trIndex.forEach(function(val) {
+                    $("#match_list").find("tr").eq(val).remove();
+                });
                 $("#del_mark").hide();
             });
         });
@@ -224,15 +220,14 @@
         $("#cancel_btn").on("click", function() {
             $("#del_mark").hide();
         });
-
-
         //点击 “设为结束”  
         $("#match_list").on("click", ".set_finish", function() {
             var raceId = $(this).closest("tr").attr("raceId");
+            var $this = $(this);
             matchListObj.setFinishRace({
                 "raceId": raceId
             }, function() {
-
+                $this.closest("tr").remove();
             });
         });
         // 点击 “编辑” 跳转到 “赛事编辑”页面
@@ -240,7 +235,9 @@
         $("#match_list").on("click", ".editor_btn", function() {
             var raceId = $(this).closest("tr").attr("raceId");
             var oneloftId = $(this).closest("tr").attr("oneloftId") || oneloftId;
-            location.href = "match_editor.html?raceId=" + raceId + "&oneLoftId=" + oneloftId + "&oneloftName=" + oneloftName;
+            var oneloftName = $(this).closest("tr").attr("oneloftName") || oneloftName;
+            var tab = $("#business_tit .active").index();
+            location.href = "match_editor.html?raceId=" + raceId + "&oneLoftId=" + oneloftId + "&oneloftName=" + oneloftName + "&tab=" + tab;
         });
         /*报名管理*/
         $("#match_list").on("click", ".sign_up", function() {

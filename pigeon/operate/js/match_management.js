@@ -27,7 +27,7 @@ var matchListObj = {
                 }
             },
             error: function() {
-                myAlert.createBox("网络不给力！");
+                myAlert.createBox("网络不给力");
                 var infoList = [1, 2, 3];
             }
         });
@@ -55,7 +55,7 @@ var matchListObj = {
         var str = "";
         infoList.forEach(function(val) {
             str += '<tr raceId="' +
-                val.raceId + '" oneloftId="' + val.oneloftId + '" >' +
+                val.raceId + '" oneloftId="' + val.oneloftId + '" oneloftName="' + val.oneloftName + '">' +
                 '<td>' +
                 '<input type="checkbox">' +
                 '<label for=""></label>' +
@@ -85,7 +85,7 @@ var matchListObj = {
     finishedCreateList: function(infoList) {
         var str = "";
         infoList.forEach(function(val) {
-            str += '<tr raceId="' + val.raceId + '" oneloftId="' + val.oneloftId + '">' +
+            str += '<tr raceId="' + val.raceId + '" oneloftId="' + val.oneloftId + '" oneloftName="' + val.oneloftName + '">' +
                 '<td>' +
                 '<input type="checkbox">' +
                 '<label for=""></label>' +
@@ -100,7 +100,7 @@ var matchListObj = {
                 '</td>' +
                 '<td>' + val.oneloftName + '</td>' +
                 '<td>' +
-                '<span class="editor_btn">编辑</span><br>' +
+                '<span class="editor_btn">查看</span><br>' +
                 '<span class="match_upload">查看比赛成绩</span><br>' +
                 '<span class="del_race">删除</span>' +
                 '</td>' +
@@ -126,17 +126,17 @@ var matchListObj = {
                 }
             },
             error: function() {
-                myAlert.createBox("网络不给力！");
+                myAlert.createBox("网络不给力");
             }
         })
     },
     /**
-     *设为已结束
-     * 没有接口
+     *52、终止赛事接口
+     * http://域名/operator/race/editTerminated
      */
     setFinishRace: function(finishData, callback) {
         $.ajax({
-            url: location.origin + "",
+            url: location.origin + "/operator/race/editTerminated",
             type: "post",
             data: JSON.stringify(finishData),
             dataType: "json",
@@ -148,7 +148,7 @@ var matchListObj = {
                 }
             },
             error: function() {
-                myAlert.createBox("网络不给力！");
+                myAlert.createBox("网络不给力");
             }
         })
     }

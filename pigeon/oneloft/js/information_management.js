@@ -1,4 +1,4 @@
-var oneloftId = getParameter("oneloftId") || "";
+//var oneloftId = getParameter("oneloftId") || "";
 /**
  *4、资讯列表接口
  *http://域名/oneloft/news/findList
@@ -12,6 +12,7 @@ var inforObj = {
             dataType: "json",
             contentType: "application/json",
             success: function(data) {
+                errorToken(data.code);
                 if (data.code == "0") {
                     if (postData.pageNum == "1") {
                         var total = data.data.total;
@@ -22,7 +23,7 @@ var inforObj = {
                 }
             },
             error: function() {
-                myAlert.createBox("网络不给力！");
+                myAlert.createBox("网络不给力");
             }
         });
     },
@@ -77,13 +78,14 @@ var inforObj = {
             dataType: "json",
             contentType: "application/json",
             success: function(data) {
+                errorToken(data.code);
                 if (data.code == "0") {
                     myAlert.createBox("撤稿成功！");
                     cb && cb();
                 }
             },
             error: function() {
-                myAlert.createBox("网络不给力！");
+                myAlert.createBox("网络不给力");
             }
         });
     },
@@ -99,13 +101,14 @@ var inforObj = {
             dataType: "json",
             contentType: "application/json",
             success: function(data) {
+                errorToken(data.code);
                 if (data.code == "0") {
                     myAlert.createBox("删除成功！");
                     cb && cb();
                 }
             },
             error: function() {
-                myAlert.createBox("网络不给力！");
+                myAlert.createBox("网络不给力");
             }
         });
     }

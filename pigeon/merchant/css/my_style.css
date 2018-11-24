@@ -3,7 +3,6 @@ body {
     padding: 0;
     margin: 0;
     width: 100%;
-    height: 100%;
     background: #f2f2f2;
     min-width: 800px;
 }
@@ -29,7 +28,7 @@ body {
     color: #707070;
     padding-left: 25px;
     border-bottom: 1px solid #e0e0e0;
-    z-index: 1;
+    z-index: 2;
 }
 
 .commodity_box {
@@ -414,7 +413,6 @@ body {
 .schedule_time_ff {
     position: relative;
     height: 33px;
-    border: 1px solid #eeeeee;
     border-radius: 4px;
     margin-left: 20px;
     padding-left: 10px;
@@ -428,8 +426,15 @@ body {
 
 .schedule_time_ff2 input {
     display: inline-block;
-    width: 90px;
-    line-height: 33px;
+    width: 128px;
+    border: 1px solid #eeeeee;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 10px;
+}
+
+.schedule_time_ff2 .fly_space {
+    width: 40px;
 }
 
 .schedule_time_ff span {
@@ -451,6 +456,7 @@ body {
     width: 240px;
     height: 33px;
     background: none;
+    border: 1px solid #eeeeee;
 }
 
 
@@ -470,10 +476,12 @@ body {
 
 .c-datepicker input {
     display: block;
-    line-height: 33px;
+    line-height: 30px;
     background: none;
     position: relative;
+    border: 1px solid #eeeeee;
     z-index: 1;
+    padding: 0 10px;
 }
 
 .schedule_time_ff i {
@@ -863,16 +871,6 @@ body {
     left: 0;
 }
 
-.up_box {
-    width: 100px;
-    height: 100px;
-    position: absolute;
-    left: 0;
-    top: 0;
-    overflow: hidden;
-    background: url(../image/tj.png) no-repeat;
-}
-
 .input_info_txt {
     float: left;
     width: 80%;
@@ -903,8 +901,25 @@ body {
 }
 
 .input_info_chose h3 span {
-    color: #999999;
+    color: #999;
     padding-left: 20px;
+    float: left;
+}
+
+.oneloft_logo {
+    float: left;
+    width: 80px;
+    height: 80px;
+    position: relative;
+    overflow: hidden;
+    display: none;
+}
+
+.oneloft_logo img {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
 }
 
 .input_info_btn {
@@ -1024,12 +1039,14 @@ body {
     height: 150px;
     border: 1px solid #eee;
     text-indent: 10px;
+    padding: 10px;
+    font-size: 12px;
 }
 
 .pl_article_btn {
     margin-left: 50px;
     margin-top: 30px;
-    margin-bottom: 60px;
+    margin-bottom: 10px;
 }
 
 .pl_article_btn h4 {
@@ -1100,7 +1117,11 @@ body {
     top: 50%;
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
+    z-index: 1000;
 }
+
+
+/* 视频放大*/
 
 .video_box {
     width: 100%;
@@ -1113,19 +1134,24 @@ body {
     z-index: 2;
 }
 
-.video_box video {
-    width: 375px;
+.video_box div {
+    width: 30%;
+    height: 80%;
     position: absolute;
     left: 50%;
-    top: 100px;
-    margin-left: -150px;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    overflow-y: auto;
 }
 
-.video_box img {
+.video_box video {
+    width: 100%;
     position: absolute;
     left: 50%;
-    top: 170px;
-    margin-left: 170px;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%)
 }
 
 
@@ -1198,6 +1224,15 @@ body {
     background: url(../image/tj.png) no-repeat;
 }
 
+.up_box video {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
 .input_info_list li img {
     position: absolute;
     width: 100%;
@@ -1225,4 +1260,128 @@ body {
     right: -10px;
     top: -10px;
     display: none;
+}
+
+.loading {
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+
+.loading img {
+    width: 2rem;
+    height: 2rem;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -1rem;
+    margin-top: -1rem;
+}
+
+.platform_set_pigeon {
+    width: 300px;
+    border: 1px solid #eee;
+    padding: 20px;
+    background: #fff;
+    margin: 0 0 0 150px;
+    border-radius: 4px;
+}
+
+.platform_set_pigeon dd {
+    font-size: 16px;
+    line-height: 30px;
+}
+
+.platform_set_pigeon dd label {
+    position: relative;
+}
+
+.platform_set_pigeon dd i {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    background: url(../image/check.png) no-repeat;
+    background-size: 100% 100%;
+    left: 0;
+    top: 2px;
+}
+
+.platform_set_pigeon dd input {
+    opacity: 0;
+}
+
+.platform_set_pigeon dd input:checked+i {
+    background: url(../image/checked.png) no-repeat;
+}
+
+.platform_set_pigeon button {
+    width: 120px;
+    height: 32px;
+    outline: none;
+    border-radius: 4px;
+}
+
+.platform_set_pigeon_btn {
+    position: absolute;
+    width: 100%;
+    height: 70px;
+    line-height: 70px;
+    bottom: 0;
+    left: 0;
+    text-align: center;
+}
+
+.platform_set_pigeon .cancel_btn {
+    border: 1px solid #ccc;
+    margin-right: 20px;
+    color: #666;
+    background: #fff;
+}
+
+.platform_set_pigeon .sure_btn {
+    border: 1px solid #f40;
+    color: #fff;
+    background: #f40;
+}
+
+.pl_article_btn .active {
+    background: #448af8;
+    color: #fff;
+    border: none;
+}
+
+
+/* 放大缩略图 */
+
+.pay_big_img_box {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    left: 0;
+    top: 0;
+    z-index: 1;
+}
+
+.pay_big_img_box div {
+    position: absolute;
+    width: 30%;
+    height: 80%;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    overflow-y: auto;
+}
+
+.pay_big_img_box img {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 50%;
+    -webkit-transform: translate(0, -50%);
+    transform: translate(0, -50%)
 }

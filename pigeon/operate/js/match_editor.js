@@ -1,6 +1,7 @@
 var oneloftId = getParameter("oneloftId") || ""; //有oneloftId：公棚 “添加赛事”
 var raceId = getParameter("raceId") || ""; //编辑
 var oneloftName = decodeURI(getParameter("oneloftName") || "");
+var tab = getParameter("tab") || "";
 /**
  * 47、赛事详情接口
  * http://域名/operator/race/find
@@ -20,7 +21,7 @@ var matchEditoObj = {
                 }
             },
             error: function() {
-                myAlert.createBox("网络不给力！");
+                myAlert.createBox("网络不给力");
             }
         })
     },
@@ -59,8 +60,8 @@ var matchEditoObj = {
                 '<input type="text" value="' + val.startedPlace + '" class="startedPlace">' +
                 '</div>' +
                 '<div class="schedule_time_ff schedule_time_ff2">' +
-                '<span>空距</span>' +
-                '<input type="text" placeholder="" value="' + val.distance + '" class="distance">' +
+                '<span class="fly_space">空距</span>' +
+                '<input type="text" placeholder="" value="' + val.distance + '" class="distance"> <b>km</b>' +
                 '</div>'
             '</li>';
         });
@@ -94,7 +95,7 @@ var matchEditoObj = {
      * 30、新增赛事接口
      * http://域名/operator/race/add
      */
-    addMatch: function(saveData) {
+    addMatch: function(saveData, callback) {
         $.ajax({
             url: location.origin + "/operator/race/add",
             type: "post",
@@ -104,11 +105,12 @@ var matchEditoObj = {
             success: function(data) {
                 errorToken(data.code);
                 if (data.code == 0) {
-                    myAlert.createBox(data.msg);
+                    myAlert.createBox("保存成功！");
+                    callback && callback();
                 }
             },
             error: function() {
-                myAlert.createBox("网络不给力！");
+                myAlert.createBox("网络不给力");
             }
         })
     },
@@ -131,7 +133,7 @@ var matchEditoObj = {
                 }
             },
             error: function() {
-                myAlert.createBox("网络不给力！");
+                myAlert.createBox("网络不给力");
             }
         })
     },
@@ -148,7 +150,7 @@ var matchEditoObj = {
     isInputFile: function() {
         var inputCheck = $("#raceShow li").find("img");
         for (var i = 0; i < inputCheck.length; i++) {
-            if (inputCheck.eq(i).attr("src")) {
+            if (i != 0 && inputCheck.eq(i).attr("src")) {
                 return true;
             }
         }

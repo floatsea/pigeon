@@ -62,10 +62,10 @@
         <div class="commodity_box">
             <div class="business_infor">
                 <ol class="clearfix">
-                    <li class="clearfix">
+                    <!-- <li class="clearfix">
                         <span>公棚ID</span>
                         <span id="oneloftId_dom">12399007788</span>
-                    </li>
+                    </li> -->
                     <li>
                         <span>注册日期</span>
                         <span id="createTime">2018-7-09 18:34</span>
@@ -251,9 +251,9 @@
                 dataType: "json",
                 contentType: "application/json",
                 success: function(data) {
-                    //errorToken(data.code);
+                    errorToken(data.code);
                     var oneloftObj = data.data;
-                    //setInfo(oneloftObj);
+                    setInfo(oneloftObj);
                 },
                 error: function() {
                     myAlert.createBox("网络不给力")

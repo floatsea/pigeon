@@ -20,16 +20,16 @@
 </head>
 
 <body>
-    <div>
+    <div id="match_editor_box">
         <div class="commod_tit" id="order_tit">
             <span>编辑赛事信息</span>
         </div>
         <div class="commodity_box">
             <ul class="product clearfix ">
-                <li>
+                <!-- <li>
                     <span>公棚</span>
                     <input type="text" placeholder=" " id="oneloftName" style="width:388px;">
-                </li>
+                </li> -->
                 <li>
                     <span>赛事名称</span>
                     <input type="text" placeholder=" " id="raceTitile">
@@ -81,8 +81,9 @@
                             <input type="text" class="startedPlace">
                         </div>
                         <div class="schedule_time_ff schedule_time_ff2">
-                            <span>空距</span>
+                            <span class="fly_space">空距</span>
                             <input type="text" placeholder=" " class="distance">
+                            <b>km</b>
                         </div>
                     </li>
                 </ul>
@@ -175,6 +176,11 @@
             } else {
                 $("#oneloftName").attr("readonly", "");
                 $("#oneloftName").val(oneloftName)
+            }
+            if (tab == 0) { //进行中
+                $("#save_btn").show();
+            } else { // 已结束
+                $("#save_btn").hide();
             }
             /**
              *日期控件
@@ -337,8 +343,8 @@
                     '<input type="text" value="" class="startedPlace">' +
                     '</div>' +
                     '<div class="schedule_time_ff schedule_time_ff2">' +
-                    '<span>空距</span>' +
-                    '<input type="text" placeholder="" value="" class="distance">' +
+                    '<span class="fly_space">空距</span>' +
+                    '<input type="text" placeholder="" value="" class="distance"> <b>km</b>' +
                     '</div>'
                 '</li>';
                 $("#race_item_box").append(str);
@@ -352,7 +358,8 @@
              *点击 “保存”
              */
             $("#save_btn").on("click", function() {
-                if (!matchEditoObj.isAllInfo()) {
+                var inputText = $("#match_editor_box input[type=text]"); //所有输入框
+                if (!matchEditoObj.isAllInfo(inputText)) {
                     myAlert.createBox("信息填写不完整，请重新录入！");
                     return;
                 }
@@ -410,7 +417,9 @@
                     "raceitems": raceArr
                 };
                 if (!raceId) { //添加
-                    matchEditoObj.addMatch(saveData);
+                    matchEditoObj.addMatch(saveData, function() {
+                        window.history.go(-1);
+                    });
                 } else { //编辑 保存
                     matchEditoObj.saveMatch(saveData, function() {
                         window.history.go(-1);

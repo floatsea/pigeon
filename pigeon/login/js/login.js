@@ -102,7 +102,7 @@ $(function() {
                 }
             },
             error: function() {
-                myAlert.createBox("网络不给力！");
+                myAlert.createBox("网络不给力");
             }
         });
     }
@@ -172,11 +172,11 @@ $(function() {
             success: function(data) {
                 if (data.code == 0) {
                     cb && cb();
-                    myAlert.createBox(data.msg);
+                    myAlert.createBox("发送成功");
                 }
             },
             error: function() {
-                myAlert.createBox("网络不给力！");
+                myAlert.createBox("网络不给力");
             }
         });
     }
@@ -254,7 +254,7 @@ $(function() {
                 }
             },
             error: function() {
-                myAlert.createBox("网络不给力！");
+                myAlert.createBox("网络不给力");
             }
         });
     }

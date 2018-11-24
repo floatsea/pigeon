@@ -12,7 +12,7 @@ var matchListObj = {
             dataType: "json",
             contentType: "application/json",
             success: function(data) {
-                //errorToken(data.code);
+                errorToken(data.code);
                 if (data.code == "0") {
                     if (matchListData.pageNum == "1") {
                         var total = data.data.total;
@@ -27,7 +27,7 @@ var matchListObj = {
                 }
             },
             error: function() {
-                myAlert.createBox("网络不给力！");
+                myAlert.createBox("网络不给力");
                 var infoList = [1, 2, 3];
             }
         });
@@ -55,7 +55,7 @@ var matchListObj = {
         var str = "";
         infoList.forEach(function(val) {
             str += '<tr raceId="' +
-                val.raceId + '" oneloftId="' + val.oneloftId + '" >' +
+                val.raceId + '" oneloftId="' + val.oneloftId + '" oneloftName="' + val.oneloftName + '">' +
                 '<td>' +
                 '<input type="checkbox">' +
                 '<label for=""></label>' +
@@ -68,7 +68,7 @@ var matchListObj = {
                 '<p>' + val.startedTime + '起</p>' +
                 '<p>' + val.endedTime + '止</p>' +
                 '</td>' +
-                '<td>' + val.oneloftName + '</td>' +
+                // '<td>' + val.oneloftName + '</td>' +
                 '<td>' +
                 '<span class="editor_btn">编辑</span><br>' +
                 '<span class="set_finish">设为结束</span><br>' +
@@ -85,7 +85,7 @@ var matchListObj = {
     finishedCreateList: function(infoList) {
         var str = "";
         infoList.forEach(function(val) {
-            str += '<tr raceId="' + val.raceId + '" oneloftId="' + val.oneloftId + '">' +
+            str += '<tr raceId="' + val.raceId + '" oneloftId="' + val.oneloftId + '" oneloftName="' + val.oneloftName + '">' +
                 '<td>' +
                 '<input type="checkbox">' +
                 '<label for=""></label>' +
@@ -98,9 +98,9 @@ var matchListObj = {
                 '<p>' + val.startedTime + '起</p>' +
                 '<p>' + val.endedTime + '止</p>' +
                 '</td>' +
-                '<td>' + val.oneloftName + '</td>' +
+                // '<td>' + val.oneloftName + '</td>' +
                 '<td>' +
-                '<span class="editor_btn">编辑</span><br>' +
+                '<span class="editor_btn">查看</span><br>' +
                 '<span class="match_upload">查看比赛成绩</span><br>' +
                 '<span class="del_race">删除</span>' +
                 '</td>' +
@@ -126,17 +126,17 @@ var matchListObj = {
                 }
             },
             error: function() {
-                myAlert.createBox("网络不给力！");
+                myAlert.createBox("网络不给力");
             }
         })
     },
     /**
      *设为已结束
-     * 没有接口
+     * /oneloft/race/editTerminated
      */
     setFinishRace: function(finishData, callback) {
         $.ajax({
-            url: location.origin + "",
+            url: location.origin + "/oneloft/race/editTerminated",
             type: "post",
             data: JSON.stringify(finishData),
             dataType: "json",
@@ -148,7 +148,7 @@ var matchListObj = {
                 }
             },
             error: function() {
-                myAlert.createBox("网络不给力！");
+                myAlert.createBox("网络不给力");
             }
         })
     }

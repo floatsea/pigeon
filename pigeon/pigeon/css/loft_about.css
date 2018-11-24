@@ -1,0 +1,130 @@
+ html,
+ body {
+     width: 100%;
+     height: 100%;
+     background: #fff;
+ }
+ 
+ .clearfix:after {
+     display: block;
+     content: "";
+     clear: both;
+ }
+ /* loft_details_news.html */
+ 
+ .loft_news_box {
+     width: 90%;
+     margin: 1rem auto;
+     box-shadow: 1px 4px 30px 1px rgba(0, 0, 0, 0.05);
+     border: 1px solid #f3f3f3;
+     padding: 0.8rem;
+ }
+ 
+ .loft_news_box h3 {
+     font-size: 0.75rem;
+     color: #333;
+     font-weight: bold;
+     line-height: 1.2rem;
+     margin-bottom: 0.3rem;
+ }
+ 
+ .loft_news_box li {
+     line-height: 1.5rem;
+     font-size: 0.6rem;
+     border-bottom: 1px solid #f3f3f3;
+ }
+ /* loft_details_match.html */
+ 
+ .loft_match_box {
+     width: 90%;
+     margin: 1rem auto;
+     box-shadow: 1px 4px 30px 1px rgba(0, 0, 0, 0.05);
+     border: 1px solid #f3f3f3;
+     padding: 0.8rem;
+ }
+ 
+ .loft_match_box h3 {
+     font-size: 0.75rem;
+     color: #333;
+     font-weight: bold;
+     line-height: 1.2rem;
+ }
+ 
+ .loft_match_box li {
+     font-size: 0.6rem;
+     padding: 1rem 0;
+     border-bottom: 1px solid #f3f3f3;
+ }
+ 
+ .loft_match_box li p {
+     font-size: 0.64rem;
+     width: 86%;
+     line-height: 1rem;
+     margin-bottom: 0.6rem;
+ }
+ 
+ .loft_match_box li p span {
+     display: inline-block;
+     font-size: 0.512rem;
+     background: #333333;
+     color: #fff;
+     border-radius: 0.6rem;
+     padding: 0 0.4rem;
+     line-height: 0.7rem;
+ }
+ 
+ .look_match_btn {
+     float: left;
+     font-size: 0.7rem;
+     line-height: 1.3rem;
+     border: 1px solid #f9454e;
+     padding: 0 1.2rem;
+     border-radius: 0.8rem;
+     color: #f9454e;
+     background: #fff;
+ }
+ 
+ .sign_up {
+     border: none;
+     font-size: 0.7rem;
+     height: 1.4rem;
+     float: right;
+     background: #fa4049;
+     color: #fff;
+     padding: 0 2rem;
+     border-radius: 0.8rem;
+     line-height: 1.4rem;
+     box-shadow: 0px 10px 10px 3px rgba(253, 32, 42, 0.05);
+ }
+ 
+ .load_more {
+     padding: 1rem 0 4rem;
+     width: 40%;
+     margin: 0 auto;
+     text-align: center;
+     font-size: 0.6rem;
+     position: relative;
+ }
+ 
+ .load_more img {
+     width: 1rem;
+     position: absolute;
+     left: 0;
+     top: .8rem;
+ }
+ 
+ .alert_box {
+     width: 80%;
+     padding: 0.4rem;
+     border-radius: 0.5rem;
+     color: #fff;
+     font-size: 0.7rem;
+     text-align: center;
+     background: rgba(0, 0, 0, 0.6);
+     position: fixed;
+     left: 50%;
+     top: 50%;
+     -webkit-transform: translate(-50%, -50%);
+     transform: translate(-50%, -50%);
+     z-index: 1000;
+ }

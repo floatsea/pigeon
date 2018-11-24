@@ -36,6 +36,7 @@ body {
     float: left;
     line-height: 48px;
     margin: 0 25px;
+    cursor: pointer;
 }
 
 .commod_tit span.active {
@@ -241,6 +242,7 @@ body {
     width: 20%;
     text-align: right;
     color: #5c99f8;
+    cursor: pointer;
 }
 
 .pro_det_last {

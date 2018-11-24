@@ -17,13 +17,7 @@ var inforEditor = {
             contentType: "application/json",
             success: function(data) {
                 if (data.code == 0) {
-                    if (oneloftId) {
-                        inforEditor.createLoftData(data.data);
-                    }
-                    if (businessId) {
-                        inforEditor.createBusinessData(data.data);
-                    }
-
+                    inforEditor.createBusinessData(data.data);
                 }
             },
             error: function() {
@@ -50,7 +44,7 @@ var inforEditor = {
      *15、新增资讯接口
      *http://域名/business/news/add
      */
-    addInfor: function(saveData) {
+    addInfor: function(saveData, callback) {
         $.ajax({
             url: location.origin + "/business/news/add",
             type: "post",
@@ -60,6 +54,7 @@ var inforEditor = {
             success: function(data) {
                 if (data.code == 0) {
                     myAlert.createBox("保存成功");
+                    callback && callback();
                 }
             },
             error: function() {
@@ -71,7 +66,7 @@ var inforEditor = {
      *16、编辑资讯接口
      *http://域名/business/news/edit
      */
-    saveInfor: function(saveData) {
+    saveInfor: function(saveData, callback) {
         $.ajax({
             url: location.origin + "/business/news/edit",
             type: "post",
@@ -81,6 +76,7 @@ var inforEditor = {
             success: function(data) {
                 if (data.code == 0) {
                     myAlert.createBox("保存成功");
+                    callback && callback();
                 }
             },
             error: function() {

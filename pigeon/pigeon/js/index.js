@@ -110,7 +110,7 @@ var indexObj = {
         var mySwiper = new Swiper('.swiper-container', {
             pagination: '.swiper-pagination',
             loop: true,
-            autoplay: 1500,
+            autoplay: 5000,
             grabCursor: true,
             paginationClickable: true
         });

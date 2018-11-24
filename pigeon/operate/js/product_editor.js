@@ -18,7 +18,6 @@ var proEditorObj = {
             dataType: "json",
             contentType: "application/json",
             success: function(data) {
-                alert(JSON.stringify(data))
                 errorToken(data.code);
                 if (data.code == "0") {
                     var editorInfo = data.data
@@ -26,7 +25,7 @@ var proEditorObj = {
                 }
             },
             error: function() {
-                myAlert.createBox("网络不给力！");
+                myAlert.createBox("网络不给力");
             }
         });
     },
@@ -42,7 +41,7 @@ var proEditorObj = {
         $("#pigeonBlood").val(editorInfo.pigeonBlood); //血统
         $("#pigeonPoint").val(editorInfo.pigeonPoint); //卖点
         $("#pigeonPrice").val(editorInfo.pigeonPrice); //价格
-        $("#pigeon_tab").val(editorInfo.pigeonTags.tag);
+        $("#pigeon_tab").val(editorInfo.pigeonTags ? editorInfo.pigeonTags.tag : ""); //标签
         proEditorObj.createImgList(editorInfo.pigeonShow); //橱窗列表
         proEditorObj.showSelect(editorInfo.pigeonTags);
         var desc = editorInfo.pigeonDesc;
@@ -112,7 +111,7 @@ var proEditorObj = {
                 }
             },
             error: function() {
-                myAlert.createBox("网络不给力！");
+                myAlert.createBox("网络不给力");
             }
         });
     },
@@ -120,7 +119,7 @@ var proEditorObj = {
      * 20、信鸽增加接口
      * http://域名/operator/pigeon/add
      */
-    addRequst: function(saveData) {
+    addRequst: function(saveData, callback) {
         $.ajax({
             url: location.origin + "/operator/pigeon/add",
             type: "post",
@@ -135,7 +134,7 @@ var proEditorObj = {
                 }
             },
             error: function() {
-                myAlert.createBox("网络不给力！");
+                myAlert.createBox("网络不给力");
             }
         });
     },
@@ -163,15 +162,30 @@ var proEditorObj = {
     isInputFile: function() {
         var inputCheck = $("#pigeonShow li").find("img");
         for (var i = 0; i < inputCheck.length; i++) {
-            if (inputCheck.eq(i).attr("src")) {
+            if (i != 0 && inputCheck.eq(i).attr("src")) {
                 return true;
             }
         }
         return false;
     },
+    //筛选条件校验
+    selectPigeon: function() {
+        if ($(".platform_set_pigeon dl").eq(0).find("input:checked").length == 0 || $(".platform_set_pigeon dl").eq(1).find("input:checked").length == 0 || $(".platform_set_pigeon dl").eq(2).find("input:checked").length == 0) {
+            myAlert.createBox("请选择鸽子的筛选条件！");
+            return false;
+        }
+        return true;
+    },
+    getUeditor: function() {
+        if (!ue.getContent()) {
+            return false;
+        } else {
+            return true;
+        }
+    },
     //校验页面信息是否填写完整
     isAllInfo: function() {
-        if (!proEditorObj.isInputText() || !proEditorObj.isInputRadio() || !proEditorObj.isInputFile()) {
+        if (!proEditorObj.isInputText() || !proEditorObj.isInputRadio() || !proEditorObj.isInputFile() || !proEditorObj.getUeditor() || !proEditorObj.selectPigeon()) {
             return false;
         } else {
             return true;

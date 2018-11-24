@@ -1,7 +1,3 @@
-/**
- * information_editor_business.html 调用
- * information_editor_loft.html 调用
- */
 var oneloftId = getParameter("oneloftId") || "";
 var inforEditor = {
     /**
@@ -43,7 +39,7 @@ var inforEditor = {
      *15、新增资讯接口
      *http://域名/oneloft/news/add
      */
-    addInfor: function(saveData) {
+    addInfor: function(saveData, callback) {
         $.ajax({
             url: location.origin + "/oneloft/news/add",
             type: "post",
@@ -53,6 +49,7 @@ var inforEditor = {
             success: function(data) {
                 if (data.code == 0) {
                     myAlert.createBox("保存成功");
+                    callback && callback();
                 }
             },
             error: function() {

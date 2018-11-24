@@ -17,7 +17,7 @@ var indexObj = {
                     }
                 },
                 error: function() {
-                    myAlert.createBox("网络不给力！");
+                    myAlert.createBox("网络不给力");
                 }
             });
         },

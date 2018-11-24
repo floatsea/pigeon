@@ -628,7 +628,15 @@ function uploadRequest(postUrl,id,callback) {
 function setLocVal(name, val){
     localStorage.setItem(name, val);
 }
+
 function getLocVal(name) {
     localStorage.getItem(name);
+}
+// if (isIphoneX()){
+//     $(document.body).append("<div style='height:68px;background:#fff'></div>");
+//     $("footer").height($("footer").height()+68);
+// }
+function isIphoneX() {
+    return /iphone/gi.test(navigator.userAgent) && (screen.height == 812 && screen.width == 375)
 }
 

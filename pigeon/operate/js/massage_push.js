@@ -21,7 +21,7 @@ var msgListObj = {
                 }
             },
             error: function() {
-                myAlert.createBox("网络不给力！");
+                myAlert.createBox("网络不给力");
             }
         });
     },
@@ -32,7 +32,15 @@ var msgListObj = {
                 '<td>' +
                 '<span>' + val.messageTitle + '</span>' +
                 '</td>' +
-                '<td>' + val.preparedTime + '</td>' +
+                '<td>' +
+                '<span>' + val.messageType + '</span>' +
+                '</td>' +
+                '<td>' +
+                '<span>' + (val.messageTemplate || "-") + '</span>' +
+                '</td>' +
+                '<td>' +
+                '<span>' + val.preparedTime + '</span>' +
+                '</td>' +
                 '<td>' +
                 '<span class="look_btn">查看</span>' +
                 '</td>' +

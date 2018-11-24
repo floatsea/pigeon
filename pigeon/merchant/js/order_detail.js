@@ -1,6 +1,6 @@
 /**
  * 订单详情页
- * 接口24 http://域名/operator/orders/find
+ * 接口24 http://域名/business/orders/find
  * 入参：orderId
  * 2018.10.01
  */
@@ -11,7 +11,7 @@ var pigeonImgSrc = location.origin + "/operate/image/cp.png"; //默认鸽子图�
 var orderDetailObj = {
     initPageRequest: function() {
         $.ajax({
-            url: location.origin + "/operator/orders/find",
+            url: location.origin + "/business/orders/find",
             type: "post",
             data: JSON.stringify({
                 "orderId": orderId
@@ -24,7 +24,7 @@ var orderDetailObj = {
                 orderDetailObj.updateData(obj);
             },
             error: function() {
-                myAlert.createBox("网络不给力！");
+                myAlert.createBox("网络不给力");
             },
         })
     },

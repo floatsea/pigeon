@@ -413,7 +413,6 @@ body {
 .schedule_time_ff {
     position: relative;
     height: 33px;
-    border: 1px solid #eeeeee;
     border-radius: 4px;
     margin-left: 20px;
     padding-left: 10px;
@@ -427,8 +426,15 @@ body {
 
 .schedule_time_ff2 input {
     display: inline-block;
-    width: 90px;
-    line-height: 33px;
+    width: 128px;
+    border: 1px solid #eeeeee;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 10px;
+}
+
+.schedule_time_ff2 .fly_space {
+    width: 40px;
 }
 
 .schedule_time_ff span {
@@ -450,6 +456,7 @@ body {
     width: 240px;
     height: 33px;
     background: none;
+    border: 1px solid #eeeeee;
 }
 
 
@@ -469,10 +476,12 @@ body {
 
 .c-datepicker input {
     display: block;
-    line-height: 33px;
+    line-height: 30px;
     background: none;
     position: relative;
+    border: 1px solid #eeeeee;
     z-index: 1;
+    padding: 0 10px;
 }
 
 .schedule_time_ff i {
@@ -1063,6 +1072,7 @@ body {
     background: #fff;
     border-radius: 24px;
     font-size: 14px;
+    cursor: pointer;
 }
 
 .pl_article_btn div .active {
@@ -1171,6 +1181,7 @@ body {
     border-radius: 4px;
     box-shadow: 2px 2px 3px 2px #dae8fe;
     margin-right: 20px;
+    cursor: pointer;
 }
 
 

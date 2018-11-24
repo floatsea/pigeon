@@ -22,7 +22,7 @@
 }
 
 .del_cont p {
-    text-align: justify;
+    text-align: center;
     font-size: 16px;
     line-height: 28px;
 }
@@ -41,14 +41,14 @@
     border-radius: 4px;
 }
 
-.cancel_btn {
+.del_cont .cancel_btn {
     border: 1px solid #ccc;
     margin-right: 20px;
     color: #666;
     background: #fff;
 }
 
-.sure_btn {
+.del_cont .sure_btn {
     border: 1px solid #f40;
     color: #fff;
     background: #f40;

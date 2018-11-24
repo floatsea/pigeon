@@ -24,7 +24,7 @@ var orderDetailObj = {
                 orderDetailObj.updateData(obj);
             },
             error: function() {
-                myAlert.createBox("网络不给力！");
+                myAlert.createBox("网络不给力");
             },
         })
     },
@@ -73,6 +73,14 @@ var orderDetailObj = {
     createLogistics: function(logis) { //物流信息
         var expressStatus = logis.expressStatus == 0 ? "配送中" : '已签收';
         var expressVoucher = logis.expressVoucher; //物流凭证
+        var exStr = "";
+        if (expressVoucher) {
+            exStr = '<div class="order_pay_voucher">' +
+                '<p>物流凭证</p>' +
+                '<ul class="clearfix expressVoucherList">' + orderDetailObj.createExpressVoucher(expressVoucher.images) +
+                '</ul>' +
+                '</div>';
+        }
         return '<div class="send_goods_date">' +
             '<div class="order_detail_tab order_grey clearfix" style="border-top:1px solid #ddd;">' +
             '<div>' +
@@ -104,12 +112,7 @@ var orderDetailObj = {
             '<span>' + expressStatus + '</span>' +
             '</div>' +
             '</div>' +
-            '</div>' +
-            '<div class="order_pay_voucher">' +
-            '<p>物流凭证</p>' +
-            '<ul class="clearfix expressVoucherList">' + orderDetailObj.createExpressVoucher(expressVoucher.images) +
-            '</ul>' +
-            '</div>';
+            '</div>' + exStr;
     },
     //物流凭证
     createExpressVoucher: function(images) {

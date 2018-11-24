@@ -191,7 +191,7 @@
         $("#pro_list_box").on("click", ".editor_btn", function() {
             var pigeonId = $(this).closest("tr").attr("pigeonId");
             var businessId = $(this).closest("tr").attr("businessId");
-            location.href = "product_editor.html?pigeonId=" + pigeonId + "&businessId=" + businessId;
+            location.href = "product_editor.html?pigeonId=" + pigeonId + "&businessId=" + businessId + "&tabFlag=" + $("#product_tit .active").index();
         });
         //点击 “删除”
         $("#pro_list_box").on("click", ".del_btn", function() {
@@ -226,8 +226,14 @@
             productObj.deleteList({ //调删除接口
                 "pigeonId": pigeonId
             }, function() {
-                $("#pro_list_box").find("input[type=checkbox]:checked").closest("tr").remove();
+                trIndex.forEach(function(val, i) {
+                    if (i != 0) {
+                        val -= i;
+                    }
+                    $("#pro_list_box").find("tr").eq(val).remove();
+                });
                 $("#total_num").html($("#pro_list_box tr").length);
+                $("#product_tit .active").trigger("click"); // 重新渲染数据
                 $("#del_mark").hide();
             });
         });
@@ -258,30 +264,6 @@
                 }
             })
         });
-        //点击 “置顶” 大按钮
-        // $("#settop_button").on("click", function() {
-        //     if ($(this).hasClass("active")) {
-        //         var checkPigeon = $("#pro_list_box").find("input[type=checkbox]:checked");
-        //         if (checkPigeon.length == 0) {
-        //             myAlert.createBox("请选择要置顶的鸽子");
-        //             return;
-        //         }
-        //         var pigeonArr = [];
-        //         checkPigeon.each(function(index) {
-        //             pigeonArr.push(checkPigeon.eq(index).attr("pigeonId"))
-        //         });
-
-        //         var setTopData = {
-        //             "pigeonId": pigeonArr.join(","),
-        //             "sticky": true //是否置顶： true， 置顶； false， 解除
-        //         };
-        //         productObj.setTop(setTopData, function() {
-        //             if (setTopData.sticky) {
-        //                 checkPigeon.closest("tr").find(".setTop_btn").html("取消置顶");
-        //             }
-        //         });
-        //     }
-        // });
         //点击 “下架” 或者 “上架”
         $("#pro_list_box").on("click", ".frame_btn", function() {
             var $this = $(this);
@@ -305,14 +287,20 @@
             //调接口
             var pigeonId = $("#updown_mark").attr("pigeonId");
             var pigeonStatus = $("#updown_mark").attr("pigeonStatus");
-            // var trIndex = $("#del_mark").attr("index").split(",");
+            var trIndex = $("#updown_mark").attr("index").split(",");
             productObj.frame({ //请求接口
                 pigeonId: pigeonId,
                 pigeonStatus: pigeonStatus
             }, function() {
-                $("#pro_list_box").find("input[type=checkbox]:checked").closest("tr").remove();
-                $("#updown_mark").hide();
+                trIndex.forEach(function(val, i) {
+                    if (i != 0) {
+                        val -= i;
+                    }
+                    $("#pro_list_box").find("tr").eq(val).remove();
+                });
+                $("#total_num").html($("#pro_list_box tr").length);
                 $("#product_tit .active").trigger("click"); // 重新渲染数据
+                $("#updown_mark").hide();
             });
         });
 

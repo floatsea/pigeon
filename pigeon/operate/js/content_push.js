@@ -187,7 +187,7 @@ var contentObj = {
                 }
             },
             error: function() {
-                myAlert.createBox("网络不给力！");
+                myAlert.createBox("网络不给力");
             }
         });
     },
@@ -245,16 +245,18 @@ var contentObj = {
     //初始化展示
     initCreateImg: function(list, box) {
         var str = "";
+        var classSwiper = box == "swiper_box" ? "content_swiper_box" : "";
         list.forEach(function(val, index) {
             str += '<li>' +
                 '<div class="input_info_tit clearfix">' +
-                '<span>图片' + (index + 1) + '</span>' +
-                '<div class="content_file_box">' +
+                '<span class="pic_num">图片' + (index + 1) + '</span>' +
+                '<div class="content_file_box ' + classSwiper + '">' +
                 '<div class="content_file">' +
                 '<img src="' + val.img + '" alt="" class="loadImg">' +
                 '<input type="file" accept="image/*" class="upImg" name="upfile" id="upImg' + box + '' + index + '">' +
                 '</div>' +
                 '<i class="j_del_img"></i>' +
+                '<b class="look_btn" style="display:block;">查看原图</b>' +
                 '</div>' +
                 '</div>' +
                 '<div class="input_info_tit clearfix">' +
@@ -268,15 +270,17 @@ var contentObj = {
     //点击 “添加下一张”
     createImg: function(box) {
         var num = box.find("li").length + 1;
+        var classSwiper = box.attr("id") == "swiper_box" ? "content_swiper_box" : "";
         var liStr = '<li>' +
             '<div class="input_info_tit clearfix">' +
-            '<span>图片' + num + '</span>' +
-            '<div class="content_file_box">' +
+            '<span class="pic_num">图片' + num + '</span>' +
+            '<div class="content_file_box ' + classSwiper + '">' +
             '<div class="content_file">' +
             '<img src="" alt="" class="loadImg">' +
             '<input type="file" class="upImg" name="upfile" id="' + box.attr("id") + '' + Date.now() + '">' +
             '</div>' +
             '<i class="j_del_img"></i>' +
+            '<b class="look_btn">查看原图</b>' +
             '</div>' +
             '</div>' +
             '<div class="input_info_tit clearfix">' +
@@ -296,6 +300,9 @@ var contentObj = {
         if (box.find("li").length == 1) {
             box.find(".j_del_img").hide();
         }
+        box.find("li").each(function(index) {
+            box.find("li").eq(index).find(".pic_num").html("图片" + (index + 1));
+        });
     },
     //初始化创建赛事
     createRace: function(list) {

@@ -19,7 +19,7 @@ var uploadObj = {
                 }
             },
             error: function() {
-                myAlert.createBox("网络不给力！");
+                myAlert.createBox("网络不给力");
             }
         });
     },
@@ -31,7 +31,7 @@ var uploadObj = {
                 statusStr = '<span style="border-bottom:1px solid #000;">已导入(45)</span>'
             } else {
                 statusStr = '<div class="match_info_btn">' +
-                    '<input type="file" id="upfile' + index + '" name="upfile" class="input_upload"> 选择文件' +
+                    '<input type="file" id="upfile' + index + '" name="upfile" class="input_upload" accept=".xls,.doc,.txt,.pdf"> 选择文件' +
                     '</div>';
             }
             str += '<tr raceId="' + raceId + '" raceitemId="' + val.raceitemId + '">' +
@@ -90,7 +90,7 @@ var uploadObj = {
                 }
             },
             error: function() {
-                myAlert.createBox("网络不给力！");
+                myAlert.createBox("网络不给力");
             }
         });
     },
@@ -114,7 +114,7 @@ var uploadObj = {
                 }
             },
             error: function() {
-                myAlert.createBox("网络不给力！");
+                myAlert.createBox("网络不给力");
             }
         });
     }
