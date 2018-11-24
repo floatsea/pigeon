@@ -7,6 +7,7 @@ $(function() {
     });
     $("body").on("mouseleave", function() {
         $("#default_left").removeClass("login_left3");
+        $("#login_right_box").css("width", "100%");
     });
     // 鼠标移入左侧
     $("#default_left").on("mouseenter", function() {
@@ -25,6 +26,7 @@ $(function() {
         $("#default_left").addClass("login_left3").show(); //左边显示默认
         $("#default_right").hide();
         $("#loging_main").show();
+        $(this).css("width", "100%");
     });
     // 鼠标移出 右侧
     $("#login_right_box").on("mouseleave", function() {
@@ -32,6 +34,7 @@ $(function() {
         $("#default_left").removeClass("login_left3").show(); //左边显示默认
         $("#default_right").show();
         $("#loging_main").hide();
+        $(this).css("width", "80%");
     });
 
     //点击获取验证码 (登录)
@@ -85,6 +88,7 @@ $(function() {
     //倒计时
     function tick(dom) {
         var time = 59;
+        dom.css("color", "#999");
         var str = '60s 重新获取'
         dom.html(str);
         timer = setInterval(function() {
@@ -98,6 +102,7 @@ $(function() {
                 time--;
             } else {
                 clearInterval(timer);
+                dom.css("color", "#448af8");
                 dom.html("获取验证码");
                 return true;
             }

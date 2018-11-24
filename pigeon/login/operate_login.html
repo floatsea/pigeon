@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>登录</title>
     <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/operate_style.css">
+    <link rel="stylesheet" href="css/style.css">
     <script src="js/jquery-1.10.2.min.js"></script>
     <script src="js/public.js"></script>
     <script src="js/operate_login.js"></script>
@@ -28,34 +28,36 @@
             </div>
         </div>
         <!--商家-->
-        <div class="login_right" id="login_right_box">
-            <!--默认状态-->
-            <div class="default_right" style="display:block;" id="default_right">
-                <img src="image/operate.png " class="logo">
-                <img src="image/con_txt.png " class="con_txt">
-            </div>
-            <!--鼠标移入-->
-            <div class="login_right_main" style="display:none" id="loging_main">
-                <img src="image/operate.png " class="logo">
-                <!--登录-->
-                <div class="login_cont" style="display:block" id="login_dom">
-                    <ul class="login_tit clearfix" id="switch_login">
-                        <li class="active">运营登录</li>
-                    </ul>
-                    <ul class="login_list">
-                        <li class="clearfix" id="iphone_box">
-                            <span>手机号</span>
-                            <input type="text" maxlength="11" id="login_tel" value="18688899999" />
-                        </li>
-                        <li class="clearfix">
-                            <span>验证码</span>
-                            <input type="text" maxlength="6" id="login_code" value="123456" />
-                            <button id="login_code_btn">获取验证码</button>
-                        </li>
-                        <li style="border:none;"></li>
-                    </ul>
-                    <button class="login_btn" id="login_btn">登录</button>
-                    <!-- <p class="desc" id="regist_text">还没有账号，免费注册</p> -->
+        <div class="login_right_bg">
+            <div class="login_right" id="login_right_box">
+                <!--默认状态-->
+                <div class="default_right" style="display:block;" id="default_right">
+                    <img src="image/operate.png " class="logo">
+                    <img src="image/con_txt.png " class="con_txt">
+                </div>
+                <!--鼠标移入-->
+                <div class="login_right_main" style="display:none" id="loging_main">
+                    <img src="image/operate.png " class="logo">
+                    <!--登录-->
+                    <div class="login_cont" style="display:block" id="login_dom">
+                        <ul class="login_tit clearfix" id="switch_login">
+                            <li class="active">运营登录</li>
+                        </ul>
+                        <ul class="login_list">
+                            <li class="clearfix" id="iphone_box">
+                                <span>手机号</span>
+                                <input type="text" maxlength="11" id="login_tel" value="18688899999" />
+                            </li>
+                            <li class="clearfix">
+                                <span>验证码</span>
+                                <input type="text" maxlength="6" id="login_code" value="123456" />
+                                <button id="login_code_btn">获取验证码</button>
+                            </li>
+                            <li style="border:none;"></li>
+                        </ul>
+                        <button class="login_btn" id="login_btn">登录</button>
+                        <!-- <p class="desc" id="regist_text">还没有账号，免费注册</p> -->
+                    </div>
                 </div>
             </div>
         </div>

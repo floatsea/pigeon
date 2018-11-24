@@ -48,7 +48,7 @@ body {
 }
 
 .login_right .logo {
-    width: 36%;
+    width: 40%;
     position: absolute;
     right: 21.4%;
     top: 36.7%;
@@ -177,7 +177,7 @@ body {
     right: 20.3%;
     top: 39.6%;
     border-radius: 6px;
-    padding-bottom: 10px;
+    padding-bottom: 20px;
 }
 
 .login_tit,
@@ -262,6 +262,7 @@ body {
 }
 
 .login_btn {
+    font-size: 18px;
     display: block;
     width: 80%;
     height: 40px;

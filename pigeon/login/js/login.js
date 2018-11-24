@@ -329,6 +329,7 @@ $(function() {
     //倒计时
     function tick(dom) {
         var time = 59;
+        dom.css("color", "#999");
         var str = '60s 重新获取'
         timer = setInterval(function() {
             if (time > 0) {
@@ -340,6 +341,7 @@ $(function() {
                 time--;
             } else {
                 clearInterval(timer);
+                dom.css("color", "#448af8");
                 dom.html("获取验证码");
                 return true;
             }
