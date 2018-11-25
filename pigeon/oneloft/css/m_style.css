@@ -166,6 +166,14 @@ body {
     width: 44%;
 }
 
+.info_list_tit ol {
+    display: flex;
+}
+
+.info_list_tit ol li {
+    flex: 1;
+}
+
 .info_list_tit ol li:nth-child(1) {
     width: 30%;
 }
@@ -243,6 +251,7 @@ body {
     text-align: right;
     color: #5c99f8;
     cursor: pointer;
+    padding-right: 10px;
 }
 
 .pro_det_last {
@@ -270,6 +279,11 @@ body {
     height: auto;
     padding: 0;
     line-height: 80px;
+    display: flex;
+}
+
+.info_list_tit ul li>div {
+    flex: 1;
 }
 
 .comm_list_l {

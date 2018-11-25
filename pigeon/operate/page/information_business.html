@@ -180,6 +180,7 @@
             //点击每个列表中的 “编辑”
             $("#news_list_box").on("click", ".enditor_btn", function() {
                 var newsId = $(this).closest("li").attr("newsId");
+                var ownerId = businessId || $(this).closest("li").attr("ownerId");
                 location.href = "information_editor_business.html?businessId=" + businessId + "&newsId=" + newsId;
             });
             //点击每个列表中的 “撤稿”

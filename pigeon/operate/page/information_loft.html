@@ -178,7 +178,8 @@
             //点击每个列表中的 “编辑”
             $("#news_list_box").on("click", ".enditor_btn", function() {
                 var newsId = $(this).closest("li").attr("newsId");
-                location.href = "information_editor_business.html?oneloftId=" + oneloftId + "&newsId=" + newsId;
+                var ownerId = oneloftId || $(this).closest("li").attr("ownerId");
+                location.href = "information_editor_loft.html?oneloftId=" + ownerId + "&newsId=" + newsId;
             });
             //点击每个列表中的 “撤稿”
             $("#news_list_box").on("click", ".cancel_btn", function() {

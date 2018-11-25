@@ -36,7 +36,7 @@ var inforEditor = {
     },
     // 公棚
     createLoftData: function(data) {
-        $("#oneloftName").val(data.ownerName); //公棚名称
+        $("#oneloftName").val(data.ownerName || "神秘公棚"); //公棚名称
         $("#newsTitle").val(data.newsTitle); //资讯标题
         setTimeout(function() {
             UE.getEditor('editor').execCommand('insertHtml', data.newsContent || "");
@@ -44,7 +44,7 @@ var inforEditor = {
     },
     // 商家
     createBusinessData: function(data) {
-        $("#businessName").val(data.ownerName); //公棚名称
+        $("#businessName").val(data.ownerName || "神秘商家"); //公棚名称
         $("#newsTitle").val(data.newsTitle); //公棚标题
         setTimeout(function() {
             UE.getEditor('editor').execCommand('insertHtml', data.newsContent || "");

@@ -61,7 +61,7 @@ var inforEditor = {
      *16、编辑资讯接口
      *http://域名/oneloft/news/edit
      */
-    saveInfor: function(saveData) {
+    saveInfor: function(saveData, callback) {
         $.ajax({
             url: location.origin + "/oneloft/news/edit",
             type: "post",
@@ -71,6 +71,7 @@ var inforEditor = {
             success: function(data) {
                 if (data.code == 0) {
                     myAlert.createBox("保存成功");
+                    callback && callback();
                 }
             },
             error: function() {

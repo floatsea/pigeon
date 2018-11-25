@@ -67,21 +67,22 @@ $(function() {
             $("#login_code").val("");
             return;
         } else {
-            if (isNaN(codeStr) || !codeStr) {
-                $("#login_code").val("");
-                myAlert.createBox("验证码有误");
-                return;
-            } else {
-                // 调登录接口
-                var loginData = {
-                    "mobile": $("#login_tel").val(),
-                    "userPwd": $("#login_code").val()
-                };
-                loginRequest(loginData, function() {
-                    telStr = telStr.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2');
-                    location.href = location.origin + "/operate/home.html?mobile=" + telStr;
-                });
-            }
+            // if (isNaN(codeStr) || !codeStr) {
+            //     $("#login_code").val("");
+            //     myAlert.createBox("验证码有误");
+            //     return;
+            // } else {
+
+            // }
+            // 调登录接口
+            var loginData = {
+                "mobile": $("#login_tel").val(),
+                "userPwd": $("#login_code").val()
+            };
+            loginRequest(loginData, function() {
+                telStr = telStr.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2');
+                location.href = location.origin + "/operate/home.html?mobile=" + telStr;
+            });
         }
     });
 
@@ -111,7 +112,7 @@ $(function() {
     //获取验证码接口
     function getCode(getCodeData, cb) {
         $.ajax({
-            url: location.origin + "",
+            url: location.origin + "/operator/message/code",
             type: "post",
             data: JSON.stringify(getCodeData),
             dataType: "json",
@@ -119,6 +120,8 @@ $(function() {
             success: function(data) {
                 if (data.code == 0) {
                     cb && cb();
+                    myAlert.createBox("验证码发送成功");
+                } else {
                     myAlert.createBox(data.msg);
                 }
             },
@@ -141,7 +144,7 @@ $(function() {
                 if (data.code == 0) {
                     cb && cb();
                 } else {
-                    myAlert.createBox(data.msg);
+                    myAlert.createBox("登录失败");
                 }
             },
             error: function() {

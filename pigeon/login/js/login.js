@@ -40,12 +40,16 @@ $(function() {
     // 点击 "还没有账号，免费注册"
     $("#regist_text").on("click", function() {
         $("#login_dom").hide();
+        $("#switch_login li").find("input").val("");
+        $("#regist_code").val("");
+        $("#password").val("");
         $("#regist_dom").show();
     });
 
     //点击 “已有账号，立即登录”
     $("#login_text").on("click", function() {
         $("#regist_dom").hide();
+        $("#switch_login li").find("input").val("");
         $("#login_dom").show();
     });
     /*-------------------------------------------------------------------------- */
@@ -99,6 +103,8 @@ $(function() {
                 if (data.code == 0) {
                     cb && cb();
                     //myAlert.createBox(data.msg);
+                } else {
+                    myAlert.createBox("登录失败");
                 }
             },
             error: function() {
@@ -172,11 +178,13 @@ $(function() {
             success: function(data) {
                 if (data.code == 0) {
                     cb && cb();
-                    myAlert.createBox("发送成功");
+                    myAlert.createBox("验证码发送成功");
+                } else {
+                    myAlert.createBox("验证码获取失败");
                 }
             },
             error: function() {
-                myAlert.createBox("网络不给力");
+                myAlert.createBox("网络不给力！");
             }
         });
     }
@@ -201,7 +209,7 @@ $(function() {
             //倒计时
             if ($this.html() == "获取验证码") {
                 var postUrl = location.origin + "/oneloft/message/code";
-                getOneloftRequestCode({ "mobile": telStr }, postUrl, function() {
+                getRequestCode({ "mobile": telStr }, postUrl, function() { //getOneloftRequestCode
                     tick($this);
                 })
             } else {
@@ -240,7 +248,7 @@ $(function() {
      * 商家 /business/add
      * 公棚 /oneloft/add
      */
-    function registRequest(registData, postUrl) {
+    function registRequest(registData, postUrl, cb) {
         $.ajax({
             url: postUrl,
             type: "post",
@@ -250,11 +258,13 @@ $(function() {
             success: function(data) {
                 if (data.code == 0) {
                     cb && cb();
-                    myAlert.createBox(data.msg);
+                    myAlert.createBox("注册成功");
+                } else {
+                    myAlert.createBox("用户注册失败");
                 }
             },
             error: function() {
-                myAlert.createBox("网络不给力");
+                myAlert.createBox("网络不给力！");
             }
         });
     }
@@ -268,23 +278,26 @@ $(function() {
                 myAlert.createBox("验证码有误");
                 return;
             } else {
-                // 调登录接口
+                // 调注册接口
                 var registData = {
                     "email": registEmail,
-                    "userPwd": "",
+                    "userPwd": $("#password").val(),
                     "code": codeStr
                 };
                 var postUrl = location.origin + "/business/add";
-                registRequest(registData, postUrl);
+                registRequest(registData, postUrl, function() {
+                    $("#regist_dom").hide();
+                    $("#login_dom").show();
+                });
             }
         }
     }
     //公棚注册
     function oneloftRegist() {
-        var telStr = $("#regist_tel").val();
+        var telStr = $("#regist_tel1").val();
         var codeStr = $("#regist_code").val();
         if (!checkInputPhone(telStr)) {
-            $("#regist_tel").val("");
+            $("#regist_tel1").val("");
             $("#regist_code").val("");
             return;
         } else {
@@ -311,7 +324,7 @@ $(function() {
             var emailStr = $("#regist_email").val();
             getBusinessCode($this, emailStr);
         } else { //公棚
-            var telStr = $("#regist_tel").val();
+            var telStr = $("#regist_tel1").val();
             getOneloftCode($this, telStr);
         }
     });

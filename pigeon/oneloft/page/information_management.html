@@ -33,7 +33,7 @@
                     </div>
                 </div>
                 <!--内容-->
-                <div class="pro_det commodity_list_tit info_list_tit">
+                <div class="pro_det info_list_tit">
                     <ol class="clearfix">
                         <li class="clearfix">
                             <div class="p_check_box">
@@ -46,11 +46,10 @@
                         </li>
                         <li class="info_create_date" id="newsDate">发布日期</li>
                         <li class="info_create_date">编辑</li>
-                        <li class="info_create_date">公棚</li>
+                        <!-- <li class="info_create_date">公棚</li> -->
                         <li class="info_last">操作</li>
                     </ol>
                     <div>
-                        <!--已发布-->
                         <ul class="comm_list_box" id="news_list_box">
                             <li class="clearfix">
                                 <div class="comm_list_l clearfix">
@@ -67,7 +66,7 @@
                                     2018-06-21 18:34
                                 </div>
                                 <div class="info_create_date">133****0000</div>
-                                <div class="info_create_date ">天津宇航赛鸽公棚</div>
+                                <!-- <div class="info_create_date ">天津宇航赛鸽公棚</div> -->
                                 <div class="info_last ">
                                     <span class="enditor_btn">编辑</span> | <span>撤稿</span> | <span>删除</span>
                                 </div>
@@ -171,23 +170,19 @@
             //点击每个列表中的 “编辑”
             $("#news_list_box").on("click", ".enditor_btn", function() {
                 var newsId = $(this).closest("li").attr("newsId");
-                location.href = "information_editor_business.html?newsId=" + newsId;
+                location.href = "information_editor.html?newsId=" + newsId;
             });
             //点击每个列表中的 “撤稿”
             $("#news_list_box").on("click", ".cancel_btn", function() {
                 var $this = $(this);
                 var newsId = $this.closest("li").attr("newsId");
+                var isPublished = $(this).html() == "撤稿" ? false : true;
                 var cancelData = {
                     "newsId": newsId, //"用户id：支持多个，逗号,分隔",
-                    "isPublished": false //"发布状态：发布，true；撤回，false"
+                    "isPublished": isPublished //"发布状态：发布，true；撤回，false"
                 }
-                var isPublished = $(this).html() == "撤稿" ? false : true;
                 inforObj.cancelRequest(cancelData, function() {
-                    if (cancelData.isPublished) {
-                        $this.html("撤稿");
-                    } else {
-                        $this.html("发布");
-                    }
+                    $("#info_tit .active").trigger("click");
                 });
             });
             //点击每个列表中的 “删除”

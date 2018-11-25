@@ -50,7 +50,7 @@ var inforObj = {
         list.forEach(function(val) {
             var newsDate = postData.isPublished ? val.updatedTime : val.createdTime;
             var cancelTxt = postData.isPublished ? "撤稿" : "发布";
-            listStr += '<li class="clearfix" newsId="' + val.newsId + '">' +
+            listStr += '<li class="clearfix" newsId="' + val.newsId + '" ownerId="' + val.ownerId + '">' +
                 '<div class="comm_list_l clearfix">' +
                 '<div class="comm_list_check">' +
                 '<input type="checkbox">' +
@@ -60,7 +60,7 @@ var inforObj = {
                 '</div>' +
                 '<div class="info_create_date ">' + newsDate + '</div>' +
                 '<div class="info_create_date">' + val.userName + '</div>' +
-                '<div class="info_create_date ">' + val.ownerName + '</div>' +
+                '<div class="info_create_date ">' + (val.ownerName || "神秘公棚") + '</div>' +
                 '<div class="info_last ">' +
                 '<span class="enditor_btn">编辑</span> | <span class="cancel_btn">' + cancelTxt + '</span> | <span class="delete_btn">删除</span>' +
                 '</div>' +

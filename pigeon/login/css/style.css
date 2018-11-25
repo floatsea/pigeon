@@ -184,10 +184,11 @@ body {
 .login_tit2 {
     width: 100%;
     padding: 0 8%;
+    display: flex;
 }
 
 .login_tit li {
-    float: left;
+    flex: 1;
     width: 50%;
     height: 60px;
     padding-top: 10px;
@@ -229,7 +230,7 @@ body {
     /*height: 100%;
     line-height: 400%;*/
     line-height: 40px;
-    width: 30%;
+    width: 20%;
     color: #333;
     font-size: 16px;
 }

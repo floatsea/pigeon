@@ -32,7 +32,8 @@ var inforObj = {
         list.forEach(function(val) {
             var newsDate = postData.isPublished ? val.updatedTime : val.createdTime;
             var cancelTxt = postData.isPublished ? "撤稿" : "发布";
-            listStr += '<li class="clearfix" newsId="' + val.newsId + '">' +
+            var ownerName = val.ownerName ? val.ownerName : "——";
+            listStr += '<li class="clearfix" newsId="' + val.newsId + '" ownerName="' + ownerName + '">' +
                 '<div class="comm_list_l clearfix">' +
                 '<div class="comm_list_check">' +
                 '<input type="checkbox">' +
@@ -42,7 +43,7 @@ var inforObj = {
                 '</div>' +
                 '<div class="info_create_date ">' + newsDate + '</div>' +
                 '<div class="info_create_date">' + val.userName + '</div>' +
-                '<div class="info_create_date ">' + val.ownerName + '</div>' +
+                // '<div class="info_create_date ">' + val.ownerName + '</div>' +
                 '<div class="info_last ">' +
                 '<span class="enditor_btn">编辑</span> | <span class="cancel_btn">' + cancelTxt + '</span> | <span class="delete_btn">删除</span>' +
                 '</div>' +
@@ -80,7 +81,11 @@ var inforObj = {
             success: function(data) {
                 errorToken(data.code);
                 if (data.code == "0") {
-                    myAlert.createBox("撤稿成功！");
+                    if (cancelData.isPublished) {
+                        myAlert.createBox("发布成功！");
+                    } else {
+                        myAlert.createBox("撤稿成功！");
+                    }
                     cb && cb();
                 }
             },
