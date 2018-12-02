@@ -34,9 +34,9 @@
                 <p class="sigup_nam">2018第三届三关大奖赛 报名用户<i id="signUpNum">(121)</i></p>
                 <div class="user_top_cont clearfix">
                     <div class="user_top_cont_l">
-                        <span>关键词：</span>
-                        <input type="text" placeholder="输入产品关键词">
-                        <button>查询</button>
+                        <!-- <span>关键词：</span> -->
+                        <input type="text" placeholder="输入赛事报名名称" id="key_word">
+                        <button id="search_btn">查询</button>
                     </div>
                     <div class="user_top_cont_r">
                         <button class="active" id="import_list_box">
@@ -90,11 +90,11 @@
                     </div>
                     <div class="public_footer clearfix" id="page_btn">
                         <ul class="clearfix">
-                            <li class="active">1</li>
+                            <!-- <li class="active">1</li>
                             <li>2</li>
                             <li>3</li>
                             <li>4</li>
-                            <li>5</li>
+                            <li>5</li> -->
                         </ul>
                         <div>共<span id="total_num">0</span>条，每页显示<span>20</span>条</div>
                     </div>
@@ -119,7 +119,7 @@
         //初始化
         var initData = {
             "raceId": raceId,
-            "keyword": "", //
+            "keyword": $("#key_word").val(), //
             "pageSize": "20", //分页参数：分页大小
             "pageNum": "1", //分页参数：页码
             "orderBy": "publishedTime",
@@ -127,6 +127,13 @@
         };
         //注：orderBy可选字段：createdTime添加时间，publishedTime添加时间，updatedTime修改时间，views浏览量，sales销量，follows关注量.
         signupObj.getListRequest(initData);
+
+        //点击查询 
+        $("#search_btn").on("click", function() {
+            initData.keyword = $("#key_word").val();
+            initData.pageNum = "1";
+            signupObj.getListRequest(initData);
+        });
 
         //点击 “导入清单”
         $("#import_list").on("change", function() {

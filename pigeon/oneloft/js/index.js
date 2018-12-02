@@ -3,6 +3,14 @@
  * 2、公棚统计接口
  * http://域名/oneloft/statistics
  */
+getOneloftName(function(oneloftName) {
+    if (!oneloftName) {
+        $('#oneloft_set', parent.document).trigger("click");
+    } else {
+        Setcookie("oneloftName", oneloftName);
+    }
+});
+
 var indexObj = {
         initRequest: function(initData) {
             $.ajax({

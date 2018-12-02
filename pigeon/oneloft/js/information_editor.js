@@ -1,4 +1,8 @@
 var oneloftId = getParameter("oneloftId") || "";
+var oneloftName = getCookie("oneloftName");
+if (!oneloftName) {
+    $('#oneloft_set', parent.document).trigger("click");
+}
 var inforEditor = {
     /**
      *14、资讯详情接口

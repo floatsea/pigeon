@@ -421,6 +421,10 @@
 
             //点击 查询
             $("#serch_btn").on("click", function() {
+                if ($("#Keyword").val() == "") {
+                    myAlert.createBox("请输入关键字");
+                    return;
+                }
                 var channle = $(this).attr("channle"); //0 商家  1公棚
                 if (channle == 0) {
                     businessData.keyword = $("#Keyword").val();

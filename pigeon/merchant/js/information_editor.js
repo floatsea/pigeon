@@ -3,6 +3,10 @@
  * information_editor_loft.html 调用
  */
 var businessId = getParameter("businessId") || "";
+var shopName = getCookie("shopName");
+if (!shopName) {
+    $('#shop_set', parent.document).trigger("click");
+}
 var inforEditor = {
     /**
      *14、资讯详情接口

@@ -24,8 +24,8 @@
                     <div class="user_top_cont clearfix">
                         <div class="user_top_cont_l">
                             <span>商品名称：</span>
-                            <input type="text" placeholder="输入商品名称">
-                            <button>查询</button>
+                            <input type="text" placeholder="输入商品名称" id="key_word">
+                            <button id="search_btn">查询</button>
                         </div>
                         <div class="product_button">
                             <button id="add_product" class="active">添加产品</button>
@@ -115,13 +115,13 @@
     <script src="../js/product_management.js"></script>
     <script>
         //初始化请求数据
-        //请求类型: "已发布"1 、"待上架"0
         var proListData = {
             "pageSize": "20",
             "pageNum": "1", //分页参数：页码
             "orderBy": "publishedTime", //"分页参数：排序，需约定字段",
             "orderDesc": "desc",
-            "pigeonStatus": 1
+            "pigeonStatus": 1, //请求类型: "已发布"1 、"待上架"0
+            "keyword": $("#key_word").val()
         };
         if (businessId) { // 从商家列表 跳过来 可以 添加 产品
             $("#add_product").show();
@@ -135,6 +135,17 @@
         }
         productObj.proListRequst(proListData);
 
+        //点击查询
+        $("#search_btn").on("click", function() {
+            if (!$("#key_word").val()) {
+                myAlert.createBox("请输入关键字");
+                return;
+            }
+            proListData.keyword = $("#key_word").val();
+            proListData.pigeonStatus = $("#product_tit .active").index() == 0 ? 1 : 0;
+            proListData.pageNum = "1";
+            productObj.proListRequst(proListData);
+        });
         //切换 "已发布"、"待上架"
         $("#product_tit span").on("click", function() {
             $("#sel_all").prop("checked", false);
@@ -143,6 +154,7 @@
             $(this).addClass("active");
             proListData.pageNum = 1;
             proListData.pigeonStatus = _index == 0 ? 1 : 0;
+            proListData.keyword = $("#key_word").val();
             if (_index == 1) {
                 $(".setTop_btn, #settop_button").hide()
                 $(".frame_btn, #frame_button").html("上架");
@@ -156,7 +168,7 @@
         $("#page_btn").delegate("li", "click", function() {
             $("#page_btn").find("li").removeClass("active");
             $(this).addClass("active");
-            proListData.keyword = $("#Keyword").val();
+            proListData.keyword = $("#key_word").val();
             proListData.pageNum = $(this).index();
             //重新获取列表 （调后端接口）
             productObj.proListRequst(proListData)

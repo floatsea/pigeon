@@ -3,6 +3,13 @@
  * 2、商家统计接口
  * http://域名/business/statistics
  */
+getShopName(function(shopName) {
+    if (!shopName) {
+        $('#shop_set', parent.document).trigger("click");
+    } else {
+        Setcookie("shopName", shopName);
+    }
+});
 var indexObj = {
         initRequest: function(initData) {
             $.ajax({

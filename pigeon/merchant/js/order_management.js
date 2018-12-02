@@ -1,10 +1,16 @@
 var businessId = getParameter("businessId") || ""; //有businessId：从商家列表页进入此页面，businessId为空时，说明是订单管理页面
-var shopName = getParameter("businessId") || "";
 var pigeonImgSrc = location.origin + "/operate/image/cp.png"; //默认鸽子图片
 /**
  * 5、商家订单列表接口
  * http://域名/business/orderitem/findList
  */
+getShopName(function(shopName) {
+    if (!shopName) {
+        $('#shop_set', parent.document).trigger("click");
+    } else {
+        Setcookie("shopName", shopName);
+    }
+});
 var orderListObj = {
     initRequest: function(postData) { //
         $.ajax({

@@ -15,7 +15,8 @@ $(function() {
         $(this).find("img").attr("src", imgSrc.substring(0, imgSrc.indexOf(".")) + "1.png");
 
         var txt = $(this).find("span").html();
-
+        $(".infor_seconds div").removeClass("info_active");
+        $(".live_seconds div").removeClass("live_active");
         switch (txt) {
             case "运营概览":
                 $("title").html("运营概览");
@@ -44,11 +45,10 @@ $(function() {
             case "信息管理":
                 $("title").html("信息管理");
                 $(".infor_seconds").slideToggle();
-                // if ($(".infor_seconds").css("display") == "none") {
-                //     $(".infor_seconds").css("display", "block");
-                // } else {
-                //     $(".infor_seconds").css("display", "none");
-                // }
+                $(".infor_seconds div").eq(0).trigger("click");
+                $(this).removeClass("active")
+                var imgSrc = $(this).find("img").attr("src");
+                $(this).find("img").attr("src", imgSrc.substring(0, imgSrc.indexOf("1")) + ".png");
                 break;
             case "客服消息":
                 $("title").html("客服消息");
@@ -68,15 +68,28 @@ $(function() {
                 break;
             case "直播管理":
                 $("title").html("直播管理");
-                $("#pageContent").attr("src", "page/live_management.html");
+                $(this).removeClass("active");
+                var imgSrc = $(this).find("img").attr("src");
+                $(".live_seconds").slideToggle();
+                $(".live_seconds div").eq(0).trigger("click");
+                $(this).find("img").attr("src", imgSrc.substring(0, imgSrc.indexOf("1")) + ".png");
+                // $("#pageContent").attr("src", "page/live_management.html");
                 break;
         }
         // setHomeHeight();
     });
-
-
     $(".infor_seconds div").on("click", function(ev) {
         ev.stopPropagation();
+        $("#home_list_box").find("li").removeClass("active");
+        $("#home_list_box").find("li img").each(function(i) {
+            var imgSrc = $("#home_list_box").find("li img").eq(i).attr("src");
+            if (imgSrc.indexOf("1") >= 0) {
+                imgSrc = imgSrc.split("1")[0] + ".png";
+                $("#home_list_box").find("li img").eq(i).attr("src", imgSrc);
+            }
+        });
+        $(".infor_seconds div").removeClass("info_active");
+        $(this).addClass("info_active");
         var _index = $(this).index();
         if (_index == 0) {
             $("#pageContent").attr("src", "page/information_business.html?channelType=business");
@@ -84,11 +97,42 @@ $(function() {
             $("#pageContent").attr("src", "page/information_loft.html?channelType=oneloft");
         }
     });
+    //视频直播
+    $(".live_seconds div").on("click", function(ev) {
+        ev.stopPropagation();
+        $("#home_list_box").find("li").removeClass("active");
+        $("#home_list_box").find("li img").each(function(i) {
+            var imgSrc = $("#home_list_box").find("li img").eq(i).attr("src");
+            if (imgSrc.indexOf("1") >= 0) {
+                imgSrc = imgSrc.split("1")[0] + ".png";
+                $("#home_list_box").find("li img").eq(i).attr("src", imgSrc);
+            }
+        });
+        $(".live_seconds div").removeClass("live_active");
+        $(this).addClass("live_active");
+        var _index = $(this).index();
+        if (_index == 0) { //直播申请
+            $("#pageContent").attr("src", "page/live_apply_management.html");
+        } else { //视频回放
+            $("#pageContent").attr("src", "page/live_play_management.html");
+        }
+    });
+
+    //存cookie
+    function Setcookie(name, value) {
+        //设置名称为name,值为value的Cookie
+        var expdate = new Date(); //初始化时间
+        expdate.setTime(expdate.getTime() + 30 * 60 * 1000); //时间单位毫秒
+        document.cookie = name + "=" + value + ";expires=" + expdate.toGMTString() + ";path=/";
+        //即document.cookie= name+"="+value+";path=/";  时间默认为当前会话可以不要，但路径要填写，因为JS的默认路径是当前页，如果不填，此cookie只在当前页面生效！
+    }
+
     var bodyHeight = document.documentElement.clientHeight;
     var pageContent = document.getElementById("pageContent");
     var homeLeft = document.getElementById("homeLeft");
     pageContent.style.height = bodyHeight + "px";
     homeLeft.style.height = bodyHeight + "px";
     var mobile = getParameter("mobile");
+    Setcookie("mobile", mobile);
     $("#mobile").html(mobile);
 })

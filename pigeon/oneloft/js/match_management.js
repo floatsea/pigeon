@@ -1,4 +1,15 @@
 var oneloftId = getParameter("oneloftId") || ""; //有oneloftId：从公棚列表页进来
+var oneloftName = getCookie("oneloftName");
+if (!oneloftName) {
+    getOneloftName(function(oneloftName) {
+        if (!oneloftName) {
+            $('#oneloft_set', parent.document).trigger("click");
+        } else {
+            Setcookie("oneloftName", oneloftName);
+            oneloftName = oneloftName;
+        }
+    });
+}
 /**
  * 17、赛事列表接口
  * http://域名/oneloft/race/findList

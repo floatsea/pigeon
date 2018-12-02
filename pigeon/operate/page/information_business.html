@@ -23,7 +23,7 @@
                     <!-- <span>快速检索</span> -->
                     <div class="query_p_show">
                         <span>资讯名称：</span>
-                        <input type="text" placeholder="请输入资讯名称">
+                        <input type="text" placeholder="请输入资讯名称" id="key_words">
                     </div>
                     <button class="query_p_btn" id="search_btn">查询</button>
                     <div class="query_p_btns clearfix">
@@ -112,13 +112,24 @@
             var postData = {
                 "isPublished": true, //"发布状态：发布，true；未发布，false",
                 "ownerType": "1",
-                "keyword": "", //检索关键字
+                "keyword": $("#key_words").val(), //检索关键字
                 "pageSize": "20",
                 "pageNum": "1",
                 "orderBy": "", //分页参数：排序标记，以此字段排序
-                "orderDesc": "" //"分页参数：升降序标记，desc为降序，不传或空字符串为升序"
+                "orderDesc": "desc" //"分页参数：升降序标记，desc为降序，不传或空字符串为升序"
             }
             inforObj.newsRequstList(postData); //页面初始化
+            //点击查询
+            $("#search_btn").on("click", function() {
+                if (!$("#key_words").val()) {
+                    myAlert.createBox("请输入关键字");
+                    return;
+                }
+                postData.keyword = $("#key_words").val();
+                postData.pageNum = "1";
+                postData.isPublished = $("#info_tit .active").index() == 0 ? true : false;
+                inforObj.newsRequstList(postData);
+            });
             //切换"已发布"和"待发布"
             $("#info_tit>span").on('click', function() {
                 $("#info_check_all").prop("checked", false);
@@ -142,7 +153,7 @@
             $("#page_btn").delegate("li", "click", function() {
                 $("#page_btn").find("li").removeClass("active");
                 $(this).addClass("active");
-                postData.keyword = $("#search_btn").attr("searchTxt");
+                postData.keyword = $("#key_words").val();
                 postData.pageNum = $(this).html() + 1;
                 inforObj.newsRequstList(postData); //重新渲染数据
             });

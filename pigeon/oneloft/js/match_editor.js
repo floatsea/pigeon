@@ -1,6 +1,9 @@
 var oneloftId = getParameter("oneloftId") || ""; //有oneloftId：公棚 “添加赛事”
 var raceId = getParameter("raceId") || ""; //编辑
-var oneloftName = decodeURI(getParameter("oneloftName") || "");
+var oneloftName = decodeURI(getParameter("oneloftName")) || getCookie("oneloftName") || "";
+if (!oneloftName) {
+    $('#oneloft_set', parent.document).trigger("click");
+}
 var tab = getParameter("tab") || "";
 /**
  * 18、赛事详情接口

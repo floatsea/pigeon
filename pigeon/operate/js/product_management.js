@@ -30,6 +30,11 @@ var productObj = {
     },
     createInfoList: function(infoLists) {
         var listStr = "";
+        if (infoLists.length == 0) {
+            listStr = "没有查询到数据";
+            $("#pro_list_box").html(listStr);
+            return;
+        }
         infoLists.forEach(function(val) {
             var pigeonStatus = "";
             switch (val.pigeonStatus + "") {

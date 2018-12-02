@@ -145,7 +145,8 @@
                     }
                 }
                 businessInfoObj.infoEditor(savePostData, function() {
-                    window.history.go(-1);
+                    //存店铺名称，其它页面使用
+                    Setcookie("shopName", $("#shopName").val());
                 });
             });
 

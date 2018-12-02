@@ -1,6 +1,9 @@
 var pigeonId = getParameter("pigeonId") || "";
 var businessId = getParameter("businessId") || "";
-var shopName = decodeURI(getParameter("shopName")) || "";
+var shopName = getcookie("shopName");
+if (!shopName) {
+    $('#shop_set', parent.document).trigger("click");
+}
 var ue = UE.getEditor('editor', {
     BaseUrl: ''
         //UEDITOR_HOME_URL: 'static/utf8-jsp/',

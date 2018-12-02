@@ -257,8 +257,8 @@ $(function() {
             contentType: "application/json",
             success: function(data) {
                 if (data.code == 0) {
-                    cb && cb();
                     myAlert.createBox("注册成功");
+                    cb && cb();
                 } else {
                     myAlert.createBox("用户注册失败");
                 }
@@ -286,8 +286,7 @@ $(function() {
                 };
                 var postUrl = location.origin + "/business/add";
                 registRequest(registData, postUrl, function() {
-                    $("#regist_dom").hide();
-                    $("#login_dom").show();
+                    location.href = location.origin + "/merchant/home.html?email=" + registEmail;
                 });
             }
         }
@@ -312,7 +311,10 @@ $(function() {
                     "code": codeStr
                 };
                 var postUrl = location.origin + "/oneloft/add";
-                registRequest(registData, postUrl);
+                registRequest(registData, postUrl, function() {
+                    telStr = telStr.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2');
+                    location.href = location.origin + "/oneloft/home.html?mobile=" + telStr;
+                });
             }
         }
     }

@@ -1,4 +1,4 @@
-var userListStr = ""; //创建出来的dom元素
+//var userListStr = ""; //创建出来的dom元素
 //请求数据接口
 var userListObj = {
     /**
@@ -24,9 +24,6 @@ var userListObj = {
             },
             error: function() {
                 myAlert.createBox("网络不给力");
-                pageLiStr = userListObj.getPageNumer(totalNum); //页码
-                userListStr = userListObj.initList(list); //列表
-                callback && callback();
             }
         })
     },
@@ -58,7 +55,7 @@ var userListObj = {
                 '</td>' +
                 '</tr>'
         })
-        return listStr;
+        $("#user_list").html(listStr);
     },
     //获取分页的页码
     getPageNumer: function(totalNum) {

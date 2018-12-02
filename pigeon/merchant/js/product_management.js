@@ -2,6 +2,13 @@
  * 17、信鸽列表接口
  * http://域名/business/pigeon/findList
  */
+getShopName(function(shopName) {
+    if (!shopName) {
+        $('#shop_set', parent.document).trigger("click");
+    } else {
+        Setcookie("shopName", shopName);
+    }
+});
 var businessId = getParameter("businessId") || ""; //有businessId：从商家列表页进
 var productObj = {
     proListRequst: function(proListData) {

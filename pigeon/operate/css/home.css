@@ -175,17 +175,20 @@ body {
     position: relative;
 }
 
-.infor_seconds {
+.infor_seconds,
+.live_seconds {
     width: 140px;
     display: none;
 }
 
-.infor_seconds div {
+.infor_seconds div,
+.live_seconds div {
     color: #fff;
     background: #333;
 }
 
-.infor_seconds .info_active {
+.infor_seconds .info_active,
+.live_seconds .live_active {
     color: #333;
     background: #f3f3f3;
 }

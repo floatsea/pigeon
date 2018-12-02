@@ -12,7 +12,7 @@
     <script src="../js/public.js"></script>
     <script src="../js/moment.min.js"></script>
     <script src="../js/datepicker.all.js"></script>
-    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=McNGNstqGgRVbESkMBUmfciFxnsWpQ0g"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=OZ1fE40BLTTCv33iinqT3NZHicNYKmgo"></script>
     <style>
         input[type=date]::-webkit-inner-spin-button {
             visibility: hidden;
@@ -180,7 +180,7 @@
                 </div>
             </div>
             <div class="editor_button" style="padding-top:30px;">
-                <button id="return_btn">返回</button>
+                <!-- <button id="return_btn">返回</button> -->
                 <button id="save_btn">保存</button>
             </div>
         </div>
@@ -262,9 +262,9 @@
         };
 
         function setInfo(oneloftObj) {
-            $("#createTime").html(oneloftObj.createdTime || "-"); //创建时间
-            $("#loginTime").html(oneloftObj.loginTime || "-"); //最后登录时间
-            $("#oneloftName").val(oneloftObj.oneloftName || "-"); //公棚名称
+            $("#createTime").html(oneloftObj.createdTime || ""); //创建时间
+            $("#loginTime").html(oneloftObj.loginTime || ""); //最后登录时间
+            $("#oneloftName").val(oneloftObj.oneloftName || ""); //公棚名称
             if (oneloftObj.logo) {
                 $("#logo_img").attr("src", oneloftObj.logo);
                 $("#logo_img").parent().show();
@@ -278,7 +278,7 @@
             $("#address").val(oneloftObj.address);
             var liStr = "";
             var oneloftShowObj = oneloftObj.oneloftShow;
-            if (oneloftShowObj.images.length > 0) {
+            if (oneloftShowObj.images && oneloftShowObj.images.length > 0) {
                 oneloftShowObj.images.forEach(function(val, index) {
                     $("#oneloftShow li").eq(index + 1).find("img").attr("src", val.img);
                     $("#oneloftShow li").eq(index + 1).find("input").hide();
@@ -371,10 +371,6 @@
                 searchByStationName($this);
             });
 
-            //返回
-            $("#return_btn").on("click", function() {
-                window.history.go(-1);
-            });
             //点击保存
             $("#save_btn").on("click", function() {
                 if (!isAllInfo()) {
@@ -421,7 +417,7 @@
                 }
                 alert(saveData.location)
                 editorRequest(saveData, function() {
-                    window.history.go(-1);
+                    Setcookie("oneloftName", $("#oneloftName").val());
                 });
             })
 

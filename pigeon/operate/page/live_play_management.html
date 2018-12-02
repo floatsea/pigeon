@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>直播管理</title>
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/public.css">
+    <script src="../js/jquery-1.10.2.min.js"></script>
+    <script src="../js/public.js"></script>
+</head>
+
+<body>
+    <div>
+        <div class="public_tit" id="live_tit">
+            <!-- <span class="active">已发布</span>
+            <span>待发布</span> -->
+        </div>
+        <div class="public_box" id="product_cont">
+            <div>
+                <div class="user_top">
+                    <!-- <p class="quick_search">快速检索</p> -->
+                    <div class="user_top_cont clearfix">
+                        <div class="user_top_cont_l">
+                            <span>直播名称：</span>
+                            <input type="text" placeholder="输入直播名称" id="key_word">
+                            <button id="search_btn">查询</button>
+                        </div>
+                        <div class="product_button" id="title_btn">
+                            <div id="waiting_tit_btn">
+                                <button id="auditDel">删除</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="user_cont" id="live_mana_cont">
+                    <table>
+                        <thead>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" id="sel_all">
+                                    <label for=""></label>
+                                </td>
+                                <!-- <td>标题时长</td>
+                                <td>发布日期</td>
+                                <td>编辑</td>
+                                <td>公棚</td>
+                                <td>操作</td> -->
+                                <td>标题时长</td>
+                                <td>发布日期</td>
+                                <td>编辑</td>
+                                <td>直播人类型</td>
+                                <td>操作</td>
+                            </tr>
+                        </thead>
+                        <tbody id="waiting_cont">
+                            <tr>
+                                <td>
+                                    <input type="checkbox">
+                                    <label for=" "></label>
+                                </td>
+                                <td>
+                                    <div style="line-height:90px;">
+                                        比利时亚精顿！国家赛[00:01:20]
+                                    </div>
+                                </td>
+                                <td>2018-06-28 18:08</td>
+                                <td>133****6456</td>
+                                <td>天津宇航赛鸽公棚</td>
+                                <td>
+                                    <span class="editor_btn">回放</span> |
+                                    <span class="del_btn">删除</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="public_footer clearfix" id="page_btn">
+                    <ul class="clearfix">
+                        <!-- <li class="active">1</li>
+                        <li>2</li>
+                        <li>3</li>
+                        <li>4</li>
+                        <li>5</li> -->
+                    </ul>
+                    <div>共<span id="total_num">0</span>条，每页显示<span>20</span>条</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--删除 确认-->
+    <div class="del_mark" id="del_mark" style="display:none;">
+        <div class="del_cont">
+            <p>
+                是否将已选择内容彻底删除？<br/> 删除后无法恢复！
+            </p>
+            <div class="btn_box">
+                <button class="cancel_btn" id="cancel_btn">取消</button>
+                <button class="sure_btn" id="sure_btn">确定</button>
+            </div>
+        </div>
+    </div>
+    <script src="../js/live_play_management.js"></script>
+    <script>
+        var postData = {
+            "liveStatus": "1", //直播状态(0: 申请中, 1: 已通过, 2: 已拒绝),
+            "keyword": $("key_word").val(),
+            "pageSize": "20",
+            "pageNum": "1",
+            "orderBy": "",
+            "orderDesc": "desc"
+        };
+        liveApplyObj.getLiveRequest(postData); // 页面初始化
+        // 点击 查询
+        $("#search_btn").on("click", function() {
+            if (!$("key_word").val()) {
+                myAlert.createBox("请输入关键字");
+                return;
+            }
+            postData.keyword = $("key_word").val();
+            postData.pageNum = "1";
+            liveApplyObj.getLiveRequest(postData);
+        });
+        //点击 “页码”
+        $("#page_btn").delegate("li", "click", function() {
+            $("#page_btn").find("li").removeClass("active");
+            $(this).addClass("active");
+            postData.keyword = $("#Keyword").val();
+            postData.pageNum = $(this).index();
+            //重新获取列表 （调后端接口）
+            liveApplyObj.getLiveRequest(postData);
+        });
+        //点击“全选”
+        $("#sel_all").on("change", function() {
+            var selAllFlag = $(this).prop("checked");
+            if (selAllFlag) {
+                $(this).closest("table").find("tbody").find("input[type=checkbox]").prop("checked", true);
+                $("#waiting_tit_btn button").addClass("active");
+            } else {
+                $(this).closest("table").find("tbody").find("input[type=checkbox]").prop("checked", false);
+                $("#waiting_tit_btn button").removeClass("active");
+            }
+        });
+
+        //点击列表中“checkbox”
+        $("#waiting_cont").on("change", "input[type=checkbox]", function() {
+            if ($("#waiting_cont").find("input:checked").length > 0) {
+                $(".product_button button").addClass("active");
+            } else {
+                $(".product_button button").removeClass("active");
+            }
+            if ($("#waiting_cont").find("input:checked").length == $("#waiting_cont").find(
+                    "input[type=checkbox]").length) {
+                $("#sel_all").prop("checked", true);
+            } else {
+                $("#sel_all").prop("checked", false);
+            }
+        });
+
+        //点击 “删除”
+        $("#waiting_cont").on("click ", ".del_btn", function() {
+            var $this = $(this);
+            var liveId = $this.closest("tr").attr("liveId");
+            var trNum = $this.closest("tr").index();
+            $("#del_mark").attr({
+                "liveId": liveId,
+                "index": trNum
+            }).show(); //删除弹窗 显示
+        });
+        //点击 “删除” 大按钮
+        $("#auditDel").on("click", function() {
+            if ($(this).hasClass("active")) {
+                var checkLive = $("#waiting_cont").find("input[type=checkbox]:checked");
+                var LiveArr = [];
+                var trNumArr = [];
+                checkLive.each(function(i) {
+                    LiveArr.push(checkLive.eq(i).closest("tr").attr("liveId"))
+                    trNumArr.push(checkLive.eq(i).closest("tr").index())
+                });
+                $("#del_mark").attr({
+                    "liveId": LiveArr.join(","),
+                    "index": trNumArr.join(",")
+                }).show();
+            }
+        });
+        // 点击 “删除弹窗” 确定
+        $("#sure_btn").on("click", function() {
+            var liveId = $("#del_mark").attr("liveId");
+            var trIndex = $("#del_mark").attr("index").split(",");
+            liveApplyObj.delLiveList({ //调删除接口
+                "liveId": liveId
+            }, function() {
+                trIndex.forEach(function(val, i) {
+                    if (i != 0) {
+                        val -= i;
+                    }
+                    $("#waiting_cont").find("tr").eq(val).remove();
+                });
+                $("#total_num").html($("#waiting_cont tr").length);
+                location.reload();
+                $("#del_mark").hide();
+            });
+        });
+        // 点击 “删除弹窗” 取消  
+        $("#cancel_btn").on("click", function() {
+            $("#del_mark").hide();
+        });
+
+        //查看 回放
+        $("#waiting_cont").on("click", ".editor_btn", function() {
+            alert("接口没有返回视频链接")
+        });
+    </script>
+</body>

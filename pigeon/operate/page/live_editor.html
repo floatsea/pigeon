@@ -25,27 +25,28 @@
             <div class="input_info_tit clearfix">
                 <span>标题</span>
                 <!-- <input type="text" placeholder="" id="businesName"> -->
-                <span>比利时亚精顿</span>
+                <span id="live_title">比利时亚精顿</span>
             </div>
             <div class="input_info_tit clearfix">
-                <span>直播时长</span>
+                <!-- <span id="">直播时长</span> -->
+                <span id="">服务类型</span>
                 <!-- <input type="text" placeholder="" id="pigeonName"> -->
-                <span>1分钟</span>
+                <span> 免费服务（限时2000分钟）</span>
             </div>
             <div class="input_info_tit clearfix">
                 <span>直播内容</span>
                 <!-- <input type="text" placeholder="" id="pigeonNo"> -->
-                <span>直播秋季第一场</span>
+                <span id="live_content">直播秋季第一场</span>
             </div>
             <div class="input_info_tit clearfix">
                 <span>公棚</span>
                 <!-- <input type="text" placeholder="" id="pigeonNo"> -->
-                <span>天津宇航赛鸽公棚</span>
+                <span id="oneloft_name">天津宇航赛鸽公棚</span>
             </div>
             <div class="input_info_tit clearfix">
                 <span>编辑</span>
                 <!-- <input type="text" placeholder="" id="pigeonNo"> -->
-                <span>133****4569</span>
+                <span id="editor_name">133****4569</span>
             </div>
             <div class="input_info_tit live_check clearfix " id="pigeonGender">
                 <span>审核结果</span>
@@ -67,27 +68,14 @@
         </div>
     </div>
     <script>
-        /** 
-         * 直播详情接口
-         */
-        function initPage(initData) {
-            $.ajax({
-                url: location.origin + "",
-                type: "post",
-                data: JSON.stringify(initData),
-                dataType: "json",
-                contentType: "application/json",
-                success: function(data) {
-                    errorToken(data.code);
-                    if (data.code == "0") {
-                        myAlert.createBox("发送成功");
-                    }
-                },
-                error: function() {
-                    myAlert.createBox("网络不给力");
-                }
-            });
-        }
+        //页面初始化， 所有数据从上一页带过来
+        var liveInfo = decodeURI(getParameter("liveInfo"));
+        liveInfo = JSON.parse(liveInfo);
+        console.log(liveInfo)
+        $("#live_title").html(liveInfo.application);
+        $("#live_content").html(liveInfo.application);
+        $("#oneloft_name").html("");
+        $("#editor_name").html("");
         /**
          * 54、直播审核接口
          * http://域名/operator/live/editEstimate
@@ -121,11 +109,15 @@
          * 提交
          */
         $("#save_btn").on("click", function() {
+            if ($("#pigeonGender").find("input:checked").length == 0) {
+                myAlert.createBox("请选择审核类型");
+                return;
+            }
             var auditData = {
-                "userId": "直播人编号",
-                "userType": "直播人类型", //(客户: 0, 商家: 1, 公棚: 2, 运营: 3),
-                "liveStatus": "直播状态", //(1: 通过, 2: 拒绝),
-                "estimation": "直播申请通过或者拒绝原因"
+                "userId": "",
+                "userType": "3", //(客户: 0, 商家: 1, 公棚: 2, 运营: 3),
+                "liveStatus": "", //(1: 通过, 2: 拒绝),
+                "estimation": ""
             }
             audit(auditData, function() {
                 window.history.go(-1);

@@ -5,7 +5,10 @@
  * 2018.10.01
  */
 var orderId = getParameter("orderId") || "";
-var shopName = decodeURI(getParameter("shopName")) || "";
+var shopName = getCookie("shopName");
+if (!shopName) {
+    $('#shop_set', parent.document).trigger("click");
+}
 var orderType = getParameter("orderType") || "";
 var pigeonImgSrc = location.origin + "/operate/image/cp.png"; //默认鸽子图片
 var orderDetailObj = {

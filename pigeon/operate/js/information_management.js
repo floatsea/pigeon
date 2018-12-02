@@ -11,12 +11,6 @@ var businessId = getParameter("businessId") || "";
 var channelType = getParameter("channelType") || ""; //business,loft
 var shopName = getParameter("shopName") || "";
 var oneloftName = getParameter("oneloftName") || "";
-// if (!oneloftId || !businessId) {
-//     $("#input_info_btn").hide();
-// } else {
-//     $("#input_info_btn").show();
-// }
-
 /**
  * 16、资讯列表接口
  * http://域名/operator/news/findList
@@ -47,6 +41,11 @@ var inforObj = {
     },
     createInfoList: function(list, postData) {
         var listStr = "";
+        if (list.length == 0) {
+            listStr = "没有查询到数据";
+            $("#news_list_box").html(listStr);
+            return;
+        }
         list.forEach(function(val) {
             var newsDate = postData.isPublished ? val.updatedTime : val.createdTime;
             var cancelTxt = postData.isPublished ? "撤稿" : "发布";

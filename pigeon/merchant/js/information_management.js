@@ -3,6 +3,13 @@
  *6、资讯列表接口
  * http://域名/business/news/findList
  */
+getShopName(function(shopName) {
+    if (!shopName) {
+        $('#shop_set', parent.document).trigger("click");
+    } else {
+        Setcookie("shopName", shopName);
+    }
+});
 var inforObj = {
     newsRequstList: function(postData) {
         $.ajax({

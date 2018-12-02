@@ -23,8 +23,8 @@
                 <div class="user_top_cont clearfix">
                     <div class="user_top_cont_l">
                         <span>赛事名称：</span>
-                        <input type="text" placeholder="请输入赛事名称">
-                        <button>查询</button>
+                        <input type="text" placeholder="请输入赛事名称" id="key_word">
+                        <button id="search_btn">查询</button>
                     </div>
                     <div class="user_top_cont_r">
                         <button class="active" id="add_match">添加赛事</button>
@@ -113,14 +113,33 @@
         }
         //页面初始化
         var matchListData = {
-            "keyword": "", //检索关键字
+            "keyword": $("#key_word").val(), //检索关键字
             "pageSize": "20",
             "pageNum": "1",
             "orderBy": "publishedTime",
             "orderDesc": "",
-            "startedTime": new Date().getTime()
+            "startedTime": new Date().getTime(),
+            "endedTime": ""
         }
         matchListObj.matchListRequest(matchListData, 0);
+        //点击 “查询”
+        $("#search_btn").on("click", function() {
+            if (!$("#key_word").val()) {
+                myAlert.createBox("请输入关键字");
+                return;
+            }
+            matchListData.keyword = $("#key_word").val();
+            var _index = $("#business_tit .active").index();
+            matchListData.pageNum = "1";
+            if (_index == 0) {
+                matchListData.startedTime = new Date().getTime();
+                matchListData.endedTime = "";
+            } else {
+                matchListData.endedTime = new Date().getTime();
+                matchListData.startedTime = "";
+            }
+            matchListObj.matchListRequest(matchListData, _index);
+        });
         // 切换 “进行中” 和 “已结束”
         $("#business_tit span").on("click", function() {
             var _index = $(this).index();
@@ -142,7 +161,7 @@
             $("#page_btn").find("li").removeClass("active");
             $(this).addClass("active");
 
-            matchListData.keyword = $("#keyword").val(); //关键字
+            matchListData.keyword = $("#key_word").val(); //关键字
             matchListData.pageNum = $(this).html(); //页码
             //"进行中"、"已结束"
             var _index = $("#business_tit .active").index();

@@ -3,6 +3,17 @@
  *4、资讯列表接口
  *http://域名/oneloft/news/findList
  */
+var oneloftName = getCookie("oneloftName");
+if (!oneloftName) {
+    getOneloftName(function(oneloftName) {
+        if (!oneloftName) {
+            $('#oneloft_set', parent.document).trigger("click");
+        } else {
+            Setcookie("oneloftName", oneloftName);
+            oneloftName = oneloftName;
+        }
+    });
+}
 var inforObj = {
     newsRequstList: function(postData) {
         $.ajax({
